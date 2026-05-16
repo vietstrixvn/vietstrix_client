@@ -39,14 +39,14 @@ export default async function LocaleLayout({
         <meta property="fb:app_id" content="939394498693137" />
         <Script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-169R801JZ0"
+          src="https://www.googletagmanager.com/gtag/js?id=G-QLE41CQ8TP"
         />
         <Script id="google-analytics">{`
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-169R801JZ0');
-  `}</Script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-QLE41CQ8TP');
+        `}</Script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
