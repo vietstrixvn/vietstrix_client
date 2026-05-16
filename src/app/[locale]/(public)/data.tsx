@@ -1,0 +1,60 @@
+'use client';
+
+import HeroSection from './hero';
+import ServicesSection from '@/components/sections/service.section';
+import AboutUsSection from '@/components/sections/about.section';
+import ProjectsSection from '@/components/sections/project.section';
+import CTASection from '@/components/sections/cta.section';
+import BlogSection from '@/components/sections/post.section';
+import { PostResponse } from '@/types/portfolio';
+import OurStrength from '@/components/sections/our-strength.section';
+
+interface HomePageProps {
+  projects?: PostResponse[];
+  posts?: PostResponse[];
+}
+
+export default function HomePage({ posts, projects }: HomePageProps) {
+  return (
+    <main className="relative bg-white">
+      {/* Hero */}
+      <section className="relative min-h-screen">
+        <HeroSection />
+      </section>
+      {/* About wrapper - sticky + clip */}
+      <div style={{ position: 'relative', height: '200vh', overflow: 'clip' }}>
+        <div style={{ position: 'sticky', top: 0, height: '100vh', zIndex: 1 }}>
+          <section id="about" className="relative h-full">
+            <AboutUsSection />
+          </section>
+        </div>
+      </div>
+
+      {/* Services bắt đầu ngay sau wrapper - dùng marginTop âm để kéo lên ĐÈ lên About */}
+      <div style={{ position: 'relative', zIndex: 10, marginTop: '-100vh' }}>
+        <section
+          id="strength"
+          className="relative  bg-white"
+          style={{ borderRadius: '20px 20px 0 0' }}
+        >
+          <OurStrength />
+        </section>
+        <section id="services" className="relative min-h-screen bg-white">
+          <ServicesSection />
+        </section>
+
+        <section id="projects" className="relative bg-white">
+          <ProjectsSection projects={projects} />
+        </section>
+
+        <section id="blog" className="relative bg-white">
+          <BlogSection posts={posts} />
+        </section>
+
+        <section id="cta" className="relative">
+          <CTASection />
+        </section>
+      </div>
+    </main>
+  );
+}

@@ -1,0 +1,230 @@
+{
+  "Page": {
+    "Hero": {
+      "title": "Tụi mình biến mọi thứ thành sản phẩm — từ:",
+      "description": "Liên hệ để nhận demo sớm nhất — tụi mình build nhanh khi đã rõ hướng, và linh hoạt hơn với các yêu cầu thiết kế riêng."
+    },
+    "Toc": "Nội dung bài viết",
+    "Blog": {
+      "description": "Nơi tụi mình chia sẻ ý tưởng, tips và những góc nhìn hậu trường về cách tụi mình xây dựng và tư duy về sản phẩm số."
+    },
+    "Project": {
+      "title": "Giá Trị Thực Tế",
+      "description": "Mọi người làm việc với tụi mình để build những thứ nhanh, gọn gàng và sẵn sàng phát triển.",
+      "button": "Xem Thêm"
+    },
+    "Strength": {
+      "headline": "Xem website phát triển từng bước, từ ý tưởng đến hoàn thiện.",
+      "description": "Minh bạch tiến độ với link preview trực tiếp, giúp theo dõi, phản hồi và tinh chỉnh sản phẩm trước khi bàn giao.",
+      "title": {
+        "t1": "Tư vấn & Định hướng",
+        "t2": "Thiết kế & Phát triển trực tiếp",
+        "t3": "Kiểm thử & Triển khai",
+        "t4": "Hỗ trợ & Bảo trì"
+      },
+      "answer": {
+        "a1": "Bắt đầu từ việc hiểu rõ mục tiêu kinh doanh, người dùng và định hướng phát triển để xây đúng ngay từ đầu.",
+        "a2": "Khách hàng được chọn giao diện phù hợp và theo dõi tiến độ thực tế qua link preview trong suốt quá trình build.",
+        "a3": "Website được tối ưu hiệu năng, fix lỗi, kiểm tra responsive và bảo mật kỹ trước khi go-live.",
+        "a4": "Bàn giao đầy đủ source code, tài liệu hướng dẫn và đồng hành hỗ trợ sau khi dự án hoàn thành."
+      },
+      "button": "Liên Hệ Ngay"
+    },
+    "CTA": {
+      "title": {
+        "t1": "Khởi động",
+        "t2": "dự án của bạn",
+        "t3": "chỉ trong → 2 tuần"
+      },
+      "description": "Đặt lịch tư vấn miễn phí với các chuyên gia của chúng tô",
+      "button": "Liên Hệ Ngay"
+    },
+    "Experience": {
+      "title1": "Kinh Nghiệm ",
+      "title2": "Làm Việc",
+      "p1": "Phát triển một trang web thông tin và quản lý nội dung cho tổ chức tôn giáo. Xử lý mọi việc từ thiết kế UI/UX đến việc phân công việc cho các thành viên vaf triển khai dự án lên môi trường thực tế, đảm bảo tối ưu hóa hiệu suất và quản lý nội dung dễ dàng.",
+      "p2": "Build a modern blogging system for an Agency project. Focus on providing beautiful UI, responsive layout and SEO for better online presence.",
+      "p3": "Phát triển website chính thức cho công ty Unien. Đảm bảo hình ảnh công ty chuyên nghiệp, thiết kế responsive và tối ưu hóa hiệu suất trên nhiều thiết bị.",
+      "p4": "Dự án tự do cá nhân hướng đến việc xây dựng một công ty khởi nghiệp. Chịu trách nhiệm phát triển sản phẩm, khám phá công nghệ mới và quản lý toàn bộ vòng đời phát triển.",
+      "p5": "Dự án tự cho triễn lãm VIA xây dựng một webiste triễn lãm. Chịu trách nhiệm phát triển sản phẩm, thiết kế sản phẩm, bàn giao và quản lý toàn bộ vòng đời phát triển.",
+      "p6": "Dự án Atom Report App nhằm xây dựng nền tảng báo cáo và phân tích dữ liệu. Chịu trách nhiệm phát triển giao diện, xử lý dữ liệu, xây dựng hệ thống báo cáo động và quản lý toàn bộ vòng đời phát triển sản phẩm.",
+      "p7": "Dự án VSS xây dựng hệ thống microservice kết hợp micro frontend cho quản lý tác vụ và giám sát. Chịu trách nhiệm thiết kế kiến trúc, phát triển tính năng và quản lý toàn bộ vòng đời phát triển.",
+      "p8": "Đây là một dashboard tài chính toàn diện với 4 chế độ xem - Map (bản đồ sự kiện kinh tế), List (lịch kinh tế chi tiết), Indices (chỉ số chứng khoán toàn cầu), và News (tin tức từ The Guardian). Ứng dụng tích hợp dữ liệu từ nhiều nguồn để cung cấp cái nhìn tổng quan về thị trường tài chính và kinh tế thế giới."
+    },
+    "Featured": {
+      "title": "DỰ ÁN NỔI BẬT"
+    },
+    "Slogan": "Dám nghĩ dám làm khổ trước sướng sau.",
+
+    "Technical": {
+      "title": "Chuyên môn kỹ thuật",
+      "content": "mình đã phát triển một bộ kỹ năng đa dạng trong lĩnh vực của mình, tập trung vào các công nghệ web hiện đại và thực tiễn tốt nhất.",
+      "development": "Phương pháp phát triển",
+      "t1": {
+        "a": "Sạch sẽ, có thể bảo trì ",
+        "q": "Viết mã có cấu trúc tốt, được ghi chép theo các thực tiễn tốt nhất và các mẫu thiết kế."
+      },
+      "t2": {
+        "a": "Tối ưu hóa hiệu suất",
+        "q": "Tập trung vào việc tạo các ứng dụng nhanh, hiệu quả với tài sản được tối ưu hóa và phân tách mã."
+      },
+      "t3": {
+        "a": "Thiết kế đáp ứng",
+        "q": "Tất cả các dự án hoàn toàn đáp ứng, đảm bảo trải nghiệm người dùng tuyệt vời trên bất kỳ thiết bị nào."
+      }
+    },
+    "Contact": {
+      "title": "Liên Hệ"
+    },
+    "Apps": {
+      "s1": {
+        "a": "Công Cụ Chuyển Đổi Bản Đồ Raster Sang Vector Tự Động",
+        "q": "Map Converter là công cụ chuyển đổi bản đồ từ hình ảnh PNG/JPG sang định dạng vector DXF và PDF. Ứng dụng tự động nhận diện và tách ba lớp: vùng nước, đất liền, và đường giao thông bằng thuật toán xử lý ảnh tiên tiến (HSV analysis, morphological operations, skeletonization). Giao diện web thân thiện phù hợp cho mọi người dùng. File DXF xuất ra tương thích AutoCAD với các lớp được tự động tô màu và đặt tên. Hỗ trợ xem trước overlay, command line, và build executable độc lập."
+      },
+      "s2": {
+        "a": "Hệ thống Tra cứu Mã số Thuế Tự động",
+        "q": "Hệ thống tra cứu mã số thuế (MST) và CCCD tự động từ masothue.com, sử dụng AI giải captcha với độ chính xác 97.36%. Ứng dụng có giao diện đồ họa thân thiện, hỗ trợ tra cứu hàng loạt với chế độ parallel (5-10 workers), tăng tốc 3-5 lần. Tự động bypass Cloudflare, xử lý captcha bằng SVM model, xuất kết quả Excel đầy đủ thông tin doanh nghiệp. Công cụ lý tưởng cho kế toán, kiểm toán viên cần tra cứu thông tin thuế nhanh chóng."
+      }
+    }
+  },
+
+  "About": {
+    "Hero": {
+      "title": {
+        "t1": "Làm thương hiệu ",
+        "t2": "theo cách",
+        "t3": "rất khác."
+      }
+    },
+    "Introduce": {
+      "title": "Tụi mình là ai?",
+      "description": "Tụi mình tạo ra những trải nghiệm số thật tự nhiên — mượt, nhanh và bền lâu."
+    },
+    "Accordion": {
+      "q1": "Về tụi mình",
+      "a1": {
+        "intro": "Tụi mình là một team nhỏ, tập trung vào sản phẩm — biến ý tưởng thành những thứ chạy được thật. Ưu tiên sự rõ ràng, tốc độ và làm đúng ngay từ đầu.",
+        "t1": "Suy nghĩ rõ ràng:",
+        "a1": "Luôn đơn giản hoá vấn đề trước khi bắt tay vào build.",
+        "t2": "Thực tế:",
+        "a2": "Mọi thứ tụi mình làm đều hướng tới kết quả thật, không chỉ là phần nhìn."
+      },
+      "q2": "Sứ mệnh",
+      "a2": {
+        "intro": "Tụi mình giúp biến ý tưởng thành sản phẩm thật — nhanh, rõ ràng và bền lâu.",
+        "t1": "Làm có mục đích:",
+        "a1": "Mỗi quyết định đều giải quyết một vấn đề cụ thể.",
+        "t2": "Tạo ra giá trị:",
+        "a2": "Tập trung vào kết quả, không chỉ là đầu ra."
+      },
+      "q3": "Điểm nổi bật",
+      "a3": {
+        "intro": "Điều tạo nên tụi mình không chỉ là làm gì, mà là cách tụi mình làm:",
+        "t1": "Làm từ A đến Z:",
+        "a1": "Từ ý tưởng đến khi hoàn thiện, tụi mình chịu trách nhiệm toàn bộ.",
+        "t2": "Nhanh nhưng có suy nghĩ:",
+        "a2": "Làm nhanh nhưng vẫn giữ được định hướng rõ ràng.",
+        "t3": "Luôn cải thiện:",
+        "a3": "Liên tục tối ưu và nâng cấp mọi thứ đã làm."
+      }
+    },
+    "Workflow": {
+      "title": "Phát triển website theo 4 bước",
+      "button": "Bắt đầu ngay",
+
+      "step": {
+        "q1": "Lên ý tưởng",
+        "a1": "Thu thập yêu cầu, tìm hiểu thị trường và xác định mục tiêu sản phẩm.",
+        "q2": "Thiết kế & Phát triển",
+        "a2": "Thiết kế UI/UX, build frontend & backend, và tích hợp các tính năng cần thiết.",
+        "q3": "Kiểm thử",
+        "a3": "Test toàn bộ chức năng, tối ưu hiệu năng và fix lỗi trước khi launch.",
+        "q4": "Bàn giao",
+        "a4": "Deploy lên server và hỗ trợ sau khi sản phẩm đi vào hoạt động."
+      }
+    },
+    "Values": {
+      "title": "Các giá trị cốt lõi của tụi mình",
+
+      "step": {
+        "q1": "Rõ ràng trước tiên",
+        "a1": "Tụi mình luôn bóc tách vấn đề thật rõ trước khi viết bất kỳ dòng code nào.",
+        "q2": "Nhanh nhưng có chất lượng",
+        "a2": "Làm nhanh, nhưng không đánh đổi hiệu năng hay khả năng maintain.",
+        "q3": "Tư duy sản phẩm",
+        "a3": "Không chỉ build tính năng — tụi mình tạo ra những giải pháp thật sự có giá trị.",
+        "q4": "Lấy người dùng làm trung tâm",
+        "a4": "Mọi quyết định đều dựa trên trải nghiệm người dùng thực tế.",
+        "q5": "Chịu trách nhiệm",
+        "a5": "Tụi mình theo sát từ ý tưởng đến khi triển khai và cả sau đó.",
+        "q6": "Luôn cải thiện",
+        "a6": "Liên tục tối ưu, nâng cấp và hoàn thiện mọi sản phẩm tụi mình làm."
+      }
+    }
+  },
+
+  "Service": {
+    "Hero": {
+      "title": {
+        "t1": "Dịch vụ số",
+        "t2": "theo cách",
+        "t3": "rất khác."
+      }
+    },
+    "OurStrength": {
+      "title": "Tại Vietstrix, tụi mình xây dựng sản phẩm với sự rõ ràng và tạo ra giá trị thật",
+      "button": "BẮT ĐẦU NGAY",
+      "description": {
+        "t1": "Tụi mình tin rằng sản phẩm tốt bắt đầu từ tư duy rõ ràng và khả năng thực thi mạnh mẽ.",
+        "t2": "Vietstrix là một team tập trung vào sản phẩm,",
+        "t3": "biến ý tưởng thành các giải pháp số nhanh, ổn định và có thể phát triển lâu dài."
+      },
+      "step": {
+        "q1": "Triển khai rõ ràng, có cấu trúc",
+        "a1": "Mỗi dự án đều bắt đầu bằng việc làm rõ vấn đề. Tụi mình phân tích ý tưởng, xác định phạm vi và thống nhất mục tiêu trước khi build.",
+        "q2": "Nhanh nhưng đáng tin cậy",
+        "a2": "Làm nhanh nhưng vẫn giữ chất lượng — tạo ra sản phẩm ổn định, có thể mở rộng và sẵn sàng cho người dùng thực.",
+        "q3": "Đồng hành từ đầu đến cuối",
+        "a3": "Từ ý tưởng đến khi hoàn thiện và sau đó, tụi mình chịu trách nhiệm để sản phẩm thật sự hoạt động và mang lại giá trị."
+      }
+    },
+    "Services": {
+      "description": "Tụi mình tạo ra trải nghiệm thân thiện, cá nhân hoá — rồi build và tối ưu để mọi thứ vận hành mượt và phát triển bền lâu.",
+      "step": {
+        "q1": "Tụi mình thiết kế, phát triển và triển khai website hoàn chỉnh từ đầu — mang lại giải pháp nhanh, có khả năng mở rộng và sẵn sàng đưa vào vận hành.",
+        "q2": "Tụi mình tạo ra giao diện trực quan, lấy người dùng làm trung tâm, giúp tăng tương tác và chuyển đổi.",
+        "q3": "Xây dựng hệ thống nhanh, có khả năng mở rộng với hiệu năng tối ưu và chuẩn SEO.",
+        "q4": "Ra mắt sản phẩm nhanh chóng với một phiên bản MVP vững chắc và dễ mở rộng.",
+        "q5": "Nâng cấp website cũ thành trải nghiệm hiện đại, hiệu năng cao và dễ sử dụng hơn."
+      }
+    }
+  },
+  "Blog": {
+    "Hero": {
+      "title": {
+        "t1": "Góc nhìn & chia sẻ",
+        "t2": "về cách",
+        "t3": "tụi mình tư duy và xây dựng."
+      }
+    },
+    "Recent": {
+      "title": "Liên quan",
+      "button": "Xem Thêm"
+    }
+  },
+  "Contact": {
+    "Hero": {
+      "title": {
+        "t1": "Có ý tưởng?",
+        "t2": "Cùng tụi mình",
+        "t3": "biến nó thành thật."
+      }
+    }
+  },
+  "NotFound": {
+    "title": "Ôi không! Trang này không tồn tại.",
+    "desc1": "Liên kết bạn truy cập có thể đã sai hoặc trang đã bị xóa.",
+    "desc2": "Nhưng đừng lo, vẫn còn rất nhiều điều tuyệt vời đang chờ bạn khám phá!",
+    "button": "Quay lại trang chủ"
+  }
+}

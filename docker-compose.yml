@@ -1,0 +1,63 @@
+services:
+  # ============================================
+  # WEB
+  # ============================================
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx_proxy
+    restart: unless-stopped
+    ports:
+      - '3000:80'
+    depends_on:
+      frontend:
+        condition: service_healthy
+    networks:
+      - app_network
+    mem_limit: 128m
+    mem_reservation: 64m
+    cpus: 0.5
+    healthcheck:
+      test: ['CMD', 'wget', '--spider', '-q', 'http://localhost/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vietstrix_client
+    restart: unless-stopped
+    expose:
+      - '3000'
+    env_file:
+      - .env.docker
+    environment:
+      - NODE_ENV=production
+      - NODE_OPTIONS=--max-old-space-size=512
+      - API_GATEWAY_URL=http://api-gateway:8080
+    # depends_on:
+    #   - api-gateway
+    networks:
+      - app_network
+    mem_limit: 768m
+    mem_reservation: 384m
+    cpus: 1
+    healthcheck:
+      test: ['CMD', 'wget', '--spider', '-q', 'http://127.0.0.1:3000/']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+
+networks:
+  app_network:
+    external: true
+    name: vietstrix-be_app_network # Tên network của backend
+
+volumes:
+  postgres_data:

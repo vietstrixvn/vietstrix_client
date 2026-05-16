@@ -1,0 +1,57 @@
+'use client';
+
+import { BlogCard } from '@/components/animations/tech.animation';
+import { Container } from '@/components/wrappers/container';
+import React, { useRef } from 'react';
+import { useTranslations } from 'next-intl';
+import { FeaturesBadge } from '../customs/badge.custom';
+
+export const BlogtHeroSetion = () => {
+  const t = useTranslations('Blog');
+
+  const sectionRef = useRef(null);
+  return (
+    <section
+      ref={sectionRef}
+      className="w-full py-16 bg-white md:py-24 relative overflow-hidden pt-20 sm:pt-24"
+    >
+      {/* Background grid pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.08] pointer-events-none z-0"
+        style={{
+          backgroundImage:
+            'linear-gradient(to right, #495057 1px, transparent 1px), linear-gradient(to bottom, #495057 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
+        }}
+      />
+
+      <Container className="mx-auto">
+        <div className="mx-auto w-full flex justify-center">
+          <FeaturesBadge title="Blogs" />
+        </div>
+
+        <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center">
+          {/* Heading — full width on mobile, half on desktop */}
+          <div className="w-full md:flex-1">
+            <h1 className=" uppercase font-black text-main text-lg sm:text-2xl md:text-4xl lg:text-5xl leading-[0.85] tracking-tighter flex flex-col">
+              <span className="text-primary-container">
+                {t('Hero.title.t1')}
+              </span>
+              <span className="ml-[40px] sm:ml-[80px] md:ml-[120px] text-outline-navy py-2 sm:py-3 md:py-4">
+                {t('Hero.title.t2')}
+              </span>
+              <span className="text-primary-container">
+                {t('Hero.title.t3')}
+              </span>
+            </h1>
+          </div>
+
+          {/* Card — ẩn trên mobile nhỏ, hiện từ sm trở lên */}
+          <div className="hidden sm:flex md:flex-1 w-full justify-center">
+            <BlogCard />
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+};
