@@ -5,8 +5,6 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
-  output: 'standalone',
-
   reactStrictMode: true,
 
   // Optimize CSS and JavaScript
