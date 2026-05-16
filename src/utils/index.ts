@@ -21,4 +21,3 @@ export * from './helpers/media.helper';
 export * from './dateHelpers';
 
 export * from './logger.util';
-export * from './tiptap-utils';
