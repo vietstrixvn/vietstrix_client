@@ -40,6 +40,22 @@ export const metadata: Metadata = {
       'Vietstrix is a product-driven team building scalable web apps, helping startups turn ideas into reliable digital products from design to deployment.',
     url: 'https://vietstrix.com',
     type: 'website',
+    images: [
+      {
+        url: 'https://vietstrix.com/imgs/OG-Image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Vietstrix',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Vietstrix - Build every thing',
+    description:
+      'Vietstrix is a product-driven team building scalable web apps, helping startups turn ideas into reliable digital products from design to deployment.',
+    images: ['https://vietstrix.com/imgs/OG-Image.png'],
+    creator: '@vietstrix',
   },
 };
 
@@ -68,35 +84,41 @@ export default async function Page({
   const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Cơm Lành',
-    url: 'https://gaolanh.com',
-    logo: 'https://gaolanh.com/logo.svg',
+    name: 'Vietstrix',
+    alternateName: 'Vietstrix Team',
+    url: 'https://vietstrix.com',
+    logo: 'https://vietstrix.com/icons/logo-cricle.svg',
     description:
-      'Cơm Lành đồng hành cùng chủ quán tìm ra loại gạo phù hợp nhất cho nồi cơm kinh doanh thông qua chương trình thử mẫu nhỏ - nấu mẫu lớn.',
+      'Vietstrix is a product-driven freelance team building high-performance and scalable web applications. We partner with startups and businesses to turn ideas into reliable digital products — from design and development to deployment and growth.',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'VN',
-      addressLocality: 'Việt Nam',
+      addressLocality: 'Ho Chi Minh City, Vietnam',
     },
     contactPoint: {
       '@type': 'ContactPoint',
-      contactType: 'Customer Service',
-      availableLanguage: ['Vietnamese'],
+      contactType: 'customer support',
+      availableLanguage: ['English', 'Vietnamese'],
     },
-    sameAs: ['https://facebook.com/gaolanh', 'https://instagram.com/gaolanh'],
+    sameAs: [
+      'https://www.facebook.com/VietStrix.dev',
+      'https://github.com/vietstrixvn',
+      'https://www.linkedin.com/company/vietstrix',
+      'https://www.instagram.com/vietstrix',
+    ],
   };
 
   // WebSite structured data for homepage
   const websiteJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Cơm Lành',
-    url: 'https://gaolanh.com',
+    name: 'Vietstrix',
+    url: 'https://vietstrix.com',
     description:
-      'Đối tác tin cậy của hàng nghìn quán ăn - Gạo sạch, chất lượng cao',
+      'Vietstrix is a product-driven team building scalable web apps, helping startups turn ideas into reliable digital products from design to deployment.',
     potentialAction: {
       '@type': 'SearchAction',
-      target: 'https://gaolanh.com/san-pham?search={search_term_string}',
+      target: 'https://vietstrix.com/search?q={search_term_string}',
       'query-input': 'required name=search_term_string',
     },
   };

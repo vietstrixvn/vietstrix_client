@@ -12,7 +12,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const isEn = locale === 'en';
-  const url = isEn ? 'https://vietstrix.com/en' : 'https://vietstrix.com/vi';
+  const url = isEn ? 'https://vietstrix.com' : 'https://vietstrix.com/vi';
 
   return {
     ...rootMetadata,
@@ -22,7 +22,7 @@ export async function generateMetadata({
       locale: isEn ? 'en_US' : 'vi_VN',
       images: [
         {
-          url: 'https://vietstrix.com/imgs/vsv.webp', // full URL tuyệt đối
+          url: 'https://vietstrix.com/imgs/OG-Image.png',
           width: 1200,
           height: 630,
           alt: 'Vietstrix',
