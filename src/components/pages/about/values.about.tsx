@@ -105,14 +105,14 @@ export const OurValuesSection = () => {
   ];
 
   return (
-    <section className="bg-white min-h-screen py-16 px-6">
+    <section className="bg-white min-h-screen py-16">
       {/* Section header */}
 
       <div className="border-b border-white mt-4" />
 
-      <Container className="max-w-6xl mx-auto grid grid-cols-12 gap-8 min-h-screen">
+      <Container className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-12 gap-8 min-h-screen">
         {/* Left side */}
-        <div className="col-span-12 lg:col-span-6 p-6 lg:sticky lg:top-24 h-fit">
+        <div className="col-span-12 lg:col-span-6 lg:p-6 lg:sticky lg:top-24 h-fit">
           <FeaturesBadge title="Our_Values" />
           <h2 className="text-4xl font-bold text-main font-mono uppercase mt-4 mb-4 flex items-center gap-2 leading-tight">
             {t('Values.title')}

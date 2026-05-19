@@ -227,8 +227,8 @@ export default function NavBarClient({ navItems }: HeaderClientProps) {
                     href={item.href}
                     className={`px-3 py-3 rounded-md text-[0.95rem] font-medium transition-all ${
                       active
-                        ? 'text-primary bg-primary-bg font-bold'
-                        : 'text-text hover:bg-beige'
+                        ? 'text-main bg-primary-50 font-bold'
+                        : 'text-main hover:bg-primary-50'
                     }`}
                     onClick={() => setMobileOpen(false)}
                   >

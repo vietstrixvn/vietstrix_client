@@ -482,7 +482,7 @@ export function DevelopmentCard({ isHovered }: { isHovered?: boolean }) {
 
   return (
     <motion.div
-      className="h-[250px] p-8 mx-auto max-w-lg flex flex-col items-center justify-center relative overflow-hidden"
+      className="h-[250px] p-8 mx-auto w-full max-w-lg flex flex-col items-center justify-center relative overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -889,14 +889,14 @@ export function ContactFormCard({ isHovered }: { isHovered?: boolean }) {
 
   const desktopVariants = {
     stacked: { width: 260, height: 200 },
-    expanded: { width: 420, height: 320 },
+    expanded: { width: 'min(420px, 90vw)', height: 320 },
     highlighted: {
-      width: 420,
+      width: 'min(420px, 90vw)',
       height: 320,
       boxShadow: '0 0 0 1px rgba(255,255,255,0.8)',
     },
     final: {
-      width: 420,
+      width: 'min(420px, 90vw)',
       height: 320,
       boxShadow: '0 0 0 1px rgba(255,255,255,0)',
     },

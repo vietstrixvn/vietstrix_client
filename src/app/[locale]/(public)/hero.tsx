@@ -82,7 +82,7 @@ export default function HeroSection() {
   return (
     <section
       ref={containerRef}
-      className="min-h-screen bg-white relative overflow-hidden flex flex-col justify-center pb-20 sm:pb-24"
+      className="min-h-screen bg-white relative overflow-hidden flex flex-col justify-center pb-16 sm:pb-24"
     >
       <svg className="absolute inset-0 w-0 h-0">
         <defs>
@@ -172,125 +172,113 @@ export default function HeroSection() {
         speed={0.2}
       />
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 w-full items-center relative z-10 px-4 sm:px-6 md:px-12 pt-20 sm:pt-24 lg:pt-0">
-        {/* LEFT SIDE */}
-        <div className="space-y-6 sm:space-y-8 relative z-10">
-          <div className="space-y-3 sm:space-y-4">
-            {/* Badge */}
-            <motion.div
-              className="inline-flex space-x-3 items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-md bg-white/60 backdrop-blur-sm mb-4 sm:mb-6 relative border border-white/10"
-              style={{ filter: 'url(#glass-effect)' }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="absolute top-0 left-1 right-1 h-px bg-gradient-to-r from-transparent via-primary-400/30 to-transparent rounded-md" />
-              <CustomImage
-                src="/icons/logo.svg"
-                width={16}
-                height={16}
-                alt="logo"
-              />
-              <span className="text-main text-xs sm:text-sm  relative z-10 tracking-wide">
-                Vietstrix Team
-              </span>
-            </motion.div>
+      <div className="max-w-7xl mx-auto w-full relative z-10 px-4 sm:px-6 md:px-12 pt-20 sm:pt-24 lg:pt-0">
+        {/* Mobile layout: stacked, compact */}
+        <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-20 lg:items-center">
+          {/* LEFT SIDE */}
+          <div className="space-y-4 sm:space-y-6 relative z-10">
+            <div className="space-y-2 sm:space-y-3">
+              {/* Badge */}
+              <motion.div
+                className="inline-flex space-x-3 items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-md bg-white/60 backdrop-blur-sm mb-2 sm:mb-4 relative border border-white/10"
+                style={{ filter: 'url(#glass-effect)' }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <div className="absolute top-0 left-1 right-1 h-px bg-gradient-to-r from-transparent via-primary-400/30 to-transparent rounded-md" />
+                <CustomImage
+                  src="/icons/logo.svg"
+                  width={16}
+                  height={16}
+                  alt="logo"
+                />
+                <span className="text-main text-xs sm:text-sm relative z-10 tracking-wide">
+                  Vietstrix Team
+                </span>
+              </motion.div>
 
-            {/* Heading */}
-            <h1 className="uppercase font-black text-main text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[0.9] tracking-tighter flex flex-col">
-              {t('Hero.title')}
-            </h1>
+              {/* Heading */}
+              <h1 className="uppercase font-black text-main text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[0.9] tracking-tighter flex flex-col">
+                {t('Hero.title')}
+              </h1>
 
-            {/* Typewriter keyword */}
-            <div className="h-14 sm:h-16 lg:h-20 flex items-center">
-              <div className=" text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-wide">
-                <span className="inline-block">
-                  {displayText}
-                  <span
-                    className={`inline-block w-1 h-8 sm:h-10 bg-white ml-1 ${isTyping ? 'animate-pulse' : 'opacity-0'}`}
-                  />
+              {/* Typewriter keyword */}
+              <div className="h-10 sm:h-14 lg:h-20 flex items-center">
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-wide">
+                  <span className="inline-block">
+                    {displayText}
+                    <span
+                      className={`inline-block w-1 h-7 sm:h-10 bg-white ml-1 ${isTyping ? 'animate-pulse' : 'opacity-0'}`}
+                    />
+                  </span>
+                </div>
+              </div>
+
+              {/* Description */}
+              <motion.p
+                className="text-sm sm:text-base font-bold text-main leading-relaxed max-w-xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+              >
+                {t('Hero.description')}
+              </motion.p>
+            </div>
+
+            {/* Dots */}
+            <div className="flex gap-2">
+              {cards.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setIsTransitioning(true);
+                    setTimeout(() => {
+                      setCurrentIndex(index);
+                      setIsTransitioning(false);
+                    }, 300);
+                  }}
+                  className={`h-2 rounded-md transition-all duration-300 ${
+                    index === currentIndex
+                      ? 'bg-main w-8'
+                      : 'bg-slate-100 w-2 hover:bg-slate-100'
+                  }`}
+                  aria-label={`Go to ${cards[index].keyword}`}
+                />
+              ))}
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-row gap-3">
+              <Link
+                href="/contact-us"
+                className="flex items-center justify-center px-4 py-2.5 bg-main border border-main gap-4 group cursor-pointer flex-1 sm:flex-none"
+              >
+                <span className="font-bold uppercase tracking-[0.2em] text-xs sm:text-sm text-gray-100 whitespace-nowrap">
+                  Contact Us
+                </span>
+              </Link>
+              <div
+                className="flex items-center justify-center px-4 py-2.5 bg-main/80 border border-main gap-2 group cursor-pointer flex-1 sm:flex-none"
+                onClick={handleScrollToNext}
+              >
+                <span className="font-bold uppercase tracking-[0.2em] text-xs sm:text-sm text-gray-100 whitespace-nowrap">
+                  Explore
                 </span>
               </div>
             </div>
-
-            {/* Description */}
-            <motion.p
-              className="text-sm sm:text-lg font-bold text-main mb-6 sm:mb-8 leading-relaxed max-w-xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-            >
-              {t('Hero.description')}
-            </motion.p>
           </div>
 
-          {/* Dots */}
-          <div className="flex gap-2 pt-2 sm:pt-4">
-            {cards.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  setIsTransitioning(true);
-                  setTimeout(() => {
-                    setCurrentIndex(index);
-                    setIsTransitioning(false);
-                  }, 300);
-                }}
-                className={`h-2 rounded-md transition-all duration-300 ${
-                  index === currentIndex
-                    ? 'bg-main w-8'
-                    : 'bg-slate-100 w-2 hover:bg-slate-100'
-                }`}
-                aria-label={`Go to ${cards[index].keyword}`}
-              />
-            ))}
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <Link
-              href="/contact-us"
-              className="flex items-center justify-center p-4 bg-main h-10 sm:h-8 border border-main gap-4 group cursor-pointer"
-            >
-              <span className=" font-bold uppercase tracking-[0.2em] text-xs sm:text-sm text-gray-100 whitespace-nowrap">
-                Contact Us
-              </span>
-            </Link>
-            <div
-              className="flex items-center justify-center sm:justify-start p-4 bg-main/80 sm:bg-main h-10 sm:h-8 border border-main gap-4 group cursor-pointer"
-              onClick={handleScrollToNext}
-            >
-              <div className="hidden sm:block w-12 sm:w-16 h-px bg-white transition-all duration-500 group-hover:w-20 sm:group-hover:w-24" />
-              <span className=" font-bold uppercase tracking-[0.2em] text-xs sm:text-sm text-gray-100 whitespace-nowrap">
-                Scroll to explore
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* RIGHT SIDE — ẩn trên mobile nhỏ, hiện từ sm trở lên */}
-        <div className="hidden sm:flex justify-center lg:justify-end relative z-10">
-          <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md h-[220px] sm:h-[260px] md:h-[280px]">
-            <div className="h-full flex items-center justify-center">
-              <div
-                key={`card-${currentIndex}`}
-                className={`w-full ${isTransitioning ? 'card-exit' : 'card-enter'}`}
-              >
-                {currentCard.card}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Card nhỏ gọn cho mobile */}
-        <div className="flex sm:hidden justify-center relative z-10">
-          <div className="relative w-full max-w-[280px] h-[180px]">
-            <div className="h-full flex items-center justify-center">
-              <div
-                key={`card-mobile-${currentIndex}`}
-                className={`w-full ${isTransitioning ? 'card-exit' : 'card-enter'}`}
-              >
-                {currentCard.card}
+          {/* Card — mobile: compact inline, desktop: right column */}
+          <div className="flex justify-center lg:justify-end relative z-10 mt-6 sm:mt-8 lg:mt-0">
+            <div className="relative w-full max-w-[260px] sm:max-w-sm md:max-w-md h-[160px] sm:h-[220px] md:h-[260px] lg:h-[280px]">
+              <div className="h-full flex items-center justify-center">
+                <div
+                  key={`card-${currentIndex}`}
+                  className={`w-full ${isTransitioning ? 'card-exit' : 'card-enter'}`}
+                >
+                  {currentCard.card}
+                </div>
               </div>
             </div>
           </div>

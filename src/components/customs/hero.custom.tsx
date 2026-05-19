@@ -17,7 +17,7 @@ export const HeroCustom = ({
   });
   return (
     <section
-      className="relative h-[70vh] flex items-center justify-center overflow-hidden"
+      className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden"
       ref={heroRef as unknown as React.RefObject<HTMLElement>}
     >
       <div className="absolute inset-0 z-0">
@@ -25,7 +25,7 @@ export const HeroCustom = ({
           src={image}
           alt="Vietstrix Team"
           fill
-          className=" object-cover"
+          className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
       </div>

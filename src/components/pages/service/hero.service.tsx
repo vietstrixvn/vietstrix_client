@@ -29,18 +29,20 @@ export const ServiceHeroSetion = () => {
         <div className="mx-auto w-full flex justify-center">
           <FeaturesBadge title="OUR_MISSION" />
         </div>
-        <div className="flex gap-8 items-center">
-          <div className="flex-1">
-            <h1 className="uppercase font-black text-main text-3xl sm:text-3xl md:text-4xl lg:text-8xl leading-[0.85] tracking-tighter flex flex-col">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center">
+          <div className="w-full md:flex-1">
+            <h1 className="uppercase font-black text-main text-[40px] sm:text-[56px] md:text-[72px] lg:text-[96px] leading-[0.85] tracking-tighter flex flex-col">
               <span className="text-main">{t('Hero.title.t1')}</span>
-              <span className="ml-[40px] sm:ml-[80px] md:ml-[120px] text-outline-navy py-2 sm:py-3 md:py-4">
+              <span className="ml-[32px] sm:ml-[60px] md:ml-[80px] lg:ml-[120px] text-outline-navy py-2 sm:py-3 md:py-4">
                 {t('Hero.title.t2')}
               </span>
               <span className="text-primary-main">{t('Hero.title.t3')}</span>
             </h1>
           </div>
-          <div className="flex-1">
-            <ServiceCard />
+          <div className="flex md:flex-1 justify-center mt-2 md:mt-0 w-full">
+            <div className="w-full scale-90 sm:scale-100 origin-top">
+              <ServiceCard />
+            </div>
           </div>
         </div>
       </Container>

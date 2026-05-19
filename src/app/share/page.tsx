@@ -164,7 +164,7 @@ export default function CTASection() {
       id: 'zalo',
       name: 'Zalo',
       description: ' Call Now · 0906 723 985',
-      href: 'tel:0906723985',
+      href: 'https://zalo.me/0906723985',
       icon: Icons.Zalo,
       color: '#0068FF',
       bgColor: '#E6F0FF',

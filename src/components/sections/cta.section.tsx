@@ -68,10 +68,10 @@ export default function CTASection() {
         }
       `}</style>
 
-      <div className="relative z-10 h-full flex items-center justify-between px-8 lg:px-16 py-20">
+      <div className="relative z-10 h-full flex flex-col lg:flex-row lg:items-center lg:justify-between px-6 sm:px-8 lg:px-16 py-16 sm:py-20 gap-8 lg:gap-0">
         {/* Left side - Main headline */}
         <div className="flex-1 max-w-2xl">
-          <h1 className="text-6xl lg:text-7xl uppercase font-bold text-main leading-tight tracking-tight">
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl uppercase font-bold text-main leading-tight tracking-tight">
             <span className="block">{t('CTA.title.t1')}</span>
             <span className="block">{t('CTA.title.t2')}</span>
             <span className="block">{t('CTA.title.t3')}</span>
@@ -79,8 +79,8 @@ export default function CTASection() {
         </div>
 
         {/* Right side - CTA content */}
-        <div className="flex-1 flex flex-col items-end justify-end pl-8">
-          <p className="text-gray-700 text-right mb-8 max-w-xs text-sm leading-relaxed">
+        <div className="flex flex-col items-start lg:items-end lg:pl-8">
+          <p className="text-gray-700 lg:text-right mb-6 max-w-xs text-sm leading-relaxed">
             {t('CTA.description')}
           </p>
           <Button className="bg-main hover:bg-primary-800 text-white px-8 py-6 text-base font-medium">

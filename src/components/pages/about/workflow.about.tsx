@@ -38,7 +38,7 @@ export function WorkflowSection() {
       </h2>
 
       {/* Step cards */}
-      <Container className="grid grid-cols-4 gap-6 w-full">
+      <Container className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
         {steps.map((step) => (
           <div
             key={step.id}

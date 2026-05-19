@@ -19,7 +19,7 @@ const itemVariants = {
 };
 
 const WorkItem = memo(({ item }: { item: any }) => {
-  const imageUrl = item.images?.[0]?.url || '/imgs/vsv.webp';
+  const imageUrl = item.images?.[0]?.url || '/imgs/OG-Image.png';
 
   return (
     <Link href={{ pathname: '/projects/[slug]', params: { slug: item.slug } }}>

@@ -12,7 +12,7 @@ const ProjectList: React.FC<ProjectListProps> = ({
 }) => {
   return (
     <main className="relative bg-white">
-      <HeroCustom image="/imgs/vsv.webp" title="Project" />
+      <HeroCustom image="/imgs/OG-Image.png" title="Project" />
       <section>
         <OurProjectSection
           project={project}
