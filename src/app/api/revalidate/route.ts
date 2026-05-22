@@ -13,13 +13,9 @@ export async function OPTIONS() {
 
 export async function POST(req: NextRequest) {
   try {
-    const { secret, path, tag } = await req.json();
+    const { secret, path, paths, tag } = await req.json();
 
-    console.log('🔄 Revalidate called:', { tag, path, hasSecret: !!secret });
-    console.log(
-      '🔑 Secret match:',
-      secret === process.env.NEXT_PUBLIC_REVALIDATE_SECRET
-    );
+    console.log('Revalidate called:', { tag, path, paths });
 
     if (secret !== process.env.NEXT_PUBLIC_REVALIDATE_SECRET) {
       return NextResponse.json(
@@ -28,21 +24,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (tag) {
-      revalidateTag(tag);
-      console.log('✅ revalidateTag:', tag);
-    }
-    if (path) {
-      revalidatePath(path);
-      console.log('✅ revalidatePath:', path);
-    }
+    if (tag) revalidateTag(tag);
+    if (path) revalidatePath(path, 'page');
+    if (paths) paths.forEach((p: string) => revalidatePath(p, 'page'));
 
     return NextResponse.json(
-      { revalidated: true, tag, path },
+      { revalidated: true, tag, path, paths },
       { headers: CORS_HEADERS }
     );
   } catch (e) {
-    console.error('❌ Error:', e);
+    console.error('Error:', e);
     return NextResponse.json(
       { error: 'Failed' },
       { status: 500, headers: CORS_HEADERS }
