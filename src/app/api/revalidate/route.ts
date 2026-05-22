@@ -25,8 +25,18 @@ export async function POST(req: NextRequest) {
     }
 
     if (tag) revalidateTag(tag);
-    if (path) revalidatePath(path, 'page');
-    if (paths) paths.forEach((p: string) => revalidatePath(p, 'page'));
+
+    if (path) {
+      revalidatePath(`/vi${path}`, 'page');
+      revalidatePath(`/${path}`, 'page');
+    }
+
+    if (paths) {
+      paths.forEach((p: string) => {
+        revalidatePath(`/vi${p}`, 'page');
+        revalidatePath(`/${p}`, 'page');
+      });
+    }
 
     return NextResponse.json(
       { revalidated: true, tag, path, paths },
