@@ -24,8 +24,7 @@ export const metadata = generatePageMetadata({
   ],
 });
 
-// ISR: Revalidate mỗi 1 giờ
-export const revalidate = 3600;
+// Page uses searchParams, so it must be dynamically rendered.
 
 export default async function Page({
   params,
@@ -36,6 +35,10 @@ export default async function Page({
 }) {
   const { locale, 'cate-slug': cateSlug } = await params;
   setRequestLocale(locale);
+
+  if (!cateSlug || cateSlug === '[cate-slug]' || cateSlug === '%5Bcate-slug%5D') {
+    notFound();
+  }
 
   const search = await searchParams;
   const page = parseInt(search.page || '1');

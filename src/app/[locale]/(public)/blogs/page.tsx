@@ -22,8 +22,9 @@ export const metadata = generatePageMetadata({
   ],
 });
 
-// ISR: Revalidate mỗi 1 giờ
-export const revalidate = 3600;
+// Page uses searchParams, so it must be dynamically rendered.
+
+import { setRequestLocale } from 'next-intl/server';
 
 export default async function Page({
   params,
@@ -33,6 +34,7 @@ export default async function Page({
   searchParams: Promise<{ page?: string; category?: string; search?: string }>;
 }) {
   const { locale } = await params;
+  setRequestLocale(locale);
 
   const search = await searchParams;
   const page = parseInt(search.page || '1');
