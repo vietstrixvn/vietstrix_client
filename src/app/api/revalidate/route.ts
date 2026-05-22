@@ -13,9 +13,7 @@ export async function OPTIONS() {
 
 export async function POST(req: NextRequest) {
   try {
-    const { secret, path, paths, tag } = await req.json();
-
-    console.log('Revalidate called:', { tag, path, paths });
+    const { secret, tag } = await req.json();
 
     if (secret !== process.env.NEXT_PUBLIC_REVALIDATE_SECRET) {
       return NextResponse.json(
@@ -25,21 +23,10 @@ export async function POST(req: NextRequest) {
     }
 
     if (tag) revalidateTag(tag);
-
-    if (path) {
-      revalidatePath(`/vi${path}`, 'page');
-      revalidatePath(`/${path}`, 'page');
-    }
-
-    if (paths) {
-      paths.forEach((p: string) => {
-        revalidatePath(`/vi${p}`, 'page');
-        revalidatePath(`/${p}`, 'page');
-      });
-    }
+    revalidatePath('/', 'layout');
 
     return NextResponse.json(
-      { revalidated: true, tag, path, paths },
+      { revalidated: true, tag },
       { headers: CORS_HEADERS }
     );
   } catch (e) {
