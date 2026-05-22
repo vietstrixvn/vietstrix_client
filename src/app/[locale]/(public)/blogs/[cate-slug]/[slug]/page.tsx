@@ -33,12 +33,15 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; 'cate-slug': string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
   return generatePostMetadata({ slug });
 }
 
 // Revalidate every 1 hour
 export const revalidate = 3600;
+
+import { getRequestConfig, setRequestLocale } from 'next-intl/server';
 
 export default async function PostPage({
   params,
@@ -46,6 +49,7 @@ export default async function PostPage({
   params: Promise<{ locale: string; 'cate-slug': string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
 
   if (!slug || slug === '[slug]' || slug === '%5Bslug%5D') {
     notFound();

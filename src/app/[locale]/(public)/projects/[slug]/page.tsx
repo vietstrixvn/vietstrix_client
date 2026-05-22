@@ -26,13 +26,16 @@ export async function generateStaticParams() {
   }
 }
 
+import { setRequestLocale } from 'next-intl/server';
+
 // Generate metadata for SEO
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
   return generatePostMetadata({ slug });
 }
 
@@ -45,6 +48,7 @@ export default async function PostPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
 
   if (!slug || slug === '[slug]' || slug === '%5Bslug%5D') {
     notFound();

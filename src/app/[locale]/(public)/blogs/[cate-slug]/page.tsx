@@ -5,6 +5,8 @@ import { getCategories } from '@/libs/seo/getCategories';
 import BlogList from './data';
 import { logError } from '@/utils';
 
+import { setRequestLocale } from 'next-intl/server';
+
 export const metadata = generatePageMetadata({
   title: 'Blogs',
   description:
@@ -33,6 +35,7 @@ export default async function Page({
   searchParams: Promise<{ page?: string }>;
 }) {
   const { locale, 'cate-slug': cateSlug } = await params;
+  setRequestLocale(locale);
 
   const search = await searchParams;
   const page = parseInt(search.page || '1');
