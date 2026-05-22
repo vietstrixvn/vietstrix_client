@@ -47,6 +47,10 @@ export default async function PostPage({
 }) {
   const { locale, slug } = await params;
 
+  if (!slug || slug === '[slug]' || slug === '%5Bslug%5D') {
+    notFound();
+  }
+
   try {
     const response = await handleAPI<any>(
       `${endpoints.cms.portfolios.slug(slug)}?populate=category,images,tags,creator&lang=${locale}`,

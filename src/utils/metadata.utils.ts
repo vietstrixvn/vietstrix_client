@@ -25,6 +25,12 @@ export async function generatePostMetadata(
     defaultImage = '/imgs/vsv.webp',
   } = options;
 
+  if (!slug || slug === '[slug]' || slug === '%5Bslug%5D') {
+    return {
+      title: 'Post Not Found',
+    };
+  }
+
   try {
     const response = await handleAPI<any>(
       endpoints.cms.portfolios.slug(slug),
