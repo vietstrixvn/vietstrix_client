@@ -18,6 +18,7 @@ export async function generateStaticParams() {
     const posts = response?.data?.results || [];
 
     return posts.map((post: any) => ({
+      'cate-slug': post.category?.slug || 'all',
       slug: post.slug,
     }));
   } catch (error) {
@@ -30,7 +31,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string; slug: string }>;
+  params: Promise<{ locale: string; 'cate-slug': string; slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
   return generatePostMetadata({ slug });
@@ -42,7 +43,7 @@ export const revalidate = 3600;
 export default async function PostPage({
   params,
 }: {
-  params: Promise<{ locale: string; slug: string }>;
+  params: Promise<{ locale: string; 'cate-slug': string; slug: string }>;
 }) {
   const { locale, slug } = await params;
 
