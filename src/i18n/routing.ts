@@ -28,9 +28,13 @@ export const routing = defineRouting({
       en: '/blogs',
       vi: '/bai-viet',
     },
-    '/blogs/[slug]': {
-      en: '/blogs/[slug]',
-      vi: '/bai-viet/[slug]',
+    '/blogs/[cate-slug]': {
+      en: '/blogs/[cate-slug]',
+      vi: '/bai-viet/[cate-slug]',
+    },
+    '/blogs/[cate-slug]/[slug]': {
+      en: '/blogs/[cate-slug]/[slug]',
+      vi: '/bai-viet/[cate-slug]/[slug]',
     },
     '/contact-us': {
       en: '/contact-us',
