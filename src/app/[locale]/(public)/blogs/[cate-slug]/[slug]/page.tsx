@@ -6,26 +6,7 @@ import { generatePostMetadata } from '@/utils/metadata.utils';
 import ArticleDetail from './data';
 import { logError } from '@/utils';
 
-// Generate static params for ISR
-export async function generateStaticParams() {
-  try {
-    const response = await handleAPI<any>(
-      `${endpoints.cms.portfolios.list}?page_size=100&status=show&type=blogs`,
-      'GET'
-    );
-
-    // API returns { pagination, results }
-    const posts = response?.data?.results || [];
-
-    return posts.map((post: any) => ({
-      'cate-slug': post.category?.slug || 'all',
-      slug: post.slug,
-    }));
-  } catch (error) {
-    logError('Error generating static params:', error);
-    return [];
-  }
-}
+export const dynamicParams = true;
 
 // Generate metadata for SEO
 export async function generateMetadata({
@@ -41,7 +22,7 @@ export async function generateMetadata({
 // Revalidate every 1 hour
 export const revalidate = 3600;
 
-import { getRequestConfig, setRequestLocale } from 'next-intl/server';
+import {  setRequestLocale } from 'next-intl/server';
 
 export default async function PostPage({
   params,
