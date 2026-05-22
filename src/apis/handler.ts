@@ -71,11 +71,25 @@ export const handleAPI = async <T = any>(
 ): Promise<T> => {
   const apiInstance = getAxiosInstance();
 
+  const defaultHeaders: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+
+  // Inject token for server-side fetches to bypass Nginx IP restriction
+  if (typeof window === 'undefined') {
+    const adminToken =
+      process.env.ADMIN_TOKEN ||
+      '7924004d1fad739b68941d454d05af805568f7ef11d523a5020bae86664ea74a';
+    if (adminToken) {
+      defaultHeaders['X-Admin-Token'] = adminToken;
+    }
+  }
+
   const config: AxiosRequestConfig = {
     url,
     method,
     headers: {
-      'Content-Type': 'application/json',
+      ...defaultHeaders,
       ...customHeaders,
     },
   };
