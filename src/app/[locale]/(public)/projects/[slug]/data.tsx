@@ -50,22 +50,24 @@ export default function ArticleDetail({ post }: ArticleDetailProps) {
       </section>
 
       {/* Article Header */}
-      <section className="mt-12">
+      <section className="mt-6 md:mt-12">
         <div className="w-full">
-          <span className="inline-block text-[0.7rem] font-bold uppercase tracking-widest mb-4 px-4 py-1 rounded-md bg-secondary-100 shadow-sm text-main">
+          <span className="inline-block text-[0.65rem] font-bold uppercase tracking-widest mb-3 px-3 py-1 rounded-md bg-secondary-100 shadow-sm text-main">
             {post?.category?.title || 'Tin tức'}
           </span>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-secondary-800 leading-[1.1] mb-6">
+
+          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-heading font-black text-secondary-800 leading-[1.15] mb-4 break-words hyphens-auto">
             {post.title}
           </h1>
-          <div className="flex items-center gap-6 text-[0.9rem] text-secondary-700">
+
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.85rem] text-secondary-700">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-md bg-beige flex items-center justify-center text-xs font-bold text-primary">
+              <div className="w-7 h-7 rounded-md bg-beige flex items-center justify-center text-xs font-bold text-primary shrink-0">
                 <CustomImage
                   src="/icons/logo-cricle.svg"
                   alt="logo"
-                  width={25}
-                  height={50}
+                  width={22}
+                  height={44}
                 />
               </div>
               <span className="font-bold text-main">
@@ -73,7 +75,7 @@ export default function ArticleDetail({ post }: ArticleDetailProps) {
                 {post?.creator?.last_name || ''}
               </span>
             </div>
-            <span>•</span>
+            <span className="text-secondary-400">•</span>
             <time>{formatSmartDate(post?.created_at)}</time>
           </div>
         </div>
