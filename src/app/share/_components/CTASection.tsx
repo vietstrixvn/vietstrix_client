@@ -2,22 +2,26 @@
 
 import { Arrows, Icons } from '@/assets';
 import { CustomImage } from '@/components';
-import { useCallback, useState } from 'react';
-
-
+import { useEffect, useState, useCallback } from 'react';
 
 function ChannelCard() {
   const [copied, setCopied] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState('');
+
+  // Chỉ lấy URL phía client
+  useEffect(() => {
+    setCurrentUrl(window.location.href);
+  }, []);
 
   const handleCopyLink = useCallback(async () => {
+    const url = currentUrl || window.location.href;
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(url);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback for older browsers
       const input = document.createElement('input');
-      input.value = window.location.href;
+      input.value = url;
       document.body.appendChild(input);
       input.select();
       document.execCommand('copy');
@@ -25,8 +29,7 @@ function ChannelCard() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
-  }, []);
-
+  }, [currentUrl]);
   return (
     <div className="w-full rounded-md overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.18)] bg-white font-sans">
       {/* Banner */}
@@ -184,7 +187,9 @@ export default function CTASection() {
         <div className="absolute -right-20 top-1/2 w-96 h-96 bg-gradient-to-l from-primary-600 to-transparent rounded-md opacity-50 blur-xl animate-float-fast" />
       </div>
 
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         @keyframes float-slow {
           0%,
           100% {
@@ -235,7 +240,9 @@ export default function CTASection() {
         .animate-float-fast {
           animation: float-fast 2s ease-in-out infinite; /* 12s → 2s */
         }
-      `}} />
+      `,
+        }}
+      />
 
       <main className="relative pt-24 pb-12 px-6">
         {/* Blur dark overlay */}
@@ -331,8 +338,8 @@ export default function CTASection() {
         </div>
         <div className="relative z-10 max-w-2xl mx-auto mt-8 space-y-section-margin">
           <CustomImage
-            src={`/imgs/vsv.webp`}
-            alt="Bui media"
+            src={`/imgs/thumbnail.png`}
+            alt="Vietstrix Team"
             height={800}
             width={800}
             className="object-cover"
