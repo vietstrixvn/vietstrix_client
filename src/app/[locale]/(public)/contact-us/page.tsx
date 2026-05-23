@@ -21,8 +21,8 @@ export default function Page() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Vietstrix',
-    url: 'https://vietstrix.com',
-    logo: 'https://vietstrix.com/logo.svg',
+    url: 'https://www.vietstrix.com',
+    logo: 'https://www.vietstrix.com/icons/logo-cricle.svg',
     description: `Vietstrix is a creative digital studio building user-friendly, high-performance websites and digital products.`,
     address: {
       '@type': 'PostalAddress',
@@ -41,7 +41,7 @@ export default function Page() {
     '@type': 'ContactPage',
     name: 'Contact Vietstrix',
     description: `Reach out to Vietstrix to discuss your ideas and start building your next digital product.`,
-    url: 'https://vietstrix.com/contact',
+    url: 'https://www.vietstrix.com/contact',
     mainEntity: {
       '@type': 'Organization',
       name: 'Vietstrix',

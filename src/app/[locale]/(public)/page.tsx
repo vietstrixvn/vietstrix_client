@@ -38,11 +38,11 @@ export const metadata: Metadata = {
     title: 'Vietstrix - Build every thing',
     description:
       'Vietstrix is a product-driven team building scalable web apps, helping startups turn ideas into reliable digital products from design to deployment.',
-    url: 'https://vietstrix.com',
+    url: 'https://www.vietstrix.com',
     type: 'website',
     images: [
       {
-        url: 'https://vietstrix.com/imgs/OG-Image.png',
+        url: 'https://www.vietstrix.com/imgs/OG-Image.png',
         width: 1200,
         height: 630,
         alt: 'Vietstrix',
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     title: 'Vietstrix - Build every thing',
     description:
       'Vietstrix is a product-driven team building scalable web apps, helping startups turn ideas into reliable digital products from design to deployment.',
-    images: ['https://vietstrix.com/imgs/OG-Image.png'],
+    images: ['https://www.vietstrix.com/imgs/OG-Image.png'],
     creator: '@vietstrix',
   },
 };
@@ -86,8 +86,8 @@ export default async function Page({
     '@type': 'Organization',
     name: 'Vietstrix',
     alternateName: 'Vietstrix Team',
-    url: 'https://vietstrix.com',
-    logo: 'https://vietstrix.com/icons/logo-cricle.svg',
+    url: 'https://www.vietstrix.com',
+    logo: 'https://www.vietstrix.com/icons/logo-cricle.svg',
     description:
       'Vietstrix is a product-driven freelance team building high-performance and scalable web applications. We partner with startups and businesses to turn ideas into reliable digital products — from design and development to deployment and growth.',
     address: {
@@ -113,12 +113,12 @@ export default async function Page({
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'Vietstrix',
-    url: 'https://vietstrix.com',
+    url: 'https://www.vietstrix.com',
     description:
       'Vietstrix is a product-driven team building scalable web apps, helping startups turn ideas into reliable digital products from design to deployment.',
     potentialAction: {
       '@type': 'SearchAction',
-      target: 'https://vietstrix.com/search?q={search_term_string}',
+      target: 'https://www.vietstrix.com/search?q={search_term_string}',
       'query-input': 'required name=search_term_string',
     },
   };

@@ -115,7 +115,7 @@ export const viewport: Viewport = {
   themeColor: appInfo.themeColor,
 };
 
-export const siteBaseUrl = 'https://vietstrix.com';
+export const siteBaseUrl = 'https://www.vietstrix.com';
 
 export function generatePageMetadata({
   title,

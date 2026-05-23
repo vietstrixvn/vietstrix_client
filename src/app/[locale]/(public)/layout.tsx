@@ -24,7 +24,7 @@ export async function generateMetadata({
       locale: isEn ? 'en_US' : 'vi_VN',
       images: [
         {
-          url: 'https://vietstrix.com/imgs/OG-Image.png',
+          url: 'https://www.vietstrix.com/imgs/OG-Image.png',
           width: 1200,
           height: 630,
           alt: 'Vietstrix',

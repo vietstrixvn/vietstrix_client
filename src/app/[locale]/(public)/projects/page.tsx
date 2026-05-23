@@ -62,8 +62,8 @@ export default async function Page({
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: 'Vietstrix',
-      url: 'https://vietstrix.com',
-      logo: 'https://vietstrix.com/logo.svg',
+      url: 'https://www.vietstrix.com',
+      logo: 'https://www.vietstrix.com/icons/logo-cricle.svg',
       description:
         'Vietstrix is a product-focused development team specializing in web applications, UI/UX design, and scalable system architecture.',
       address: {
@@ -85,13 +85,13 @@ export default async function Page({
       name: 'Vietstrix Projects',
       description:
         'A collection of real-world projects by Vietstrix, showcasing web development, UI/UX design, and scalable product engineering.',
-      url: 'https://vietstrix.com/du-an',
+      url: 'https://www.vietstrix.com/du-an',
       publisher: {
         '@type': 'Organization',
         name: 'Vietstrix',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://vietstrix.com/logo.svg',
+          url: 'https://www.vietstrix.com/icons/logo-cricle.svg',
         },
       },
       inLanguage: ['en', 'vi'],

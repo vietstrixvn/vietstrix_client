@@ -147,7 +147,7 @@ export default function CTASection() {
       id: 'website',
       name: 'Website',
       description: 'Service · Portfolio · Blog',
-      href: 'https://vietstrix.com/',
+      href: 'https://www.vietstrix.com/',
       icon: Icons.Globe,
       color: '#16A34A',
       bgColor: '#ECFDF5',
