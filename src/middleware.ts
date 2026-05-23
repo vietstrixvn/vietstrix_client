@@ -13,7 +13,8 @@ export default function middleware(request: NextRequest) {
     );
 
   if (isBot) {
-    return NextResponse.next();
+    // as-needed: EN = no prefix, nên rewrite thẳng, không thêm /en
+    return NextResponse.rewrite(request.nextUrl);
   }
 
   return intlMiddleware(request);
