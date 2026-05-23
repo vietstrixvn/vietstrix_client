@@ -1,6 +1,6 @@
 import { CustomImage } from '@/components';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 
 export default function FooterSection() {
   const t = useTranslations('Page');
@@ -195,7 +195,7 @@ export default function FooterSection() {
                 {introdues.map((introdue) => (
                   <Link
                     key={introdue.title}
-                    href={introdue.href}
+                    href={introdue.href as any}
                     className="text-main hover:underline text-sm font-normal leading-5  cursor-pointer hover:text-primary-600 transition-colors"
                   >
                     {introdue.title}

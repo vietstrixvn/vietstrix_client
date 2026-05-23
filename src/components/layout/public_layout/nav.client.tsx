@@ -1,20 +1,19 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { usePathname } from '@/i18n/navigation';
+import { usePathname, Link } from '@/i18n/navigation';
 import { Container } from '@/components/wrappers/container';
 import { LangButton, CustomImage } from '@/components';
 import { Icons } from '@/assets';
-import Link from 'next/link';
 
 interface DropdownItem {
   label: string;
-  href: string;
+  href: any;
 }
 
 interface NavItem {
   label: string;
-  href: string;
+  href: any;
   dropdown?: DropdownItem[];
 }
 
@@ -27,11 +26,20 @@ export default function NavBarClient({ navItems }: HeaderClientProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const isActive = (href: string) => {
-    if (href === '/') {
+  const isActive = (href: any) => {
+    let pathToCheck = href;
+    if (typeof href === 'object' && href !== null && href.pathname) {
+      pathToCheck = href.pathname;
+      if (href.params) {
+        Object.entries(href.params).forEach(([key, value]) => {
+          pathToCheck = pathToCheck.replace(`[${key}]`, String(value));
+        });
+      }
+    }
+    if (pathToCheck === '/') {
       return pathname === '/';
     }
-    return pathname.startsWith(href);
+    return pathname.startsWith(pathToCheck);
   };
 
   useEffect(() => {
@@ -95,7 +103,7 @@ export default function NavBarClient({ navItems }: HeaderClientProps) {
               return (
                 <div key={item.label} className="relative group/item">
                   <Link
-                    href={item.href}
+                    href={item.href as any}
                     className={`relative group/link py-2 text-14 hover:scale-105 transition-all flex items-center gap-1 px-3.5 text-base rounded-sm ${
                       active
                         ? 'text-secondary-100 font-bold bg-main rounded-md'
@@ -132,7 +140,7 @@ export default function NavBarClient({ navItems }: HeaderClientProps) {
                       {item.dropdown.map((sub) => (
                         <Link
                           key={sub.label}
-                          href={sub.href}
+                          href={sub.href as any}
                           className="flex items-center gap-3 px-3.5 py-2.5 text-[0.875rem] text-secondary-800 rounded-sm hover:text-primary hover:bg-beige transition-colors"
                         >
                           {sub.label}
@@ -224,7 +232,7 @@ export default function NavBarClient({ navItems }: HeaderClientProps) {
                 return (
                   <Link
                     key={item.label}
-                    href={item.href}
+                    href={item.href as any}
                     className={`px-3 py-3 rounded-md text-[0.95rem] font-medium transition-all ${
                       active
                         ? 'text-main bg-primary-50 font-bold'

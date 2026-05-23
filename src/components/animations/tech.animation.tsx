@@ -1056,7 +1056,7 @@ export function ContactFormCard({ isHovered }: { isHovered?: boolean }) {
 
 export function DesktopLoader() {
   return (
-    <div className="h-[250px] p-8 mx-auto max-w-lg flex flex-col items-center justify-center relative overflow-hidden">
+    <div className="h-[250px] p-2 mx-auto max-w-lg flex flex-col items-center justify-center relative overflow-hidden">
       {/* Desktop frame — giữ nguyên style từ MvpCard */}
       <div className="border-2 border-main rounded-md bg-transparent flex flex-col w-[90%] h-[75%]">
         {/* Titlebar */}

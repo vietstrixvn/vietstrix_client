@@ -28,25 +28,30 @@ const WorkItem = memo(({ item }: { item: any }) => {
         whileInView="show"
         initial="hidden"
         viewport={{ once: true, amount: 0.2 }}
-        className="h-screen border-b border-gray-200 flex flex-col p-6 md:p-8 gap-6 backdrop-blur-sm hover:bg-gray-50/50 transition-all duration-300"
+        className="border-b border-gray-200 flex flex-col p-4 md:p-2 gap-6
+                   min-h-[60vh] md:h-screen
+                   backdrop-blur-sm hover:bg-gray-50/50 transition-all duration-300"
       >
-        {/* Top: category + title + description */}
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
+        <div className="flex flex-col gap-3">
+          {' '}
+          {/* ← bỏ md:flex-row, stack dọc */}
           <div className="space-y-2">
             <div className="text-main text-sm font-semibold tracking-widest uppercase">
               {item.category?.name || 'Uncategorized'}
             </div>
-            <h3 className="text-2xl md:text-3xl font-bold text-main">
+            <h3 className="text-xl md:text-3xl font-bold text-main">
               /{item.title}
             </h3>
           </div>
-          <p className="text-gray-600 leading-relaxed text-sm md:text-base md:max-w-xs">
+          <p className="text-gray-600 leading-relaxed text-sm md:text-base">
             {truncateHtmlToText(item.description, 120)}
           </p>
         </div>
 
-        {/* Bottom: image fills remaining height */}
-        <div className="flex-1 w-full overflow-hidden">
+        {/* Image */}
+        <div className="flex-1 w-full overflow-hidden rounded-md min-h-[200px]">
+          {' '}
+          {/* ← thêm min-h */}
           <CustomImage
             src={imageUrl}
             alt={item.title}
@@ -66,10 +71,10 @@ export const OurProjectSection: React.FC<ProjectListProps> = ({
   isLoading = false,
 }) => {
   return (
-    <section className="bg-white min-h-screen px-6">
-      <div className="w-full mx-auto grid grid-cols-12 gap-8 min-h-screen">
+    <section className="bg-white min-h-screen px">
+      <div className="w-full mx-auto grid grid-cols-12 gap-8">
         {/* ── Left side: sticky ── */}
-        <div className="col-span-12 lg:col-span-4 p-6 lg:sticky lg:top-24 h-fit">
+        <div className="col-span-12 lg:col-span-4 px-2 pt-6 lg:sticky lg:top-24 h-fit">
           <FeaturesBadge title="Our_projects" />
           <h2 className="text-4xl font-bold text-main font-mono uppercase mt-4 mb-4 flex items-center gap-2 leading-tight">
             Our core values.

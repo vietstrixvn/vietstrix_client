@@ -7,12 +7,12 @@ export const revalidate = 3600;
 
 interface DropdownItem {
   label: string;
-  href: string;
+  href: any;
 }
 
 interface NavItem {
   label: string;
-  href: string;
+  href: any;
   dropdown?: DropdownItem[];
 }
 
@@ -55,7 +55,10 @@ async function getNavItems(locale: string): Promise<NavItem[]> {
       { label: 'All Post', href: '/blogs' },
       ...uniqueCategories.map((cat: any) => ({
         label: cat.title,
-        href: `/blogs/${cat.slug}`,
+        href: {
+          pathname: '/blogs/[cate-slug]',
+          params: { 'cate-slug': cat.slug }
+        },
       })),
     ];
 
