@@ -2,6 +2,7 @@
 
 import { Arrows, Icons } from '@/assets';
 import { CustomImage } from '@/components';
+import { Contact } from '@/components/forms/contact.form';
 import { useEffect, useState, useCallback } from 'react';
 
 function ChannelCard() {
@@ -37,7 +38,7 @@ function ChannelCard() {
         {/* 👇 Thay bằng <img src="..." /> của bạn */}
         <div className="w-full h-[200px] bg-gray-200 flex items-center justify-center">
           <CustomImage
-            src={`/imgs/vsv.webp`}
+            src={`/imgs/OG-Image.png`}
             alt="Vietstrix Team"
             fill
             className="object-cover"
@@ -46,19 +47,7 @@ function ChannelCard() {
 
         {/* Nút Subscribe & Share */}
         <div className="absolute top-3 left-3 right-3 flex justify-between items-center">
-          <button className="flex items-center gap-1.5 bg-black text-white rounded-md px-4 py-1.5 text-[13px] font-bold tracking-wide">
-            {/* bell icon */}
-            <svg width="15" height="15" fill="none" viewBox="0 0 24 24">
-              <path
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                stroke="#fff"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            SUBSCRIBE
-          </button>
+          <div></div>
           <button
             onClick={handleCopyLink}
             className={`rounded-md w-9 h-9 flex items-center justify-center transition-all duration-300 ${
@@ -107,7 +96,7 @@ function ChannelCard() {
           {/* 👇 Thay bằng <img src="..." className="w-full h-full object-cover" /> */}
           <div className="w-full h-full flex items-center justify-center ">
             <CustomImage
-              src={`/icons/logo-cricle.svg`}
+              src={`/icons/Og_Logo.svg`}
               alt="Vietstrix Team"
               fill
               className="object-cover"
@@ -118,7 +107,7 @@ function ChannelCard() {
 
       {/* Info */}
       <div className="px-5 pb-6 pt-2 text-center">
-        <h2 className="text-2xl font-extrabold text-gray-900 mt-1 tracking-tight">
+        <h2 className="text-2xl font-extrabold text-main mt-1 tracking-tight">
           Vietstrix Team
         </h2>
         <p className="text-gray-500 text-lg mt-1">
@@ -248,7 +237,7 @@ export default function CTASection() {
         {/* Blur dark overlay */}
         <div className="absolute inset-0 bg-main/20 backdrop-blur-sm" />
         <div className="relative z-10 max-w-2xl mx-auto space-y-section-margin">
-          <section className="relative flex flex-col items-center justify-center text-center px-4 py-12 ">
+          <section className="relative flex flex-col items-center justify-center text-center px py-12 ">
             <ChannelCard />
           </section>
           <section className="space-y-3">
@@ -336,14 +325,8 @@ export default function CTASection() {
             })}
           </section>
         </div>
-        <div className="relative z-10 max-w-2xl mx-auto mt-8 space-y-section-margin">
-          <CustomImage
-            src={`/imgs/thumbnail.png`}
-            alt="Vietstrix Team"
-            height={800}
-            width={800}
-            className="object-cover"
-          />
+        <div className="relative z-10  max-w-xl w-full mx-auto mt-8 space-y-section-margin">
+          <Contact />
         </div>
       </main>
     </section>
