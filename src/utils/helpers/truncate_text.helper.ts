@@ -10,11 +10,17 @@ export function truncateText(text: string, maxLength: number): string {
 }
 
 export function truncateHtmlToText(html: string, maxLength: number): string {
+  if (typeof document === 'undefined') {
+    // SSR: strip HTML tags bằng regex
+    const text = html.replace(/<[^>]*>/g, '');
+    return text.length > maxLength
+      ? text.slice(0, maxLength).trim() + '...'
+      : text;
+  }
+
   const div = document.createElement('div');
   div.innerHTML = html;
-
   const text = div.textContent || div.innerText || '';
-
   return text.length > maxLength
     ? text.slice(0, maxLength).trim() + '...'
     : text;
