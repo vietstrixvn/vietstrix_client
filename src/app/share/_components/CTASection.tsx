@@ -184,7 +184,7 @@ export default function CTASection() {
         <div className="absolute -right-20 top-1/2 w-96 h-96 bg-gradient-to-l from-primary-600 to-transparent rounded-md opacity-50 blur-xl animate-float-fast" />
       </div>
 
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @keyframes float-slow {
           0%,
           100% {
@@ -235,9 +235,9 @@ export default function CTASection() {
         .animate-float-fast {
           animation: float-fast 2s ease-in-out infinite; /* 12s → 2s */
         }
-      `}</style>
+      `}} />
 
-      <main className="relative flex- pt-24 pb-12 px-6">
+      <main className="relative pt-24 pb-12 px-6">
         {/* Blur dark overlay */}
         <div className="absolute inset-0 bg-main/20 backdrop-blur-sm" />
         <div className="relative z-10 max-w-2xl mx-auto space-y-section-margin">

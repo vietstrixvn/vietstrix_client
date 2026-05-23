@@ -31,16 +31,6 @@ export default async function LocaleLayout({
     <html className="mdl-js">
       <head>
         <meta property="fb:app_id" content="939394498693137" />
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-169R801JZ0"
-        />
-        <Script id="google-analytics">{`
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-169R801JZ0');
-  `}</Script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -59,6 +49,16 @@ export default async function LocaleLayout({
         <JsonLd />
       </head>
       <body className={`antialiased ${inter.variable}`}>
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-169R801JZ0"
+        />
+        <Script id="google-analytics">{`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-169R801JZ0');
+  `}</Script>
         <LoadingProvider>
           <MobileProvider>
             <ReactQueryProvider>
