@@ -5,7 +5,7 @@ export const appInfo = {
   title: 'Vietstrix',
   description:
     'Vietstrix is a product-driven freelance team building high-performance and scalable web applications. We partner with startups and businesses to turn ideas into reliable digital products — from design and development to deployment and growth.',
-  domain: 'https://vietstrix.com',
+  domain: 'https://www.vietstrix.com',
   ogImage: '/imgs/OG-Image.png',
   themeColor: '#ffffff',
   keywords: [

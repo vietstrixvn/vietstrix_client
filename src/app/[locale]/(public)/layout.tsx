@@ -12,7 +12,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const isEn = locale === 'en';
-  const url = isEn ? 'https://vietstrix.com' : 'https://vietstrix.com/vi';
+  const url = isEn
+    ? 'https://www.vietstrix.com'
+    : 'https://www.vietstrix.com/vi';
 
   return {
     ...rootMetadata,
