@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Container } from '@/components/wrappers/container';
 import { CustomImage } from '@/components';
 import { Icons } from '@/assets';
-import { Link } from '@/i18n/navigation';
+import Link from 'next/link';
 
 export default function NavBarShare() {
   const [scrolled, setScrolled] = useState(false);
