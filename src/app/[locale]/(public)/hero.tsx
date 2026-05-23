@@ -43,6 +43,7 @@ export default function HeroSection() {
   ];
 
   const handleScrollToNext = () => {
+    if (typeof document === 'undefined') return; // thêm dòng này
     const nextSection = document.getElementById('about');
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: 'smooth' });
