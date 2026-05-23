@@ -13,8 +13,12 @@ export default function middleware(request: NextRequest) {
     );
 
   if (isBot) {
-    // as-needed: EN = no prefix, nên rewrite thẳng, không thêm /en
-    return NextResponse.rewrite(request.nextUrl);
+    const url = request.nextUrl.clone();
+    // Chỉ thêm /en nếu chưa có locale prefix
+    if (!url.pathname.startsWith('/en') && !url.pathname.startsWith('/vi')) {
+      url.pathname = `/en${url.pathname === '/' ? '' : url.pathname}`;
+    }
+    return NextResponse.rewrite(url);
   }
 
   return intlMiddleware(request);
