@@ -1,5 +1,5 @@
 export function JsonLd() {
-  const baseUrl = 'https://vietstrix.com';
+  const baseUrl = 'https://www.vietstrix.com';
 
   const organizationSchema = {
     '@context': 'https://schema.org',
