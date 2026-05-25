@@ -15,6 +15,8 @@ import { Container } from '../wrappers/container';
 import { SectionTag } from '../customs/section-tag.custom';
 import { logError } from '@/utils';
 import { useCreateContact } from '@/hooks/contact/useContact';
+import ReCAPTCHA from 'react-google-recaptcha';
+
 
 export interface CreateContactItem {
   name: string;
@@ -68,7 +70,7 @@ export function Monitor() {
 export function Contact() {
   const formRef = useRef<HTMLFormElement | null>(null);
   const [isLoading] = useState(false);
-
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const form = useForm<CreateContactDTO>({
     resolver: zodResolver(CreateContactSchema),
     defaultValues: {
@@ -85,9 +87,17 @@ export function Contact() {
 
   const onSubmit = async (data: CreateContactDTO) => {
     try {
-      // Remove event_id if it's null or undefined
+      const recaptchaToken = recaptchaRef.current?.getValue();
+
+      // Nếu chưa tích captcha thì chặn lại và thông báo
+      if (!recaptchaToken) {
+        toast.error('Please check the box "I am not a robot"!');
+        return;
+      }
+
       const submitData: CreateContactDTO = {
         ...data,
+        captcha_token: recaptchaToken
       };
 
       if (!submitData.post_id) {
@@ -96,6 +106,7 @@ export function Contact() {
 
       await addContactMutation.mutateAsync(submitData);
       form.reset();
+      recaptchaRef.current?.reset();
     } catch (error: any) {
       logError('Error creating contact:', error);
       toast.error(error.message || 'Lỗi khi gửi thông tin liên hệ');
@@ -178,7 +189,17 @@ export function Contact() {
                       )}
                     </motion.div>
                   ))}
-
+                  <motion.div
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.6 }} // Cho mượt theo sequence animation của bạn
+                    className="flex justify-center py-2"
+                  >
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+                    />
+                  </motion.div>
                   <motion.div
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}

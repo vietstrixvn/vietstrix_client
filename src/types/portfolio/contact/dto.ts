@@ -6,6 +6,7 @@ export const CreateContactSchema = z.object({
   message: z.string().min(1, 'Message is required').max(1000),
   phone_number: z.string().min(1, 'Phone number is required').max(100),
   email: z.string().min(1, 'Mail is required').max(100),
+  captcha_token: z.string().min(1, 'Captcha token is required'),
 });
 
 export type CreateContactDTO = z.infer<typeof CreateContactSchema>;

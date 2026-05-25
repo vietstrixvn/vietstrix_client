@@ -52,6 +52,7 @@
     "react-chartjs-2": "^5.3.1",
     "react-day-picker": "^9.11.3",
     "react-dom": "^19.0.0",
+    "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "^7.71.1",
     "react-icons": "^5.5.0",
     "react-split": "^2.0.14",
@@ -70,8 +71,9 @@
     "@commitlint/config-conventional": "^20.5.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/react-google-recaptcha": "^2.1.9",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "eslint-config-prettier": "^10.1.8",
@@ -92,5 +94,9 @@
   },
   "eslintConfig": {
     "extends": "next/core-web-vitals"
+  },
+  "resolutions": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0"
   }
 }
