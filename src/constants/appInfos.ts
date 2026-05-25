@@ -124,6 +124,7 @@ export function generatePageMetadata({
   path,
   keywords,
   type = 'website',
+  alternates,
 }: {
   title: string;
   description?: string;
@@ -131,6 +132,7 @@ export function generatePageMetadata({
   path: string;
   keywords?: string[];
   type?: 'website' | 'article';
+  alternates?: Metadata['alternates'];
 }): Metadata {
   const url = `${appInfo.domain}${path}`;
   const image = ogImage ?? appInfo.ogImage;
@@ -158,6 +160,7 @@ export function generatePageMetadata({
       ],
       locale: 'vi_VN',
     },
+
     twitter: {
       card: 'summary_large_image',
       title: fullTitle,
@@ -167,6 +170,7 @@ export function generatePageMetadata({
     },
     alternates: {
       canonical: url,
+      ...alternates,
     },
     robots: {
       index: true,

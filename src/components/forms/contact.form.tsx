@@ -71,8 +71,8 @@ export function Contact() {
   const formRef = useRef<HTMLFormElement | null>(null);
   const [isLoading] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
-  const form = useForm<CreateContactDTO>({
-    resolver: zodResolver(CreateContactSchema),
+  const form = useForm<Omit<CreateContactDTO, 'captcha_token'>>({
+    resolver: zodResolver(CreateContactSchema.omit({ captcha_token: true })),
     defaultValues: {
       full_name: '',
       email: '',
@@ -85,7 +85,7 @@ export function Contact() {
   const isInView = useInView(containerRef, { once: true, amount: 0.4 });
   const addContactMutation = useCreateContact();
 
-  const onSubmit = async (data: CreateContactDTO) => {
+  const onSubmit = async (data: Omit<CreateContactDTO, 'captcha_token'>) => {
     try {
       const recaptchaToken = recaptchaRef.current?.getValue();
 

@@ -5,22 +5,39 @@ import { getCategories } from '@/libs/seo/getCategories';
 import BlogList from './data';
 import { logError } from '@/utils';
 
-export const metadata = generatePageMetadata({
-  title: 'Blogs',
-  description:
-    'Vietstrix shares real-world insights on coding, product building, and scaling ideas into actual products. No fluff — just practical knowledge, optimization, and execution.',
-  path: '/blogs',
-  keywords: [
-    'development blog',
-    'web development',
-    'software engineering',
-    'product development',
-    'ui ux design',
-    'fullstack development',
-    'startup journey',
-    'vietstrix blog',
-  ],
-});
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const isVi = locale === 'vi';
+
+  return generatePageMetadata({
+    title: isVi ? 'Blog' : 'Blogs',
+    description: isVi
+      ? 'Vietstrix chia sẻ kiến thức thực tế về lập trình, xây dựng sản phẩm và mở rộng ý tưởng thành sản phẩm thật sự.'
+      : 'Vietstrix shares real-world insights on coding, product building, and scaling ideas into actual products. No fluff — just practical knowledge, optimization, and execution.',
+    path: isVi ? '/vi/blog' : '/blogs',
+    ogImage: '/imgs/og/blogs.png',
+    keywords: [
+      'development blog',
+      'web development',
+      'software engineering',
+      'product development',
+      'ui ux design',
+      'fullstack development',
+      'startup journey',
+      'vietstrix blog',
+    ],
+    alternates: {
+      languages: {
+        en: 'https://www.vietstrix.com/blogs',
+        vi: 'https://www.vietstrix.com/vi/blog',
+      },
+    },
+  });
+}
 
 // Page uses searchParams, so it must be dynamically rendered.
 
@@ -42,7 +59,6 @@ export default async function Page({
   const searchQuery = search.search || null;
 
   try {
-    // Fetch posts using cached helper with blogId filter
     const { posts, pagination } = await getPosts({
       page,
       pageSize: 12,
@@ -52,24 +68,18 @@ export default async function Page({
       search: searchQuery,
     });
 
-    // Fetch recent posts for sidebar with blogId filter
     const { posts: recentPosts } = await getPosts({
       page: 1,
       pageSize: 5,
       ...(categoryFilter && { category_id: categoryFilter }),
-
       type: 'blogs',
     });
 
-    // Fetch categories with blogId using cached helper
     const allCategories = await getCategories({ type: 'blogs', lang: locale });
-
-    // Filter categories by locale (in case API doesn't filter properly)
     const categories = allCategories.filter(
       (cat: any) => cat.lang === locale || cat.locale === locale
     );
 
-    // Organization structured data for SEO
     const organizationJsonLd = {
       '@context': 'https://schema.org',
       '@type': 'Organization',
@@ -89,19 +99,22 @@ export default async function Page({
         availableLanguage: ['English', 'Vietnamese'],
       },
       sameAs: [
-        'https://facebook.com/yourpage',
+        'https://www.facebook.com/VietStrix.dev',
         'https://linkedin.com/company/vietstrix',
       ],
     };
 
-    // Blog structured data
     const blogJsonLd = {
       '@context': 'https://schema.org',
       '@type': 'Blog',
       name: 'Vietstrix Blog',
       description:
-        'Insights on web development, product building, UI/UX, and real-world engineering. Practical knowledge, system optimization, and lessons from building scalable products.',
-      url: 'https://www.vietstrix.com/blogs',
+        'Insights on web development, product building, UI/UX, and real-world engineering.',
+      url:
+        locale === 'vi'
+          ? 'https://www.vietstrix.com/vi/blog'
+          : 'https://www.vietstrix.com/blogs',
+      inLanguage: locale, // 👈 đúng ngôn ngữ theo locale
       publisher: {
         '@type': 'Organization',
         name: 'Vietstrix',
@@ -110,8 +123,8 @@ export default async function Page({
           url: 'https://www.vietstrix.com/icons/logo-cricle.svg',
         },
       },
-      inLanguage: ['en', 'vi'],
     };
+
     return (
       <>
         <script

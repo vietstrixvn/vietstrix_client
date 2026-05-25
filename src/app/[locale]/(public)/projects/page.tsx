@@ -5,32 +5,45 @@ import { getCategories } from '@/libs/seo/getCategories';
 import ProjectList from './data';
 import { logError } from '@/utils';
 
-export const metadata = generatePageMetadata({
-  title: 'Projects',
-  description:
-    'A collection of Vietstrix projects — where ideas are turned into real products. From UI/UX to fullstack systems, each project reflects practical execution and scalable thinking.',
-  path: '/du-an',
-  keywords: [
-    // English
-    'web development projects',
-    'software projects',
-    'product development case study',
-    'fullstack projects',
-    'startup projects',
-    'vietstrix portfolio',
-
-    // Vietnamese
-    'dự án web',
-    'dự án phần mềm',
-    'phát triển sản phẩm',
-    'case study dự án',
-    'dự án startup',
-    'portfolio vietstrix',
-  ],
-});
-
-// ISR: Revalidate mỗi 1 giờ
 export const revalidate = 3600;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const isVi = locale === 'vi';
+
+  return generatePageMetadata({
+    title: isVi ? 'Dự Án' : 'Projects',
+    description: isVi
+      ? 'Tổng hợp các dự án của Vietstrix — nơi ý tưởng được biến thành sản phẩm thật sự. Từ UI/UX đến hệ thống fullstack, mỗi dự án phản ánh tư duy thực thi và khả năng mở rộng.'
+      : 'A collection of Vietstrix projects — where ideas are turned into real products. From UI/UX to fullstack systems, each project reflects practical execution and scalable thinking.',
+    path: isVi ? '/vi/du-an' : '/projects',
+    ogImage: '/imgs/og/project.png',
+    keywords: [
+      'web development projects',
+      'software projects',
+      'product development case study',
+      'fullstack projects',
+      'startup projects',
+      'vietstrix portfolio',
+      'dự án web',
+      'dự án phần mềm',
+      'phát triển sản phẩm',
+      'case study dự án',
+      'dự án startup',
+      'portfolio vietstrix',
+    ],
+    alternates: {
+      languages: {
+        en: 'https://www.vietstrix.com/projects',
+        vi: 'https://www.vietstrix.com/vi/du-an',
+      },
+    },
+  });
+}
 
 export default async function Page({
   params,
@@ -45,7 +58,6 @@ export default async function Page({
   const categoryFilter = search.category;
 
   try {
-    // Fetch posts with projectId type filter using cached helper
     const { posts, pagination } = await getPosts({
       page,
       pageSize: 12,
@@ -54,10 +66,8 @@ export default async function Page({
       lang: locale,
     });
 
-    // Fetch categories with projectId using cached helper
     const categories = await getCategories({ type: 'project', lang: locale });
 
-    // Organization structured data for SEO
     const organizationJsonLd = {
       '@context': 'https://schema.org',
       '@type': 'Organization',
@@ -78,14 +88,19 @@ export default async function Page({
       },
     };
 
-    // Blog structured data
     const projectsJsonLd = {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
-      name: 'Vietstrix Projects',
+      name: locale === 'vi' ? 'Dự Án Vietstrix' : 'Vietstrix Projects',
       description:
-        'A collection of real-world projects by Vietstrix, showcasing web development, UI/UX design, and scalable product engineering.',
-      url: 'https://www.vietstrix.com/du-an',
+        locale === 'vi'
+          ? 'Tổng hợp các dự án thực tế của Vietstrix, thể hiện năng lực phát triển web, thiết kế UI/UX và kỹ thuật sản phẩm có khả năng mở rộng.'
+          : 'A collection of real-world projects by Vietstrix, showcasing web development, UI/UX design, and scalable product engineering.',
+      url:
+        locale === 'vi'
+          ? 'https://www.vietstrix.com/vi/du-an'
+          : 'https://www.vietstrix.com/projects',
+      inLanguage: locale, // 👈 động theo locale
       publisher: {
         '@type': 'Organization',
         name: 'Vietstrix',
@@ -94,7 +109,6 @@ export default async function Page({
           url: 'https://www.vietstrix.com/icons/logo-cricle.svg',
         },
       },
-      inLanguage: ['en', 'vi'],
     };
 
     return (

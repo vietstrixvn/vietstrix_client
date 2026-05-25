@@ -12,6 +12,7 @@ export const metadata = generatePageMetadata({
   description:
     'Vietstrix shares real-world insights on coding, product building, and scaling ideas into actual products. No fluff — just practical knowledge, optimization, and execution.',
   path: '/blogs',
+  ogImage: '/imgs/og/blogs.png',
   keywords: [
     'development blog',
     'web development',
