@@ -79,7 +79,7 @@ export function RichTextContent({ html, className }: RichTextContentProps) {
           const imgElement = document.createElement('img');
           imgElement.src = img.url;
           imgElement.alt = img.alt || 'Image';
-          imgElement.className = 'w-full h-full object-cover rounded-md';
+          imgElement.className = 'w-full h-full object-cover';
 
           itemDiv.appendChild(imgElement);
           gallery.appendChild(itemDiv);
