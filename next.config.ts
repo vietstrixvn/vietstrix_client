@@ -23,10 +23,6 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'hcm03.vstorage.vngcloud.vn',
       },
-      {
-        protocol: 'https',
-        hostname: 'img.youtube.com',
-      },
     ],
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],

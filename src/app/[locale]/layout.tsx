@@ -84,7 +84,7 @@ export default async function LocaleLayout({
         <LoadingProvider>
           <MobileProvider>
             <ReactQueryProvider>
-              <NextIntlClientProvider messages={messages}>
+              <NextIntlClientProvider locale={locale} messages={messages}>
                 {children}
                 <Toaster position="top-right" richColors />
               </NextIntlClientProvider>
