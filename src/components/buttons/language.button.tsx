@@ -1,25 +1,19 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { usePathname, useRouter } from '@/i18n/navigation';
+import { useLocale } from 'next-intl';
 
 export const LangButton = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const locale = useLocale();
 
-  const [isVietnamese, setIsVietnamese] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    if (!pathname) return;
-    setIsVietnamese(pathname.startsWith('/vi'));
-  }, [pathname]);
+  const isVietnamese = locale === 'vi';
 
   const handleLangChange = (lang: 'vi' | 'en') => {
-    if (isVietnamese === null) return;
-    router.push(`/${lang}`);
+    if (lang === locale) return;
+    router.replace(pathname as any, { locale: lang });
   };
-
-  if (isVietnamese === null) return null;
 
   return (
     <div className="flex items-center gap-4 text-base lg:text-lg">
