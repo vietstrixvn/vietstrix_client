@@ -130,6 +130,10 @@ export interface UserProb {
   first_name: string;
   last_name: string;
   role: string;
+  role_title?: string;
+  bio?: string;
+  avatar_url?: string;
+  social_links?: any[];
 }
 
 /**
