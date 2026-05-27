@@ -39,10 +39,10 @@ export default async function LocaleLayout({
       <head>
         <meta property="fb:app_id" content="939394498693137" />
         <Script
-          async
           src="https://www.googletagmanager.com/gtag/js?id=G-QLE41CQ8TP"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics">{`
+        <Script id="google-analytics" strategy="lazyOnload">{`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
@@ -55,17 +55,6 @@ export default async function LocaleLayout({
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','GTM-W9HJ7NXD');
         `}</Script>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
         <link rel="preconnect" href="https://hcm03.vstorage.vngcloud.vn" />
         <link rel="dns-prefetch" href="https://hcm03.vstorage.vngcloud.vn" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />

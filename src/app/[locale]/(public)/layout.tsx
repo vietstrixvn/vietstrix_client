@@ -46,7 +46,7 @@ export default async function LayoutDefault({
 
   return (
     <>
-      <DelayedLoading duration={1000} />
+      <DelayedLoading duration={500} />
       <PublicLayout locale={locale}>
         <main className="relative min-h-screen">
           <div className="relative">{children}</div>
