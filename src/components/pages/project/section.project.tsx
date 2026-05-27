@@ -37,7 +37,7 @@ const WorkItem = memo(({ item }: { item: any }) => {
           {/* ← bỏ md:flex-row, stack dọc */}
           <div className="space-y-2">
             <div className="text-main text-sm font-semibold tracking-widest uppercase">
-              {item.category?.name || 'Uncategorized'}
+              {item.category?.title || 'Uncategorized'}
             </div>
             <h3 className="text-xl md:text-3xl font-bold text-main">
               /{item.title}

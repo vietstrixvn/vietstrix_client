@@ -9,6 +9,7 @@ import { PostResponse } from '@/types/portfolio';
 import { Container } from '@/components/wrappers/container';
 import { CustomImage } from '@/components';
 import TableOfContents from '@/components/cards/toc.card';
+import AuthorCard from '@/components/cards/author.card';
 
 interface ArticleDetailProps {
   post: PostResponse;
@@ -39,7 +40,7 @@ export default function ArticleDetail({ post }: ArticleDetailProps) {
   return (
     <Container className="pt-20 mx-auto pb-32 bg-white">
       {/* Article Hero Image */}
-      <section className="h-[60vh] overflow-hidden">
+      <section className="h-auto aspect-[16/9] md:h-[60vh] md:aspect-auto overflow-hidden">
         <CustomImage
           src={post.images?.[0]?.url || '/imgs/vsv.webp'}
           alt={post.title}
@@ -50,24 +51,22 @@ export default function ArticleDetail({ post }: ArticleDetailProps) {
       </section>
 
       {/* Article Header */}
-      <section className="mt-6 md:mt-12">
+      <section className=" mt-12">
         <div className="w-full">
-          <span className="inline-block text-[0.65rem] font-bold uppercase tracking-widest mb-3 px-3 py-1 rounded-md bg-secondary-100 shadow-sm text-main">
+          <span className="inline-block text-[0.7rem] font-bold uppercase tracking-widest mb-4 px-4 py-1 rounded-md bg-secondary-100 shadow-sm text-main">
             {post?.category?.title || 'Tin tức'}
           </span>
-
-          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-heading font-black text-secondary-800 leading-[1.15] mb-4 break-words hyphens-auto">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-secondary-800 leading-[1.1] mb-6">
             {post.title}
           </h1>
-
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.85rem] text-secondary-700">
+          <div className="flex items-center gap-6 text-[0.9rem] text-secondary-700">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-md bg-beige flex items-center justify-center text-xs font-bold text-primary shrink-0">
+              <div className="w-8 h-8 rounded-md bg-beige flex items-center justify-center text-xs font-bold text-primary">
                 <CustomImage
                   src="/icons/logo-cricle.svg"
                   alt="logo"
-                  width={22}
-                  height={44}
+                  width={25}
+                  height={50}
                 />
               </div>
               <span className="font-bold text-main">
@@ -75,7 +74,7 @@ export default function ArticleDetail({ post }: ArticleDetailProps) {
                 {post?.creator?.last_name || ''}
               </span>
             </div>
-            <span className="text-secondary-400">•</span>
+            <span>•</span>
             <time>{formatSmartDate(post?.created_at)}</time>
           </div>
         </div>
@@ -105,20 +104,21 @@ export default function ArticleDetail({ post }: ArticleDetailProps) {
 
       {/* Article Content */}
       <section className="mt-8">
-        <div className="grid lg:grid-cols-12 gap-20">
+        <div className="grid lg:grid-cols-12 gap-6 lg:gap-20">
           <aside className="hidden lg:block lg:col-span-3">
             <div className="sticky top-24">
               <TableOfContents htmlContent={post.description} />
             </div>
           </aside>
-          <div className="lg:col-span-9">
-            <div className="max-w-none prose prose-lg prose-primary">
+          <div className="lg:col-span-9 space-y-6 min-w-0">
+            <div className="max-w-none prose prose-lg prose-primary overflow-hidden">
               <RichTextContent
                 html={post.description}
                 className="prose rich-text-content prose-sm max-w-none"
               />
             </div>
-            <div className="flex flex-wrap items-center gap-2">
+            <AuthorCard author={post?.creator}/>
+            <div className="flex flex-wrap items-center gap-2 overflow-hidden">
               <span className="text-sm font-bold text-secondary-700">
                 Tags:
               </span>

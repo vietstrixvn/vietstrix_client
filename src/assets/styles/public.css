@@ -696,6 +696,11 @@ body {
   li {
     margin-bottom: 0.5em;
     color: #334155;
+
+    p {
+      margin: 0;
+      display: inline;
+    }
   }
 
   strong {

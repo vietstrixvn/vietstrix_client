@@ -10,6 +10,7 @@ import { Container } from '@/components/wrappers/container';
 import { CustomImage } from '@/components';
 import TableOfContents from '@/components/cards/toc.card';
 import { RecentPostSection } from '@/components/sections/recent-post.section';
+import AuthorCard from '@/components/cards/author.card';
 
 interface ArticleDetailProps {
   post: PostResponse;
@@ -42,9 +43,9 @@ export default function ArticleDetail({
   }
 
   return (
-    <Container className="pt-20 mx-auto pb-32 bg-white">
+    <Container className="pt-20 mx-auto pb-32 bg-white overflow-x-hidden">
       {/* Article Hero Image */}
-      <section className="h-[60vh] overflow-hidden">
+      <section className="h-auto aspect-[16/9] md:h-[60vh] md:aspect-auto overflow-hidden">
         <CustomImage
           src={post.images?.[0]?.url || '/imgs/vsv.webp'}
           alt={post.title}
@@ -108,20 +109,21 @@ export default function ArticleDetail({
 
       {/* Article Content */}
       <section className="mt-8">
-        <div className="grid lg:grid-cols-12 gap-20">
+        <div className="grid lg:grid-cols-12 gap-6 lg:gap-20">
           <aside className="hidden lg:block lg:col-span-3">
             <div className="sticky top-24">
               <TableOfContents htmlContent={post.description} />
             </div>
           </aside>
-          <div className="lg:col-span-9">
-            <div className="max-w-none prose prose-lg prose-primary">
+          <div className="lg:col-span-9 space-y-6 min-w-0">
+            <div className="max-w-none prose prose-lg prose-primary overflow-hidden">
               <RichTextContent
                 html={post.description}
                 className="prose rich-text-content prose-sm max-w-none"
               />
             </div>
-            <div className="flex flex-wrap items-center gap-2">
+            <AuthorCard author={post?.creator}/>
+            <div className="flex flex-wrap items-center gap-2 overflow-hidden">
               <span className="text-sm font-bold text-secondary-700">
                 Tags:
               </span>
