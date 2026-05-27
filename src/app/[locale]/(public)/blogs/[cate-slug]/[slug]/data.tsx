@@ -43,7 +43,7 @@ export default function ArticleDetail({
   }
 
   return (
-    <Container className="pt-20 mx-auto pb-32 bg-white overflow-x-hidden">
+    <Container className="pt-20 mx-auto pb-32 bg-white overflow-x-hidden lg:overflow-x-visible">
       {/* Article Hero Image */}
       <section className="h-auto aspect-[16/9] md:h-[60vh] md:aspect-auto overflow-hidden">
         <CustomImage
