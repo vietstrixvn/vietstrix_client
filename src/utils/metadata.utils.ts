@@ -11,6 +11,32 @@ interface PostMetadataOptions {
 }
 
 /**
+ * Shared helper to optimize and ensure OG Image is always an absolute URL.
+ * Leverages Next.js built-in image optimizer to compress size under 400 KB (WhatsApp/LinkedIn friendly).
+ */
+export const getOptimizedOgImageUrl = (
+  url?: string,
+  baseUrl: string = 'https://www.vietstrix.com',
+  defaultImage: string = '/imgs/vsv.webp'
+): string => {
+  if (!url) return `${baseUrl}/imgs/vsv.webp`;
+
+  const isRemote = url.startsWith('http://') || url.startsWith('https://');
+  const isAllowedRemote = url.includes('hcm03.vstorage.vngcloud.vn') || url.includes('api.dicebear.com');
+
+  // If it's a remote image not in nextConfig remotePatterns, we can't use Next.js optimizer
+  if (isRemote && !isAllowedRemote) {
+    return url;
+  }
+
+  // For next/image: local paths must be relative (e.g. /imgs/vsv.webp), remote must be full URL
+  const targetPath = isRemote ? url : (url.startsWith('/') ? url : `/${url}`);
+
+  // Compress to 1200px width at 70% quality (reduces size from 600KB+ to ~150KB)
+  return `${baseUrl}/_next/image?url=${encodeURIComponent(targetPath)}&w=1200&q=70`;
+};
+
+/**
  * Generate metadata for post detail pages
  * @param options - Configuration options for metadata generation
  * @returns Metadata object for Next.js
@@ -50,14 +76,7 @@ export async function generatePostMetadata(
     const categorySlug = post.category?.slug || 'tin-tuc';
     const articleUrl = `${baseUrl}/blogs/${categorySlug}/${post.slug}`;
 
-    // Helper to ensure OG Image is always an absolute URL (Facebook/LinkedIn require absolute URLs)
-    const getAbsoluteImageUrl = (url?: string): string => {
-      if (!url) return `${baseUrl}${defaultImage}`;
-      if (url.startsWith('http://') || url.startsWith('https://')) return url;
-      return `${baseUrl}${url.startsWith('/') ? '' : '/'}${url}`;
-    };
-
-    const ogImageUrl = getAbsoluteImageUrl(post.thumbnail || post.images?.[0]?.url);
+    const ogImageUrl = getOptimizedOgImageUrl(post.thumbnail || post.images?.[0]?.url, baseUrl, defaultImage);
 
     return {
       title: post.title,
@@ -115,7 +134,7 @@ export function generateArticleJsonLd(post: any) {
     ? `${post.creator.first_name || ''} ${post.creator.last_name || ''}`.trim()
     : 'Hoang Pham Minh';
 
-  const image = post.thumbnail || post.images?.[0]?.url || `${baseUrl}/imgs/vsv.webp`;
+  const image = getOptimizedOgImageUrl(post.thumbnail || post.images?.[0]?.url, baseUrl);
 
   const authorUrl = post.creator?.social_links?.linkedin
     || post.creator?.social_links?.github
