@@ -12,7 +12,18 @@ export const LangButton = () => {
 
   const handleLangChange = (lang: 'vi' | 'en') => {
     if (lang === locale) return;
-    router.replace(pathname as any, { locale: lang });
+
+    let targetPath = pathname;
+
+    // Tránh đổi ngôn ngữ trực tiếp tại trang chi tiết/dynamic page của blogs và projects.
+    // Nếu đang ở trang danh sách category hoặc chi tiết bài viết/dự án, mặc định đưa về /blogs hoặc /projects.
+    if (pathname.startsWith('/blogs/') || pathname.startsWith('/bai-viet/')) {
+      targetPath = '/blogs';
+    } else if (pathname.startsWith('/projects/') || pathname.startsWith('/du-an/')) {
+      targetPath = '/projects';
+    }
+
+    router.replace(targetPath as any, { locale: lang });
   };
 
   return (
