@@ -1,10 +1,18 @@
 import { UserProb } from "@/types";
+import {
+  Globe,
+  Facebook,
+  Github,
+  Linkedin,
+  Twitter,
+  Instagram,
+  Youtube,
+} from "lucide-react";
+import { Zalo, TikTok } from "@/assets/icons";
 
 function Avatar({ author }: { author: UserProb }) {
   return (
     <div className="relative w-16 h-16 flex-shrink-0">
-      <div className="absolute inset-0 bg-yellow-400 rounded rotate-[-12deg]" />
-      <div className="absolute inset-0 bg-yellow-500 rounded rotate-[-6deg] opacity-70" />
       <div className="relative w-16 h-16 rounded overflow-hidden bg-gray-100 flex items-center justify-center">
         {author?.avatar_url ? (
           <img
@@ -55,6 +63,43 @@ export default function AuthorCard({ author }: { author: UserProb }) {
     <p className="text-sm text-gray-600 leading-7 break-words">
       {author.bio}
     </p>
+
+
+     {author?.social_links && Object.values(author.social_links).some(val => val) && (
+                <div className="pt-5 border-t border-gray-150 space-y-2.5">
+                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide block">
+                    Social Profiles
+                  </label>
+                  <div className="flex flex-wrap gap-3">
+                    {Object.entries(author.social_links).map(([platform, url]) => {
+                      if (!url) return null;
+
+                      let Icon: any = Globe;
+                      if (platform === 'facebook') Icon = Facebook;
+                      else if (platform === 'github') Icon = Github;
+                      else if (platform === 'linkedin') Icon = Linkedin;
+                      else if (platform === 'twitter') Icon = Twitter;
+                      else if (platform === 'instagram') Icon = Instagram;
+                      else if (platform === 'youtube') Icon = Youtube;
+                      else if (platform === 'zalo') Icon = Zalo;
+                      else if (platform === 'tiktok') Icon = TikTok;
+
+                      return (
+                        <a
+                          key={platform}
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center p-2 bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-200 rounded-md transition-all duration-200 text-gray-700 hover:text-blue-600 shadow-sm"
+                          title={platform.charAt(0).toUpperCase() + platform.slice(1)}
+                        >
+                          <Icon className="w-5 h-5 shrink-0" />
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 </div>
   );
 }

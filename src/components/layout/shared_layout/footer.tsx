@@ -27,7 +27,7 @@ export const FooterShare = () => {
             <i className="fas fa-external-link-alt"></i>
           </a>
           <a
-            href="mailto:vietstrix@gmail.com"
+            href="mailto:contact@vietstrix.com"
             className="hover:text-white"
             aria-label="Email"
           >

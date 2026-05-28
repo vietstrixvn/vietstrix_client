@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 
 export const appInfo = {
   logo: '/icons/logo-cricle.svg',
+  logoIco: '/icons/logo-cricle.ico',
   title: 'Vietstrix',
   description:
     'Vietstrix is a product-driven freelance team building high-performance and scalable web applications. We partner with startups and businesses to turn ideas into reliable digital products — from design and development to deployment and growth.',
@@ -33,9 +34,14 @@ export const metadata: Metadata = {
   generator: 'Next.js',
 
   icons: {
-    icon: appInfo.logo,
-    apple: appInfo.logo,
-    shortcut: appInfo.logo,
+    icon: [
+      { url: appInfo.logoIco, type: 'image/x-icon' },
+      { url: appInfo.logo, type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: appInfo.logoIco, type: 'image/x-icon' },
+    ],
+    shortcut: appInfo.logoIco,
   },
 
   openGraph: {

@@ -159,7 +159,7 @@ export default function FooterSection() {
                 </div>
                 <div className="text-main text-sm font-normal leading-5 ">
                   Email
-                  <p className="text-black ">vietstrix@gmail.com</p>
+                  <p className="text-black ">contact@vietstrix.com</p>
                 </div>
                 <div className="text-main text-sm font-normal leading-5 ">
                   Working hours

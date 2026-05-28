@@ -314,10 +314,10 @@ export function ContactForm() {
                 <div>
                   <p className="text-slate-600">Email:</p>
                   <a
-                    href="mailto:vietstrix@gmail.com"
+                    href="mailto:contact@vietstrix.com"
                     className="text-primary text-lg hover-underline-animation"
                   >
-                    hoangpm2003.strix@gmail.com
+                    contact@vietstrix.com
                   </a>
                 </div>
 
@@ -367,7 +367,7 @@ export function ContactForm() {
                       <span className="sr-only">GitHub</span>
                     </motion.a>
                     <motion.a
-                      href="mailto:vietstrix@gmail.com"
+                      href="mailto:contact@vietstrix.com"
                       className="rounded-md bg-muted p-2 text-muted-foreground hover:text-foreground transition-colors"
                       whileHover={{ scale: 1.1, rotate: 5 }}
                       whileTap={{ scale: 0.9 }}
