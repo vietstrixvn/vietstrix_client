@@ -16,7 +16,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   setRequestLocale(locale);
-  return generatePostMetadata({ slug });
+  return generatePostMetadata({ slug, locale });
 }
 
 // Revalidate every 1 hour

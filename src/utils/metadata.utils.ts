@@ -5,10 +5,37 @@ import { logError } from './logger.util';
 
 interface PostMetadataOptions {
   slug: string;
+  locale?: string;
   baseUrl?: string;
   siteName?: string;
   defaultImage?: string;
 }
+
+/**
+ * Helper to dynamically format the correct absolute post/portfolio URL based on type and active locale.
+ * Matches next-intl path translations configured in i18n/routing.ts
+ */
+export const getPostUrl = (
+  post: any,
+  locale: string = 'en',
+  baseUrl: string = 'https://www.vietstrix.com'
+): string => {
+  const isProject = post.type === 'project' || post.type === 'projects';
+  const categorySlug = post.category?.slug || 'tin-tuc';
+
+  if (locale === 'vi') {
+    if (isProject) {
+      return `${baseUrl}/vi/du-an/${post.slug}`;
+    }
+    return `${baseUrl}/vi/bai-viet/${categorySlug}/${post.slug}`;
+  }
+
+  // English (default) - uses standard URL path with prefix 'as-needed' (so no /en prefix for en)
+  if (isProject) {
+    return `${baseUrl}/projects/${post.slug}`;
+  }
+  return `${baseUrl}/blogs/${categorySlug}/${post.slug}`;
+};
 
 /**
  * Shared helper to optimize and ensure OG Image is always an absolute URL.
@@ -46,6 +73,7 @@ export async function generatePostMetadata(
 ): Promise<Metadata> {
   const {
     slug,
+    locale = 'en',
     baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vietstrix.com',
     siteName = 'Vietstrix',
     defaultImage = '/imgs/vsv.webp',
@@ -59,7 +87,7 @@ export async function generatePostMetadata(
 
   try {
     const response = await handleAPI<any>(
-      `${endpoints.cms.portfolios.slug(slug)}?populate=category,images,tags,creator`,
+      `${endpoints.cms.portfolios.slug(slug)}?populate=category,images,tags,creator&lang=${locale}`,
       'GET'
     );
     const post = response?.data;
@@ -73,9 +101,8 @@ export async function generatePostMetadata(
     const creatorName = post.creator
       ? `${post.creator.first_name || ''} ${post.creator.last_name || ''}`.trim()
       : (post.author?.name || 'Hoang Pham Minh');
-    const categorySlug = post.category?.slug || 'tin-tuc';
-    const articleUrl = `${baseUrl}/blogs/${categorySlug}/${post.slug}`;
 
+    const articleUrl = getPostUrl(post, locale, baseUrl);
     const ogImageUrl = getOptimizedOgImageUrl(post.thumbnail || post.images?.[0]?.url, baseUrl, defaultImage);
 
     return {
@@ -96,7 +123,7 @@ export async function generatePostMetadata(
             alt: post.title,
           },
         ],
-        locale: 'vi_VN',
+        locale: locale === 'vi' ? 'vi_VN' : 'en_US',
         type: 'article',
         publishedTime: post.created_at,
         modifiedTime: post.updated_at,
@@ -129,6 +156,7 @@ export async function generatePostMetadata(
  */
 export function generateArticleJsonLd(post: any) {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vietstrix.com';
+  const locale = post?.lang || 'en';
 
   const creatorName = post?.creator
     ? `${post.creator.first_name || ''} ${post.creator.last_name || ''}`.trim()
@@ -147,8 +175,7 @@ export function generateArticleJsonLd(post: any) {
     .slice(0, 160)
     .trim();
 
-  const categorySlug = post.category?.slug || 'tin-tuc';
-  const articleUrl = `${baseUrl}/blogs/${categorySlug}/${post.slug}`;
+  const articleUrl = getPostUrl(post, locale, baseUrl);
 
   return {
     '@context': 'https://schema.org',
