@@ -38,6 +38,13 @@ export default async function LocaleLayout({
     <html lang={locale} className="mdl-js">
       <head>
         <meta property="fb:app_id" content="939394498693137" />
+        <link rel="preconnect" href="https://hcm03.vstorage.vngcloud.vn" />
+        <link rel="dns-prefetch" href="https://hcm03.vstorage.vngcloud.vn" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <JsonLd />
+      </head>
+      <body className={`antialiased ${inter.variable}`}>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-QLE41CQ8TP"
           strategy="lazyOnload"
@@ -55,13 +62,6 @@ export default async function LocaleLayout({
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','GTM-W9HJ7NXD');
         `}</Script>
-        <link rel="preconnect" href="https://hcm03.vstorage.vngcloud.vn" />
-        <link rel="dns-prefetch" href="https://hcm03.vstorage.vngcloud.vn" />
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        <JsonLd />
-      </head>
-      <body className={`antialiased ${inter.variable}`}>
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-W9HJ7NXD"

@@ -36,17 +36,17 @@ export default function FooterSection() {
     },
     {
       id: 2,
-      title: 'Serivces',
+      title: 'Services',
       href: '/services',
     },
     {
       id: 3,
-      title: 'Project',
+      title: 'Projects',
       href: '/projects',
     },
     {
       id: 4,
-      title: 'Blog',
+      title: 'Blogs',
       href: '/blogs',
     },
     {
@@ -230,36 +230,24 @@ export default function FooterSection() {
           </div>
 
           {/* Right side */}
-          <div className="flex space-x-5">
-            <a
-              href="#"
-              className="hover:text-white text-primary-50"
-              aria-label="LinkedIn"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="#"
-              className="hover:text-white text-primary-50"
-              aria-label="GitHub"
-            >
-              GitHub
-            </a>
-            <a
-              href="#"
-              className="hover:text-white text-primary-50"
-              aria-label="About Us"
-            >
-              About
-            </a>
-            <a
-              href="mailto:someone@example.com"
-              className="hover:text-white text-primary-50"
-              aria-label="Email"
-            >
-              Mail
-            </a>
-          </div>
+           <div className="flex space-x-5">
+          <a href="https://www.linkedin.com/company/vietstrix" className="hover:text-white" aria-label="LinkedIn">
+            <i className="fab fa-linkedin"></i>
+          </a>
+          <a href="https://github.com/vietstrixvn" className="hover:text-white" aria-label="GitHub">
+            <i className="fab fa-github"></i>
+          </a>
+          <a href="https://www.vietstrix.com/about-us" className="hover:text-white" aria-label="Portfolio">
+            <i className="fas fa-external-link-alt"></i>
+          </a>
+          <a
+            href="mailto:contact@vietstrix.com"
+            className="hover:text-white"
+            aria-label="Email"
+          >
+            <i className="fas fa-envelope"></i>
+          </a>
+        </div>
         </div>
       </footer>
     </div>

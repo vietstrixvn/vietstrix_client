@@ -17,13 +17,13 @@ export const FooterShare = () => {
 
         {/* Right side */}
         <div className="flex space-x-5">
-          <a href="#" className="hover:text-white" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/company/vietstrix" className="hover:text-white" aria-label="LinkedIn">
             <i className="fab fa-linkedin"></i>
           </a>
-          <a href="#" className="hover:text-white" aria-label="GitHub">
+          <a href="https://github.com/vietstrixvn" className="hover:text-white" aria-label="GitHub">
             <i className="fab fa-github"></i>
           </a>
-          <a href="#" className="hover:text-white" aria-label="Portfolio">
+          <a href="https://www.vietstrix.com/about-us" className="hover:text-white" aria-label="Portfolio">
             <i className="fas fa-external-link-alt"></i>
           </a>
           <a
