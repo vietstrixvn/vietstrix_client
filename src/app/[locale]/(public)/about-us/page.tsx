@@ -4,8 +4,9 @@ import AboutUsSection from './data';
 export const metadata = generatePageMetadata({
   title: 'Vietstrix — Creative Digital Studio',
   description: `Discover how Vietstrix crafts user-friendly, high-performing digital experiences — built to last and designed to grow.`,
-  path: '/about',
+  path: '/about-us',
   ogImage: '/imgs/og/about.png',
+
   keywords: [
     'vietstrix',
     'creative digital studio',

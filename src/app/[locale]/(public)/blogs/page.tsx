@@ -18,7 +18,7 @@ export async function generateMetadata({
     description: isVi
       ? 'Vietstrix chia sẻ kiến thức thực tế về lập trình, xây dựng sản phẩm và mở rộng ý tưởng thành sản phẩm thật sự.'
       : 'Vietstrix shares real-world insights on coding, product building, and scaling ideas into actual products. No fluff — just practical knowledge, optimization, and execution.',
-    path: isVi ? '/vi/blog' : '/blogs',
+    path: isVi ? '/vi/bai-viet' : '/blogs',
     ogImage: '/imgs/og/blogs.png',
     keywords: [
       'development blog',
@@ -33,10 +33,11 @@ export async function generateMetadata({
     alternates: {
       languages: {
         en: 'https://www.vietstrix.com/blogs',
-        vi: 'https://www.vietstrix.com/vi/blog',
+        vi: 'https://www.vietstrix.com/vi/bai-viet',
       },
     },
   });
+
 }
 
 // Page uses searchParams, so it must be dynamically rendered.
