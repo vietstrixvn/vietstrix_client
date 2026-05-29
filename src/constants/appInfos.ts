@@ -92,6 +92,9 @@ export const metadata: Metadata = {
   verification: {
     google: 'DHscGD5w7gIke_3M9XpkRVleQLuva4RO7BrrE4YvC4c',
     yandex: 'cc89c2e7c496f9c9',
+    other: {
+      'msvalidate.01': '21E96D55E4AC61F069842D680492F4AC',
+    },
   },
   category: 'technology',
   creator: 'Vietstrix',
