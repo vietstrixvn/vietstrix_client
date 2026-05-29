@@ -14,10 +14,15 @@ export default function middleware(request: NextRequest) {
 
   if (isBot) {
     const url = request.nextUrl.clone();
-    // Chỉ thêm /en nếu chưa có locale prefix
-    if (!url.pathname.startsWith('/en') && !url.pathname.startsWith('/vi')) {
-      url.pathname = `/en${url.pathname === '/' ? '' : url.pathname}`;
+    
+    // Nếu bot truy cập các đường dẫn đã có sẵn locale prefix (/en hoặc /vi), 
+    // bắt buộc phải qua intlMiddleware để dịch các route đã bản địa hóa (ví dụ: /vi/lien-he -> /vi/contact-us)
+    if (url.pathname.startsWith('/en') || url.pathname.startsWith('/vi')) {
+      return intlMiddleware(request);
     }
+
+    // Ngược lại (chưa có locale prefix), tự động rewrite sang /en
+    url.pathname = `/en${url.pathname === '/' ? '' : url.pathname}`;
     return NextResponse.rewrite(url);
   }
 
