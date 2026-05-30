@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import HomePage from './data';
 
 export const metadata: Metadata = {
-  title: 'Vietstrix',
+  title: 'Vietstrix Team - Build every thing',
   description:
     'Vietstrix is a product-driven team building scalable web apps, helping startups turn ideas into reliable digital products from design to deployment.',
   keywords: [

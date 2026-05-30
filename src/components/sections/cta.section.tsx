@@ -71,11 +71,11 @@ export default function CTASection() {
       <div className="relative z-10 h-full flex flex-col lg:flex-row lg:items-center lg:justify-between px-6 sm:px-8 lg:px-16 py-16 sm:py-20 gap-8 lg:gap-0">
         {/* Left side - Main headline */}
         <div className="flex-1 max-w-2xl">
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl uppercase font-bold text-main leading-tight tracking-tight">
+          <h2 className="text-4xl sm:text-5xl lg:text-7xl uppercase font-bold text-main leading-tight tracking-tight">
             <span className="block">{t('CTA.title.t1')}</span>
             <span className="block">{t('CTA.title.t2')}</span>
             <span className="block">{t('CTA.title.t3')}</span>
-          </h1>
+          </h2>
         </div>
 
         {/* Right side - CTA content */}

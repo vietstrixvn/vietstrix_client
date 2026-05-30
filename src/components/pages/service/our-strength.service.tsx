@@ -31,9 +31,9 @@ export const OurStrengthCard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
         <div className="flex flex-col gap-12">
           <div className="max-w-xl">
-            <h1 className="text-4xl text-main font-bold mt-4 mb-4">
+            <h2 className="text-4xl text-main font-bold mt-4 mb-4">
               {t('OurStrength.title')}
-            </h1>
+            </h2>
             <p className="text-secondary-800 text-base md:text-base font-body leading-relaxed">
               {t('OurStrength.description.t1')}{' '}
               <span className="font-bold">

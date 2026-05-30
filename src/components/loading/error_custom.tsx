@@ -8,9 +8,9 @@ export function ErrorCustom() {
         color: '#ff4d4f',
       }}
     >
-      <h1 style={{ fontSize: '24px', fontWeight: 'bold' }}>
+      <h2 style={{ fontSize: '24px', fontWeight: 'bold' }}>
         Data loading error
-      </h1>
+      </h2>
       <p>
         The system was unable to load the data. Please check your network
         connection or try again later.
