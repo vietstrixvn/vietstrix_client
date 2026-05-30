@@ -549,7 +549,7 @@ body {
   background-color: #053a64;
   padding: 10px 10px;
   pointer-events: none;
-  transition: transform 0.1s ease;
+  will-change: transform;
   transform: translate(-50%, -50%);
 }
 @layer utilities {

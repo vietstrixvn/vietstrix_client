@@ -26,6 +26,16 @@ export default function HeroSection() {
   const t = useTranslations('Page');
   const [hoveredId] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const cards: Card[] = [
     {
@@ -88,24 +98,6 @@ export default function HeroSection() {
       <svg className="absolute inset-0 w-0 h-0">
         <defs>
           <filter
-            id="glass-effect"
-            x="-50%"
-            y="-50%"
-            width="200%"
-            height="200%"
-          >
-            <feTurbulence baseFrequency="0.005" numOctaves="1" result="noise" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.3" />
-            <feColorMatrix
-              type="matrix"
-              values="1 0 0 0 0.02
-                      0 1 0 0 0.02
-                      0 0 1 0 0.05
-                      0 0 0 0.9 0"
-              result="tint"
-            />
-          </filter>
-          <filter
             id="gooey-filter"
             x="-50%"
             y="-50%"
@@ -161,17 +153,16 @@ export default function HeroSection() {
         </defs>
       </svg>
 
-      {/* Nền sáng hơn: thay #063265 → #aee5ff, giảm opacity lớp 2 từ 50% → 35% */}
-      <MeshGradient
-        className="absolute inset-0 w-full h-full"
-        colors={['#ffffff', '#d1f0ff', '#0065d7', '#aee5ff', '#e0e7ff']}
-        speed={0.3}
-      />
-      <MeshGradient
-        className="absolute inset-0 w-full h-full opacity-35"
-        colors={['#ffffff', '#007fff', '#6366f1', '#d1f0ff']}
-        speed={0.2}
-      />
+      {/* Nền sáng hơn: render 1 lớp MeshGradient chậm rãi trên Desktop, dùng gradient tĩnh siêu nhẹ trên Mobile */}
+      {isDesktop ? (
+        <MeshGradient
+          className="absolute inset-0 w-full h-full"
+          colors={['#ffffff', '#d1f0ff', '#0065d7', '#aee5ff', '#e0e7ff']}
+          speed={0.15}
+        />
+      ) : (
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-tr from-[#ffffff] via-[#d1f0ff] to-[#e0e7ff]" />
+      )}
 
       <div className="max-w-7xl mx-auto w-full relative z-10 px-4 sm:px-6 md:px-12 pt-20 sm:pt-24 lg:pt-0">
         {/* Mobile layout: stacked, compact */}
@@ -181,8 +172,7 @@ export default function HeroSection() {
             <div className="space-y-2 sm:space-y-3">
               {/* Badge */}
               <motion.div
-                className="inline-flex space-x-3 items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-md bg-white/60 backdrop-blur-sm mb-2 sm:mb-4 relative border border-white/10"
-                style={{ filter: 'url(#glass-effect)' }}
+                className="inline-flex space-x-3 items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-md bg-white/60 backdrop-blur-md mb-2 sm:mb-4 relative border border-white/10"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
