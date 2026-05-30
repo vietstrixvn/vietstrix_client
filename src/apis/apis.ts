@@ -45,6 +45,11 @@ const endpoints = {
       list: buildUrl('/tags'),
       detail: (id: string) => buildUrl(`/tags/${id}`),
     },
+
+       mentions: {
+      list: buildUrl("/mentions"),
+      detail: (id: string) => buildUrl(`/mentions/${id}`),
+    },
   },
 
   // ========================================================================

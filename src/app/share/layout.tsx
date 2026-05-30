@@ -28,7 +28,7 @@ export default async function LocaleLayout({
   children: ReactNode;
 }) {
   return (
-    <html className="mdl-js">
+    <html className="mdl-js" suppressHydrationWarning>
       <head>
         <meta property="fb:app_id" content="939394498693137" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,7 +48,7 @@ export default async function LocaleLayout({
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <JsonLd />
       </head>
-      <body className={`antialiased ${inter.variable}`}>
+      <body className={`antialiased ${inter.variable}`} suppressHydrationWarning>
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-169R801JZ0"

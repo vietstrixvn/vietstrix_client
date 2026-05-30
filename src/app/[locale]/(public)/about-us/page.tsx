@@ -1,5 +1,6 @@
 import { generatePageMetadata } from '@/constants/appInfos';
 import AboutUsSection from './data';
+import { getMentions } from '@/libs/seo/getMentions';
 
 export const metadata = generatePageMetadata({
   title: 'Vietstrix — Creative Digital Studio',
@@ -25,7 +26,11 @@ export const metadata = generatePageMetadata({
 
 export const revalidate = 86400;
 
-export default function Page() {
+export default async function Page() {
+  const { mentions } = await getMentions({
+    pageSize: 12,
+  });
+
   const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -70,7 +75,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageJsonLd) }}
       />
-      <AboutUsSection />
+      <AboutUsSection mentions={mentions} />
     </>
   );
 }

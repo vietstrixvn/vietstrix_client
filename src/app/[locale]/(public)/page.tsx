@@ -1,6 +1,7 @@
 import { getPosts } from '@/libs/seo/getPosts';
 import type { Metadata } from 'next';
 import HomePage from './data';
+import { getMentions } from '@/libs/seo/getMentions';
 
 export const metadata: Metadata = {
   title: 'Vietstrix Team - Build every thing',
@@ -79,6 +80,9 @@ export default async function Page({
     pageSize: 4,
     lang: locale,
   });
+  const { mentions } = await getMentions({
+    pageSize: 12,
+  });
 
   // Organization structured data for SEO
   const organizationJsonLd = {
@@ -133,7 +137,7 @@ export default async function Page({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
-      <HomePage posts={posts} projects={projects} />
+      <HomePage posts={posts} projects={projects} mentions={mentions} />
     </>
   );
 }

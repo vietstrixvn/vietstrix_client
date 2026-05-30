@@ -35,7 +35,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className="mdl-js">
+    <html lang={locale} className="mdl-js" suppressHydrationWarning>
       <head>
         <meta property="fb:app_id" content="939394498693137" />
         <link rel="preconnect" href="https://hcm03.vstorage.vngcloud.vn" />
@@ -44,7 +44,7 @@ export default async function LocaleLayout({
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <JsonLd />
       </head>
-      <body className={`antialiased ${inter.variable}`}>
+      <body className={`antialiased ${inter.variable}`} suppressHydrationWarning>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-QLE41CQ8TP"
           strategy="lazyOnload"

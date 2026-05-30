@@ -51,3 +51,52 @@ export interface PortfolioStatResponse {
   total_categories: number;
   total: number;
 }
+
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+/**
+ * Category visibility status
+ */
+export enum MentionStatus {
+  SHOW = 'show',
+  HIDE = 'hide',
+}
+
+// ============================================================================
+// CATEGORY
+// ============================================================================
+
+/**
+ * Category - Portfolio category with full details
+ */
+export interface Mention {
+  id: string;
+  before: string;
+  after: string;
+  name: string;
+  title: string;
+  image_media?: ImageProp;
+  image_id?: string;
+  creator: UserProb;
+  url: string;
+  status: string;
+  created_at: Date | string;
+  updated_at: Date | string;
+}
+
+/**
+ * @deprecated Use Category instead
+ */
+export type MentionResponse = Mention;
+
+/**
+ * CategoryData - Minimal category information
+ */
+export interface MentionData {
+  id: string;
+  title: string;
+  slug: string;
+}

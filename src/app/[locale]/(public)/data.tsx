@@ -8,13 +8,16 @@ import CTASection from '@/components/sections/cta.section';
 import BlogSection from '@/components/sections/post.section';
 import { PostResponse } from '@/types/portfolio';
 import OurStrength from '@/components/sections/our-strength.section';
+import { MentionResponse } from '@/types/portfolio/post/responses';
+import MentionsSection from '@/components/sections/mention.section';
 
 interface HomePageProps {
   projects?: PostResponse[];
   posts?: PostResponse[];
+  mentions?: MentionResponse[];
 }
 
-export default function HomePage({ posts, projects }: HomePageProps) {
+export default function HomePage({ posts, projects, mentions }: HomePageProps) {
   return (
     <main className="relative bg-white">
       {/* Hero */}
@@ -46,7 +49,9 @@ export default function HomePage({ posts, projects }: HomePageProps) {
         <section id="projects" className="relative bg-white">
           <ProjectsSection projects={projects} />
         </section>
-
+        <section id="mentions" className="relative bg-white">
+          <MentionsSection mentions={mentions} />
+        </section>
         <section id="blog" className="relative bg-white">
           <BlogSection posts={posts} />
         </section>
