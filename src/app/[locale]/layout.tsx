@@ -13,6 +13,7 @@ import { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 import { Inter } from 'next/font/google';
 import ReactQueryProvider from '@/contexts/react-query.context';
+import CookieConsent from '@/components/cookies/cookie-consent';
 
 export const metadata = siteMetadata;
 export const viewport = siteViewport;
@@ -45,6 +46,15 @@ export default async function LocaleLayout({
         <JsonLd />
       </head>
       <body className={`antialiased ${inter.variable}`} suppressHydrationWarning>
+        {/* Default denied consent — CookieConsent component will grant on accept */}
+        <Script id="gtag-consent-default" strategy="beforeInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('consent', 'default', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied',
+          });
+        `}</Script>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-QLE41CQ8TP"
           strategy="lazyOnload"
@@ -75,6 +85,7 @@ export default async function LocaleLayout({
             <ReactQueryProvider>
               <NextIntlClientProvider locale={locale} messages={messages}>
                 {children}
+                <CookieConsent />
                 <Toaster position="top-right" richColors />
               </NextIntlClientProvider>
             </ReactQueryProvider>

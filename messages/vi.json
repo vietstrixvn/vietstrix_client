@@ -229,5 +229,11 @@
     "desc1": "Liên kết bạn truy cập có thể đã sai hoặc trang đã bị xóa.",
     "desc2": "Nhưng đừng lo, vẫn còn rất nhiều điều tuyệt vời đang chờ bạn khám phá!",
     "button": "Quay lại trang chủ"
+  },
+  "Cookie": {
+    "title": "Tụi mình dùng cookies 🍪",
+    "description": "Tụi mình sử dụng cookies và công cụ phân tích để cải thiện trải nghiệm và đo lường hiệu suất trang web.",
+    "accept": "Đồng ý",
+    "decline": "Từ chối"
   }
 }
