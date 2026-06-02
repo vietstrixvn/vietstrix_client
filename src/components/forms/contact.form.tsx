@@ -17,7 +17,6 @@ import { logError } from '@/utils';
 import { useCreateContact } from '@/hooks/contact/useContact';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-
 export interface CreateContactItem {
   name: string;
   email: string;
@@ -97,7 +96,7 @@ export function Contact() {
 
       const submitData: CreateContactDTO = {
         ...data,
-        captcha_token: recaptchaToken
+        captcha_token: recaptchaToken,
       };
 
       if (!submitData.post_id) {
@@ -197,7 +196,7 @@ export function Contact() {
                   >
                     <ReCAPTCHA
                       ref={recaptchaRef}
-                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
                     />
                   </motion.div>
                   <motion.div
@@ -345,7 +344,7 @@ export function ContactForm() {
                       <span className="sr-only">Facebook</span>
                     </motion.a>
                     <motion.a
-                      href="https://www.linkedin.com/in/hoangpham-strix/"
+                      href="https://linkedin.com/company/vietstrix"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="rounded-md bg-muted p-2 text-muted-foreground hover:text-foreground transition-colors"
@@ -356,7 +355,7 @@ export function ContactForm() {
                       <span className="sr-only">LinkedIn</span>
                     </motion.a>
                     <motion.a
-                      href="https://github.com/protam113"
+                      href="https://github.com/vietstrixvn"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="rounded-md bg-muted p-2 text-muted-foreground hover:text-foreground transition-colors"

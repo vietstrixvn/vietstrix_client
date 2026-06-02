@@ -90,7 +90,13 @@ export default function FooterSection() {
             {/* Social Media Icons */}
             <div className="flex justify-start items-start gap-4">
               {/* Twitter/X Icon */}
-              <div className="w-6 h-6 relative bg-white rounded-md overflow-hidden">
+              <a
+                href="https://x.com/Vietstrix"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter/X"
+                className="w-6 h-6 relative bg-white rounded-md overflow-hidden hover:bg-gray-100 transition-colors"
+              >
                 <div className="w-6 h-6 left-0 top-0 absolute flex items-center justify-center">
                   <svg
                     width="16"
@@ -105,10 +111,16 @@ export default function FooterSection() {
                     />
                   </svg>
                 </div>
-              </div>
+              </a>
 
               {/* LinkedIn Icon */}
-              <div className="w-6  bg-white rounded-md h-6 relative overflow-hidden">
+              <a
+                href="https://www.linkedin.com/company/vietstrix"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="w-6 bg-white rounded-md h-6 relative overflow-hidden hover:bg-gray-100 transition-colors"
+              >
                 <div className="w-6 h-6 left-0 top-0 absolute flex items-center justify-center">
                   <svg
                     width="16"
@@ -123,10 +135,16 @@ export default function FooterSection() {
                     />
                   </svg>
                 </div>
-              </div>
+              </a>
 
               {/* GitHub Icon */}
-              <div className="w-6  bg-white rounded-md h-6 relative overflow-hidden">
+              <a
+                href="https://github.com/vietstrixvn"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="w-6 bg-white rounded-md h-6 relative overflow-hidden hover:bg-gray-100 transition-colors"
+              >
                 <div className="w-6 h-6 left-0 top-0 absolute flex items-center justify-center">
                   <svg
                     width="16"
@@ -141,7 +159,7 @@ export default function FooterSection() {
                     />
                   </svg>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
 
@@ -230,24 +248,36 @@ export default function FooterSection() {
           </div>
 
           {/* Right side */}
-           <div className="flex space-x-5">
-          <a href="https://www.linkedin.com/company/vietstrix" className="hover:text-white" aria-label="LinkedIn">
-            <i className="fab fa-linkedin"></i>
-          </a>
-          <a href="https://github.com/vietstrixvn" className="hover:text-white" aria-label="GitHub">
-            <i className="fab fa-github"></i>
-          </a>
-          <a href="https://www.vietstrix.com/about-us" className="hover:text-white" aria-label="Portfolio">
-            <i className="fas fa-external-link-alt"></i>
-          </a>
-          <a
-            href="mailto:contact@vietstrix.com"
-            className="hover:text-white"
-            aria-label="Email"
-          >
-            <i className="fas fa-envelope"></i>
-          </a>
-        </div>
+          <div className="flex space-x-5">
+            <a
+              href="https://www.linkedin.com/company/vietstrix"
+              className="text-white hover:text-primary-50"
+              aria-label="LinkedIn"
+            >
+              <i className="fab fa-linkedin"></i>
+            </a>
+            <a
+              href="https://github.com/vietstrixvn"
+              className="text-white hover:text-primary-50"
+              aria-label="GitHub"
+            >
+              <i className="fab fa-github"></i>
+            </a>
+            <a
+              href="https://www.vietstrix.com/about-us"
+              className="text-white hover:text-primary-50"
+              aria-label="Portfolio"
+            >
+              <i className="fas fa-external-link-alt"></i>
+            </a>
+            <a
+              href="mailto:contact@vietstrix.com"
+              className="text-white hover:text-primary-50"
+              aria-label="Email"
+            >
+              <i className="fas fa-envelope"></i>
+            </a>
+          </div>
         </div>
       </footer>
     </div>

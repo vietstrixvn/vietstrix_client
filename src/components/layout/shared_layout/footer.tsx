@@ -17,18 +17,30 @@ export const FooterShare = () => {
 
         {/* Right side */}
         <div className="flex space-x-5">
-          <a href="https://www.linkedin.com/company/vietstrix" className="hover:text-white" aria-label="LinkedIn">
+          <a
+            href="https://www.linkedin.com/company/vietstrix"
+            className="text-white hover:text-primary-50"
+            aria-label="LinkedIn"
+          >
             <i className="fab fa-linkedin"></i>
           </a>
-          <a href="https://github.com/vietstrixvn" className="hover:text-white" aria-label="GitHub">
+          <a
+            href="https://github.com/vietstrixvn"
+            className="text-white hover:text-primary-50"
+            aria-label="GitHub"
+          >
             <i className="fab fa-github"></i>
           </a>
-          <a href="https://www.vietstrix.com/about-us" className="hover:text-white" aria-label="Portfolio">
+          <a
+            href="https://www.vietstrix.com/about-us"
+            className="text-white hover:text-primary-50"
+            aria-label="Portfolio"
+          >
             <i className="fas fa-external-link-alt"></i>
           </a>
           <a
             href="mailto:contact@vietstrix.com"
-            className="hover:text-white"
+            className="text-white hover:text-primary-50"
             aria-label="Email"
           >
             <i className="fas fa-envelope"></i>
