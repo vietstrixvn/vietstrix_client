@@ -1,153 +1,193 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FeaturesBadge } from '@/components/customs/badge.custom';
 import { Container } from '@/components/wrappers/container';
 import { useTranslations } from 'next-intl';
-import { CustomImage } from '@/components/media/image.component';
 
 export default function StorySection() {
   const t = useTranslations('About');
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Get all rows
+    const rows = gsap.utils.toArray('.story-row') as HTMLElement[];
+
+    rows.forEach((row) => {
+      const line = row.querySelector('.story-line');
+      const title = row.querySelector('.story-title');
+      const content = row.querySelector('.story-content');
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: row,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      });
+
+      // 1. Draw the horizontal line from left to right (origin-left)
+      tl.to(line, {
+        scaleX: 1,
+        duration: 1.2,
+        ease: 'power3.inOut',
+      })
+      // 2. Fade and slide up the title and content elements smoothly
+      .to(
+        [title, content],
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power2.out',
+        },
+        '-=0.8' // overlap with line animation for absolute fluidity
+      );
+    });
+
+    // Animate the bottom closing line
+    const bottomLine = document.querySelector('.story-bottom-line');
+    if (bottomLine) {
+      gsap.to(bottomLine, {
+        scaleX: 1,
+        duration: 1.2,
+        ease: 'power3.inOut',
+        scrollTrigger: {
+          trigger: bottomLine,
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+        },
+      });
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
+
+  const items = [
+    {
+      question: `${t('Accordion.q1')}`,
+      answer: (
+        <>
+          <p className="mb-4">{t('Accordion.a1.intro')}</p>
+          <ul className="list-disc pl-5 space-y-3">
+            <li>
+              <strong className="text-secondary-900 font-bold">
+                {t('Accordion.a1.t1')}
+              </strong>{' '}
+              {t('Accordion.a1.a1')}
+            </li>
+            <li>
+              <strong className="text-secondary-900 font-bold">
+                {t('Accordion.a1.t2')}
+              </strong>{' '}
+              {t('Accordion.a1.a2')}
+            </li>
+          </ul>
+        </>
+      ),
+    },
+    {
+      question: `${t('Accordion.q2')}`,
+      answer: (
+        <>
+          <p className="mb-4">{t('Accordion.a2.intro')}</p>
+          <ul className="list-disc pl-5 space-y-3">
+            <li>
+              <strong className="text-secondary-900 font-bold">
+                {t('Accordion.a2.t1')}
+              </strong>{' '}
+              {t('Accordion.a2.a1')}.
+            </li>
+            <li>
+              <strong className="text-secondary-900 font-bold">
+                {t('Accordion.a2.t2')}
+              </strong>{' '}
+              {t('Accordion.a2.a2')}.
+            </li>
+          </ul>
+        </>
+      ),
+    },
+    {
+      question: `${t('Accordion.q3')}`,
+      answer: (
+        <>
+          <p className="mb-4">{t('Accordion.a3.intro')}</p>
+          <ul className="list-disc pl-5 space-y-3">
+            <li>
+              <strong className="text-secondary-900 font-bold">
+                {t('Accordion.a3.t1')}
+              </strong>{' '}
+              {t('Accordion.a3.a1')}.
+            </li>
+            <li>
+              <strong className="text-secondary-900 font-bold">
+                {t('Accordion.a3.t2')}
+              </strong>{' '}
+              {t('Accordion.a3.a2')}.
+            </li>
+            <li>
+              <strong className="text-secondary-900 font-bold">
+                {t('Accordion.a3.t3')}
+              </strong>{' '}
+              {t('Accordion.a3.a3')}.
+            </li>
+          </ul>
+        </>
+      ),
+    },
+  ];
 
   return (
-    <Container className="mx-auto min-h-screen flex flex-col justify-center">
-      <div className="flex flex-col ">
-        <div className="max-w-xl">
+    <Container width='max-w-8xl' className="mx-auto min-h-screen flex flex-col justify-center py-8 ">
+      <div ref={sectionRef} className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-4 items-start w-full">
+        <div className="lg:col-span-4 flex flex-col">
           <FeaturesBadge title="Our_strory" />
-          <h2 className="text-8xl font-bold text-main mt-4 mb-4">
+          <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-main mt-6 tracking-tight leading-none uppercase">
             {t('Introduce.title')}
           </h2>
-          <p className="text-xl text-secondary-600">
+        </div>
+        <div className="lg:col-span-8 lg:pt-16">
+          <p className="text-lg md:text-xl lg:text-2xl text-secondary-600 font-medium leading-relaxed">
             {t('Introduce.description')}
           </p>
         </div>
       </div>
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        viewport={{ once: true }}
-        className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start"
-      >
-        <div className="flex flex-col gap-8 mt-6">
-          <Accordion
-            type="single"
-            collapsible
-            className="w-full rounded-none space-y-4"
+
+      {/* Row List Container */}
+      <div className="w-full relative mt-8 flex flex-col">
+        {items.map((item, index) => (
+          <div
+            key={index}
+            className="story-row relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 py-12 md:py-16 items-start overflow-hidden"
           >
-            {[
-              {
-                question: `${t('Accordion.q1')}`,
-                answer: (
-                  <>
-                    <p className="mb-3">{t('Accordion.a1.intro')}</p>
-                    <ul className="list-disc pl-5 space-y-2">
-                      <li>
-                        <strong className="text-secondary-800">
-                          {t('Accordion.a1.t1')}
-                        </strong>{' '}
-                        {t('Accordion.a1.a1')}
-                      </li>
-                      <li>
-                        <strong className="text-secondary-800">
-                          {t('Accordion.a1.t2')}
-                        </strong>{' '}
-                        {t('Accordion.a1.a2')}
-                      </li>
-                    </ul>
-                  </>
-                ),
-              },
-              {
-                question: `${t('Accordion.q2')}`,
-                answer: (
-                  <>
-                    <p className="mb-3">{t('Accordion.a2.intro')}</p>
-                    <ul className="list-disc pl-5 space-y-2">
-                      <li>
-                        <strong className="text-secondary-800">
-                          {t('Accordion.a2.t1')}
-                        </strong>{' '}
-                        {t('Accordion.a2.a1')}.
-                      </li>
-                      <li>
-                        <strong className="text-secondary-800">
-                          {t('Accordion.a2.t2')}
-                        </strong>{' '}
-                        {t('Accordion.a2.a2')}.
-                      </li>
-                    </ul>
-                  </>
-                ),
-              },
-              {
-                question: `${t('Accordion.q3')}`,
-                answer: (
-                  <>
-                    <p className="mb-3">{t('Accordion.a3.intro')}</p>
-                    <ul className="list-disc pl-5 space-y-2">
-                      <li>
-                        <strong className="text-secondary-800">
-                          {t('Accordion.a3.t1')}
-                        </strong>{' '}
-                        {t('Accordion.a3.a1')}.
-                      </li>
-                      <li>
-                        <strong className="text-secondary-800">
-                          {t('Accordion.a2.t2')}
-                        </strong>{' '}
-                        {t('Accordion.a3.a2')}.
-                      </li>
-                      <li>
-                        <strong className="text-secondary-800">
-                          {t('Accordion.a2.t3')}
-                        </strong>{' '}
-                        {t('Accordion.a3.a3')}.
-                      </li>
-                    </ul>
-                  </>
-                ),
-              },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <AccordionItem
-                  value={`item-${index}`}
-                  className="px-6 py-2 bg-white hover:shadow-md transition-shadow group"
-                >
-                  <AccordionTrigger className="text-left text-4xl font-semibold text-main hover:text-secondary-800 py-4 hover:no-underline flex justify-between items-center w-full">
-                    <span>{item.question}</span>
-                    <ChevronDown className="h-5 w-5 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                  </AccordionTrigger>
-                  <AccordionContent className="text-gray-700 text-base pt-2 pb-4">
-                    {item.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              </motion.div>
-            ))}
-          </Accordion>
-        </div>
-        <div className="flex flex-col mx-auto">
-          <CustomImage
-            src={`/imgs/vsv.webp`}
-            alt="Vietstrix Team"
-            width={400}
-            height={500}
-          />
-        </div>
-      </motion.div>
+            {/* Animated horizontal divider line */}
+            <div className="story-line absolute top-0 left-0 w-full h-[1px] bg-secondary-300 origin-left scale-x-0" />
+
+            {/* Left Column: Title / Question */}
+            <div className="lg:col-span-4 story-title opacity-0 translate-y-8">
+              <h3 className="text-2xl md:text-3xl font-extrabold text-main uppercase tracking-tight leading-snug">
+                {item.question}
+              </h3>
+            </div>
+
+            {/* Right Column: Detailed Description */}
+            <div className="lg:col-span-8 story-content opacity-0 translate-y-8 text-secondary-600 text-base md:text-lg leading-relaxed space-y-4">
+              {item.answer}
+            </div>
+          </div>
+        ))}
+
+        {/* Animated bottom closing line to wrap the section */}
+        <div className="story-bottom-line w-full h-[1px] bg-secondary-300 origin-left scale-x-0" />
+      </div>
     </Container>
   );
 }

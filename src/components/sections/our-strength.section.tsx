@@ -1,13 +1,61 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { Zap, Layers, Users, Headset } from 'lucide-react';
-import { motion } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SectionTag } from '../customs/section-tag.custom';
 import { useTranslations } from 'next-intl';
 import { Container } from '../wrappers/container';
 
 export default function OurStrength() {
   const t = useTranslations('Page.Strength');
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // 1. Synchronized entrance for the header tags & text blocks
+      gsap.fromTo(
+        '.strength-header-item',
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.strength-header',
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+
+      // 2. Cascading staggered entrance for the Strength grid cards
+      gsap.fromTo(
+        '.strength-card',
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.strength-grid',
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const features = [
     {
       name: `${t('title.t1')}`,
@@ -32,67 +80,49 @@ export default function OurStrength() {
   ];
 
   return (
-    <div className="py-24 relative overflow-hidden" id="features">
-      {/* Thay đổi container này để loại bỏ padding hạn chế */}
-      <Container className=" w-full mx-auto px-0 relative z-10">
-        <div className="lg:text-left">
-          {' '}
-          {/* Căn trái thay vì căn giữa */}
-          <SectionTag title="Our Strength" />
-          <motion.p
-            className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-foreground sm:text-4xl"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true, amount: 0.5 }}
-          >
+    <div
+      ref={containerRef}
+      className="py-12 md:py-20 relative overflow-hidden"
+      id="features"
+    >
+      <Container width="max-w-8xl" className="w-full mx-auto px-0 relative z-10">
+        {/* Header Block */}
+        <div className="strength-header lg:text-left flex flex-col">
+          <div className="strength-header-item opacity-0">
+            <SectionTag title="Our Strength" />
+          </div>
+          <p className="strength-header-item opacity-0 mt-4 text-3xl sm:text-4xl lg:text-5xl leading-tight font-extrabold tracking-tight text-foreground">
             {t('headline')}
-          </motion.p>
-          <motion.p
-            className="mt-4 max-w-4xl text-xl text-muted-foreground"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            viewport={{ once: true, amount: 0.5 }}
-          >
+          </p>
+          <p className="strength-header-item opacity-0 mt-4 max-w-4xl text-lg sm:text-xl text-muted-foreground leading-relaxed">
             {t('description')}
-          </motion.p>
+          </p>
         </div>
 
-        {/* Đảm bảo grid full-width */}
-        <div className="mt-20 w-full">
-          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full">
-            {features.map((feature, index) => (
-              <motion.div
+        {/* Strength Cards Grid */}
+        <div className="strength-grid mt-16 md:mt-24 w-full">
+          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-12 w-full">
+            {features.map((feature) => (
+              <div
                 key={feature.name}
-                className="relative w-full"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true, amount: 0.5 }}
+                className="strength-card opacity-0 relative w-full flex flex-col items-start"
               >
-                <dt className="flex items-start">
-                  <motion.div
-                    className="flex items-center justify-center h-12 w-12 rounded-md bg-[#013162] text-white"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
+                <dt className="flex items-start w-full">
+                  {/* Styled Icon Box using high-performance CSS hardware-accelerated transitions */}
+                  <div className="flex items-center justify-center h-12 w-12 shrink-0 rounded-md bg-[#013162] text-white hover:scale-105 active:scale-95 transition-transform duration-300 ease-out cursor-pointer select-none">
                     <feature.icon className="h-6 w-6" aria-hidden="true" />
-                  </motion.div>
-                  <p className="ml-4 text-lg leading-6 font-medium text-foreground">
+                  </div>
+                  <p className="ml-4 text-xl font-bold text-foreground leading-normal self-center uppercase tracking-tight">
                     {feature.name}
                   </p>
                 </dt>
-                <dd className="mt-2 ml-16 text-base text-muted-foreground">
+                <dd className="mt-3 ml-16 text-base text-muted-foreground leading-relaxed">
                   {feature.description}
                 </dd>
-              </motion.div>
+              </div>
             ))}
           </dl>
         </div>
-        <button className="mt-8 bg-main hover:bg-primary-700 text-white  text-xs font-medium tracking-widest uppercase px-7 py-3.5 transition-colors">
-          {t('button')} →
-        </button>
       </Container>
     </div>
   );

@@ -24,7 +24,6 @@ export default function PartnersClient({ mentions }: PartnersClientProps) {
   const [isCompleted, setIsCompleted] = useState(false);
   const [isIntersected, setIsIntersected] = useState(false);
   const t = useTranslations('Page');
-  console.log(mentions);
 
   const isPaused = !isPlaying;
 

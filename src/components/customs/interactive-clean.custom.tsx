@@ -1,233 +1,246 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
-
-const SVG_MASK = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 250' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='10' y='10' width='180' height='230' rx='8' ry='8' fill='%23000'/%3E%3C/svg%3E")`;
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import gsap from 'gsap';
 
 export function InteractiveClean() {
-  const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const displayCanvasRef = useRef<HTMLCanvasElement>(null);
-  const maskCanvasRef = useRef<HTMLCanvasElement>(null);
-
-  const dirtyImageRef = useRef<HTMLImageElement | null>(null);
-  const cleanImageRef = useRef<HTMLImageElement | null>(null);
-
-  const lastMousePos = useRef<{ x: number; y: number } | null>(null);
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-
-  // Ajuste o tamanho do pincel conforme a sua forma
-  const BRUSH_SIZE = 120;
-  const BRUSH_HARDNESS = 0.2;
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const dirtyImg = document.createElement('img');
-    dirtyImg.src = '/imgs/vsv.webp';
-    dirtyImg.onload = () => {
-      dirtyImageRef.current = dirtyImg;
-      renderFrame();
-    };
+    if (!containerRef.current || !canvasRef.current) return;
 
-    const cleanImg = document.createElement('img');
-    cleanImg.src = '/imgs/vsv.webp';
-    cleanImg.onload = () => {
-      cleanImageRef.current = cleanImg;
-      renderFrame();
-    };
-  }, []);
+    const container = containerRef.current;
+    const canvas = canvasRef.current;
 
-  useEffect(() => {
-    const displayCanvas = displayCanvasRef.current;
-    const maskCanvas = maskCanvasRef.current;
-    if (!displayCanvas || !maskCanvas || !containerRef.current) return;
+    // ─── Three.js Scene Setup ──────────────────────────────────────────────────
+    const scene = new THREE.Scene();
 
-    const resizeCanvas = () => {
-      const width = containerRef.current!.clientWidth;
-      const height = containerRef.current!.clientHeight;
+    // WebGL Renderer with Alpha transparent channel and High performance preference
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: true,
+      powerPreference: 'high-performance',
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.shadowMap.enabled = true;
 
-      displayCanvas.width = width;
-      displayCanvas.height = height;
-      maskCanvas.width = width;
-      maskCanvas.height = height;
+    // Perspective Camera setup
+    const camera = new THREE.PerspectiveCamera(
+      45,
+      container.clientWidth / container.clientHeight,
+      0.1,
+      100
+    );
+    camera.position.set(0, 0, 7.5);
 
-      renderFrame();
-    };
+    // ─── Studio Lighting (Enhances metallic reflections) ──────────────────────
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+    scene.add(ambientLight);
 
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    return () => window.removeEventListener('resize', resizeCanvas);
-  }, []);
+    // Dynamic key light
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    keyLight.position.set(6, 6, 6);
+    scene.add(keyLight);
 
-  useEffect(() => {
-    let animationFrameId: number;
-    const fadeLoop = () => {
-      const maskCanvas = maskCanvasRef.current;
-      const maskCtx = maskCanvas?.getContext('2d');
-      if (maskCtx && maskCanvas) {
-        maskCtx.globalCompositeOperation = 'destination-out';
-        maskCtx.fillStyle = 'rgba(0, 0, 0, 0.01)';
-        maskCtx.fillRect(0, 0, maskCanvas.width, maskCanvas.height);
-        maskCtx.globalCompositeOperation = 'source-over';
-        renderFrame();
+    // Cool rim light (adds gorgeous glowing ice blue reflections)
+    const rimLight = new THREE.PointLight(0x007fff, 3.5, 18);
+    rimLight.position.set(-6, -4, -6);
+    scene.add(rimLight);
+
+    // Warm fill light for contrast
+    const fillLight = new THREE.DirectionalLight(0xd1f0ff, 1.2);
+    fillLight.position.set(-6, 4, 3);
+    scene.add(fillLight);
+
+    // ─── Load 3D GLTF/GLB Logo Model ──────────────────────────────────────────
+    const loader = new GLTFLoader();
+    const logoGroup = new THREE.Group();
+    scene.add(logoGroup);
+
+    let logoModel: THREE.Object3D | null = null;
+    let initialScale = 1;
+
+    loader.load(
+      '/3d/logo.glb',
+      (gltf) => {
+        logoModel = gltf.scene;
+
+        // Auto-center and fit the model perfectly inside the view box
+        const box = new THREE.Box3().setFromObject(logoModel);
+        const size = box.getSize(new THREE.Vector3());
+        const center = box.getCenter(new THREE.Vector3());
+
+        // Shift coordinates so model's physical center sits exactly at (0, 0, 0)
+        logoModel.position.x += -center.x;
+        logoModel.position.y += -center.y;
+        logoModel.position.z += -center.z;
+
+        // Scale factor: scale model to fit beautifully in the viewport
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 3.6 / maxDim;
+        initialScale = scale;
+
+        // Start at 0 scale for high-end entrance animation
+        logoGroup.scale.set(0, 0, 0);
+        logoGroup.add(logoModel);
+
+        // Customize mesh materials to look incredibly glossy, metallic, and colorful
+        logoModel.traverse((child) => {
+          if (child instanceof THREE.Mesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+            if (child.material) {
+              const materials = Array.isArray(child.material) ? child.material : [child.material];
+              materials.forEach((m) => {
+                if (m instanceof THREE.MeshStandardMaterial) {
+                  // Apply premium Vietstrix signature tech blue
+                  m.color.set('#0183c4');
+                  m.roughness = 0.15;
+                  m.metalness = 0.85;
+                  // Add subtle deep blue self-illumination for dramatic contrast & volume
+                  m.emissive.set('#001a47');
+                  m.needsUpdate = true;
+                }
+              });
+            }
+          }
+        });
+
+        setLoading(false);
+
+        // 🌟 Premium Entrance Animation using GSAP
+        gsap.to(logoGroup.scale, {
+          x: initialScale,
+          y: initialScale,
+          z: initialScale,
+          duration: 1.6,
+          ease: 'elastic.out(1, 0.65)',
+        });
+
+        gsap.fromTo(
+          logoGroup.rotation,
+          { y: -Math.PI * 2, x: 0.3 },
+          {
+            y: 0,
+            x: 0,
+            duration: 1.8,
+            ease: 'power4.out',
+          }
+        );
+      },
+      undefined,
+      (error) => {
+        console.error('An error happened while loading 3D logo.glb:', error);
       }
-      animationFrameId = requestAnimationFrame(fadeLoop);
+    );
+
+    // ─── Interactive Mouse Move Parallax ──────────────────────────────────────
+    const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5; // range [-0.5, 0.5]
+      const y = (e.clientY - rect.top) / rect.height - 0.5; // range [-0.5, 0.5]
+      mouse.targetX = x * 1.3;
+      mouse.targetY = y * 1.3;
     };
-    fadeLoop();
-    return () => cancelAnimationFrame(animationFrameId);
-  }, []);
 
-  const renderFrame = () => {
-    const displayCanvas = displayCanvasRef.current;
-    const maskCanvas = maskCanvasRef.current;
-    const displayCtx = displayCanvas?.getContext('2d');
+    const handleMouseEnter = () => {
+      if (!logoModel) return;
+      // Elegant springy scale up on hover
+      gsap.to(logoGroup.scale, {
+        x: initialScale * 1.15,
+        y: initialScale * 1.15,
+        z: initialScale * 1.15,
+        duration: 0.6,
+        ease: 'power3.out',
+      });
+    };
 
-    if (!displayCtx || !displayCanvas || !maskCanvas) return;
-    if (!dirtyImageRef.current || !cleanImageRef.current) return;
+    const handleMouseLeave = () => {
+      mouse.targetX = 0;
+      mouse.targetY = 0;
+      if (!logoModel) return;
+      // Return smooth back to base scale
+      gsap.to(logoGroup.scale, {
+        x: initialScale,
+        y: initialScale,
+        z: initialScale,
+        duration: 0.8,
+        ease: 'power3.out',
+      });
+    };
 
-    const width = displayCanvas.width;
-    const height = displayCanvas.height;
+    container.addEventListener('mousemove', handleMouseMove);
+    container.addEventListener('mouseenter', handleMouseEnter);
+    container.addEventListener('mouseleave', handleMouseLeave);
 
-    displayCtx.clearRect(0, 0, width, height);
+    // ─── Responsive Window Resizing ──────────────────────────────────────────
+    const handleResize = () => {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+    window.addEventListener('resize', handleResize);
 
-    const dirtyImg = dirtyImageRef.current;
-    const cleanImg = cleanImageRef.current;
-    const scale = Math.max(width / dirtyImg.width, height / dirtyImg.height);
-    const x = (width - dirtyImg.width * scale) / 2;
-    const y = (height - dirtyImg.height * scale) / 2;
+    // ─── Animation Frame Loop (Clock based) ──────────────────────────────────
+    const clock = new THREE.Clock();
+    let animId: number;
 
-    displayCtx.save();
-    displayCtx.globalCompositeOperation = 'source-over';
-    displayCtx.drawImage(maskCanvas, 0, 0);
-    displayCtx.globalCompositeOperation = 'source-out';
-    displayCtx.drawImage(
-      dirtyImg,
-      x,
-      y,
-      dirtyImg.width * scale,
-      dirtyImg.height * scale
-    );
-    displayCtx.globalCompositeOperation = 'destination-over';
-    displayCtx.drawImage(
-      cleanImg,
-      x,
-      y,
-      cleanImg.width * scale,
-      cleanImg.height * scale
-    );
-    displayCtx.restore();
-  };
+    const tick = () => {
+      const elapsedTime = clock.getElapsedTime();
 
-  const drawBrush = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
-    ctx.globalCompositeOperation = 'source-over';
-    const gradient = ctx.createRadialGradient(
-      x,
-      y,
-      BRUSH_SIZE * BRUSH_HARDNESS,
-      x,
-      y,
-      BRUSH_SIZE / 2
-    );
-    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.5)');
-    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-    ctx.fillStyle = gradient;
-    ctx.beginPath();
-    ctx.arc(x, y, BRUSH_SIZE / 2, 0, Math.PI * 2);
-    ctx.fill();
-  };
+      if (logoGroup) {
+        // Slow ambient self rotation on Y axis
+        logoGroup.rotation.y += 0.0065;
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current || !maskCanvasRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const currentX = e.clientX - rect.left;
-    const currentY = e.clientY - rect.top;
-    setCursorPos({ x: currentX, y: currentY });
-    const maskCtx = maskCanvasRef.current.getContext('2d');
-    if (!maskCtx) return;
+        // Interpolated smooth mouse parallax follow
+        mouse.x += (mouse.targetX - mouse.x) * 0.085;
+        mouse.y += (mouse.targetY - mouse.y) * 0.085;
 
-    if (lastMousePos.current) {
-      const { x: lastX, y: lastY } = lastMousePos.current;
-      const dist = Math.hypot(currentX - lastX, currentY - lastY);
-      const angle = Math.atan2(currentY - lastY, currentX - lastX);
-      const step = 5;
-      for (let i = 0; i < dist; i += step) {
-        const interpX = lastX + Math.cos(angle) * i;
-        const interpY = lastY + Math.sin(angle) * i;
-        drawBrush(maskCtx, interpX, interpY);
+        logoGroup.rotation.y += mouse.x * 0.45;
+        logoGroup.rotation.x = mouse.y * 0.4;
+
+        // Gentle premium levitating floating wave
+        logoGroup.position.y = Math.sin(elapsedTime * 1.6) * 0.15;
       }
-    } else {
-      drawBrush(maskCtx, currentX, currentY);
-    }
-    lastMousePos.current = { x: currentX, y: currentY };
-    renderFrame();
-  };
 
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    lastMousePos.current = null;
-  };
+      renderer.render(scene, camera);
+      animId = requestAnimationFrame(tick);
+    };
+    tick();
+
+    // ─── Clean Up Resources ──────────────────────────────────────────────────
+    return () => {
+      cancelAnimationFrame(animId);
+      container.removeEventListener('mousemove', handleMouseMove);
+      container.removeEventListener('mouseenter', handleMouseEnter);
+      container.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('resize', handleResize);
+      renderer.dispose();
+    };
+  }, []);
 
   return (
-    // Container principal que segura a sombra
-    // Nota: Quando usamos Mask Image, o 'box-shadow' normal é cortado.
-    // Temos que usar 'filter: drop-shadow' para a sombra seguir a forma do SVG.
     <div
-      className="relative w-full h-full"
-      style={{
-        filter: 'drop-shadow(0px 15px 25px rgba(0,0,0,0.6))',
-      }}
+      ref={containerRef}
+      className="relative w-full aspect-4/5 md:aspect-square flex items-center justify-center cursor-grab active:cursor-grabbing overflow-hidden"
     >
-      <div
-        ref={containerRef}
-        className="relative w-full h-full select-none group cursor-none bg-gray-900"
-        style={{
-          WebkitMaskImage: SVG_MASK,
-          maskImage: SVG_MASK,
+      <canvas ref={canvasRef} className="w-full h-full outline-none" />
 
-          WebkitMaskSize: 'contain',
-          maskSize: 'contain',
-
-          WebkitMaskRepeat: 'no-repeat',
-          maskRepeat: 'no-repeat',
-
-          WebkitMaskPosition: 'center',
-          maskPosition: 'center',
-
-          touchAction: 'pan-y',
-        }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
-      >
-        <canvas
-          ref={displayCanvasRef}
-          className="absolute inset-0 w-full h-full"
-        />
-        <canvas ref={maskCanvasRef} className="hidden" />
-
-        {isHovered && (
-          <motion.div
-            className="absolute z-50 pointer-events-none"
-            style={{
-              width: 100,
-              height: 100,
-              x: cursorPos.x - 50,
-              y: cursorPos.y - 50,
-            }}
-          >
-            <Image
-              src="/icons/logo-cricle.svg"
-              alt="Cleaning Cloth"
-              width={60}
-              height={60}
-              className="w-full h-full object-contain drop-shadow-xl rotate-12"
-            />
-          </motion.div>
-        )}
-      </div>
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-transparent z-10">
+          <div className="w-12 h-12 border-4 border-main border-t-transparent rounded-full animate-spin" />
+        </div>
+      )}
     </div>
   );
 }

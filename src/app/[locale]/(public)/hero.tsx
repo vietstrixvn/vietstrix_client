@@ -2,20 +2,14 @@
 
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
-import {
-  DevelopmentCard,
-  HandoffCard,
-  IdeationCard,
-} from '@/components/animations/tech.animation';
 import Link from 'next/link';
-import IntroMarquee from '@/components/sections/intro.section';
-import { motion } from 'framer-motion';
 import { MeshGradient } from '@paper-design/shaders-react';
-import { CustomImage } from '@/components';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useErosionMask } from '@/hooks/useErosionMask';
 
 interface Card {
   keyword: string;
-  card: React.ReactNode;
 }
 
 export default function HeroSection() {
@@ -24,9 +18,116 @@ export default function HeroSection() {
   const [displayText, setDisplayText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
   const t = useTranslations('Page');
-  const [hoveredId] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const heroContentRef = useRef<HTMLDivElement>(null);
   const [isDesktop, setIsDesktop] = useState(false);
+  const erosionTargetRef = useRef<HTMLDivElement>(null);
+
+  // Erosion mask hook — procedural organic dissolution with sharp edges
+  // Mount canvas at container level (not inside erosionTargetRef) to ensure it covers everything
+  const { updateMask } = useErosionMask(containerRef, {
+    width: 512,
+    height: 1024,
+    seed: 42,
+    edgeBandHeight: 0.005,      // make the transition zone super narrow for a razor-sharp crisp edge
+    displacementAmplitude: 0.09, // how bumpy/blobby the edge is
+  });
+
+  // Stable callback ref for GSAP
+  const updateMaskRef = useRef(updateMask);
+  updateMaskRef.current = updateMask;
+
+  useEffect(() => {
+    if (
+      !heroContentRef.current ||
+      !containerRef.current ||
+      !erosionTargetRef.current
+    )
+      return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const title = heroContentRef.current.querySelector('.hero-title');
+    const typewriter = heroContentRef.current.querySelector('.hero-typewriter');
+    const description =
+      heroContentRef.current.querySelector('.hero-description');
+    const buttons = heroContentRef.current.querySelector('.hero-buttons');
+
+    // 1. Entrance animation
+    const tl = gsap.timeline();
+    tl.fromTo(
+      [title, typewriter, description, buttons],
+      { opacity: 0, y: 35 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        stagger: 0.28,
+        ease: 'power3.out',
+        clearProps: 'transform',
+      }
+    );
+
+    // 2. Organic erosion mask driven by scroll
+    const progressObj = { value: 0 };
+
+    const erosionTween = gsap.to(progressObj, {
+      value: 1,
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.3,
+      },
+      onUpdate: () => {
+        // Scale progress to 0.45 so the wave rises at a coordinated pace
+        // instead of shooting up 2x faster than the scroll!
+        updateMaskRef.current(progressObj.value * 0.45);
+      },
+      ease: 'none',
+    });
+
+    // 3. Hero content: fade out and drift upward (independent of mask)
+    const motionTween = gsap.to(heroContentRef.current, {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top top',
+        end: 'bottom 25%',
+        scrub: true,
+      },
+      opacity: 0,
+      y: -80,
+      ease: 'none',
+    });
+
+    // 4. Coordinated slide-up for About content to follow the wave front
+    const aboutContent = document.querySelector('.about-grid-content');
+    let aboutTween: gsap.core.Tween | null = null;
+    if (aboutContent) {
+      aboutTween = gsap.fromTo(
+        aboutContent,
+        { y: '220px', opacity: 0.2 },
+        {
+          y: '0px',
+          opacity: 1,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 0.3,
+          },
+          ease: 'power1.out',
+        }
+      );
+    }
+
+    return () => {
+      erosionTween.kill();
+      motionTween.kill();
+      if (aboutTween) aboutTween.kill();
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const handleResize = () => {
@@ -40,20 +141,17 @@ export default function HeroSection() {
   const cards: Card[] = [
     {
       keyword: 'IDEA',
-      card: <IdeationCard isHovered={hoveredId === 1} />,
     },
     {
       keyword: 'BUILD',
-      card: <DevelopmentCard isHovered={hoveredId === 1} />,
     },
     {
       keyword: 'COMPLETE',
-      card: <HandoffCard isHovered={hoveredId === 1} />,
     },
   ];
 
   const handleScrollToNext = () => {
-    if (typeof document === 'undefined') return; // thêm dòng này
+    if (typeof document === 'undefined') return;
     const nextSection = document.getElementById('about');
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: 'smooth' });
@@ -88,13 +186,12 @@ export default function HeroSection() {
     return () => clearInterval(typeInterval);
   }, [currentIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const currentCard = cards[currentIndex];
-
   return (
     <section
       ref={containerRef}
       className="min-h-screen bg-white relative overflow-hidden flex flex-col justify-center pb-16 sm:pb-24"
     >
+      {/* SVG defs for gradients/filters used elsewhere */}
       <svg className="absolute inset-0 w-0 h-0">
         <defs>
           <filter
@@ -153,50 +250,47 @@ export default function HeroSection() {
         </defs>
       </svg>
 
-      {/* Nền sáng hơn: render 1 lớp MeshGradient chậm rãi trên Desktop, dùng gradient tĩnh siêu nhẹ trên Mobile */}
-      {isDesktop ? (
-        <MeshGradient
-          className="absolute inset-0 w-full h-full"
-          colors={['#ffffff', '#d1f0ff', '#0065d7', '#aee5ff', '#e0e7ff']}
-          speed={0.15}
-        />
-      ) : (
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-tr from-[#ffffff] via-[#d1f0ff] to-[#e0e7ff]" />
-      )}
+      {/* Erosion target — wraps the entire hero visual layer */}
+      <div
+        ref={erosionTargetRef}
+        className="absolute inset-0 w-full h-full"
+        style={{ willChange: 'mask-image' }}
+      >
+        {/* Background: MeshGradient on Desktop, static gradient on Mobile */}
+        {isDesktop ? (
+          <MeshGradient
+            className="w-full h-full"
+            colors={[
+              '#74d5fcff',
+              '#0183c4ff',
+              '#004ba1ff',
+              '#0987c2ff',
+              '#0025a0ff',
+            ]}
+            speed={0.15}
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-tr from-[#0025a0] via-[#004ba1] to-[#0183c4]" />
+        )}
+      </div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10 px-4 sm:px-6 md:px-12 pt-20 sm:pt-24 lg:pt-0">
-        {/* Mobile layout: stacked, compact */}
-        <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-20 lg:items-center">
-          {/* LEFT SIDE */}
-          <div className="space-y-4 sm:space-y-6 relative z-10">
-            <div className="space-y-2 sm:space-y-3">
-              {/* Badge */}
-              <motion.div
-                className="inline-flex space-x-3 items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-md bg-white/60 backdrop-blur-md mb-2 sm:mb-4 relative border border-white/10"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                <div className="absolute top-0 left-1 right-1 h-px bg-gradient-to-r from-transparent via-primary-400/30 to-transparent rounded-md" />
-                <CustomImage
-                  src="/icons/logo.svg"
-                  width={16}
-                  height={16}
-                  alt="logo"
-                />
-                <span className="text-main text-xs sm:text-sm relative z-10 tracking-wide">
-                  Vietstrix Team
-                </span>
-              </motion.div>
-
+        {/* Full width text layout - Centered both ways */}
+        <div className="w-full flex flex-col items-center justify-center text-center">
+          {/* Main content wrapper */}
+          <div
+            ref={heroContentRef}
+            className="space-y-6 sm:space-y-8 max-w-3xl sm:max-w-4xl relative z-10 mx-auto flex flex-col items-center justify-center"
+          >
+            <div className="space-y-3 sm:space-y-4 flex flex-col items-center w-full">
               {/* Heading */}
-              <h1 className="uppercase font-black text-main text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[0.9] tracking-tighter flex flex-col">
+              <h1 className="hero-title opacity-0 uppercase font-black text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[1.0] tracking-tighter flex flex-col items-center text-center w-full">
                 {t('Hero.title')}
               </h1>
 
               {/* Typewriter keyword */}
-              <div className="h-10 sm:h-14 lg:h-20 flex items-center">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-wide">
+              <div className="hero-typewriter opacity-0 h-10 sm:h-14 lg:h-20 flex items-center justify-center w-full">
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-wide text-center">
                   <span className="inline-block">
                     {displayText}
                     <span
@@ -207,50 +301,22 @@ export default function HeroSection() {
               </div>
 
               {/* Description */}
-              <motion.p
-                className="text-sm sm:text-base font-bold text-main leading-relaxed max-w-xl"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-              >
+              <p className="hero-description opacity-0 text-sm sm:text-base font-bold text-primary-100 leading-relaxed max-w-2xl text-center">
                 {t('Hero.description')}
-              </motion.p>
+              </p>
             </div>
-
-            {/* Dots */}
-            <div className="flex gap-2">
-              {cards.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    setIsTransitioning(true);
-                    setTimeout(() => {
-                      setCurrentIndex(index);
-                      setIsTransitioning(false);
-                    }, 300);
-                  }}
-                  className={`h-2 rounded-md transition-all duration-300 ${
-                    index === currentIndex
-                      ? 'bg-main w-8'
-                      : 'bg-slate-100 w-2 hover:bg-slate-100'
-                  }`}
-                  aria-label={`Go to ${cards[index].keyword}`}
-                />
-              ))}
-            </div>
-
             {/* CTA Buttons */}
-            <div className="flex flex-row gap-3">
+            <div className="hero-buttons opacity-0 flex flex-row justify-center gap-3 w-full">
               <Link
                 href="/contact-us"
-                className="flex items-center justify-center px-4 py-2.5 bg-main border border-main gap-4 group cursor-pointer flex-1 sm:flex-none"
+                className="flex items-center justify-center px-5 py-3 bg-white border border-white gap-4 group cursor-pointer flex-1 sm:flex-none"
               >
-                <span className="font-bold uppercase tracking-[0.2em] text-xs sm:text-sm text-gray-100 whitespace-nowrap">
+                <span className="font-bold uppercase tracking-[0.2em] text-xs sm:text-sm text-main whitespace-nowrap">
                   Contact Us
                 </span>
               </Link>
               <div
-                className="flex items-center justify-center px-4 py-2.5 bg-main/80 border border-main gap-2 group cursor-pointer flex-1 sm:flex-none"
+                className="flex items-center justify-center px-5 py-3 bg-main/80 border border-main gap-2 group cursor-pointer flex-1 sm:flex-none"
                 onClick={handleScrollToNext}
               >
                 <span className="font-bold uppercase tracking-[0.2em] text-xs sm:text-sm text-gray-100 whitespace-nowrap">
@@ -259,26 +325,7 @@ export default function HeroSection() {
               </div>
             </div>
           </div>
-
-          {/* Card — mobile: compact inline, desktop: right column */}
-          <div className="flex justify-center lg:justify-end relative z-10 mt-6 sm:mt-8 lg:mt-0">
-            <div className="relative w-full max-w-[260px] sm:max-w-sm md:max-w-md h-[160px] sm:h-[220px] md:h-[260px] lg:h-[280px]">
-              <div className="h-full flex items-center justify-center">
-                <div
-                  key={`card-${currentIndex}`}
-                  className={`w-full ${isTransitioning ? 'card-exit' : 'card-enter'}`}
-                >
-                  {currentCard.card}
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-
-      {/* Marquee bottom */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <IntroMarquee />
       </div>
     </section>
   );

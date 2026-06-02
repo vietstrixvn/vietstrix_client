@@ -10,6 +10,7 @@ import { PostResponse } from '@/types/portfolio';
 import OurStrength from '@/components/sections/our-strength.section';
 import { MentionResponse } from '@/types/portfolio/post/responses';
 import MentionsSection from '@/components/sections/mention.section';
+import OurValueSection from '@/components/sections/our-value.section';
 
 interface HomePageProps {
   projects?: PostResponse[];
@@ -24,6 +25,7 @@ export default function HomePage({ posts, projects, mentions }: HomePageProps) {
       <section className="relative min-h-screen">
         <HeroSection />
       </section>
+
       {/* About wrapper - sticky + clip */}
       <div style={{ position: 'relative', height: '200vh', overflow: 'clip' }}>
         <div style={{ position: 'sticky', top: 0, height: '100vh', zIndex: 1 }}>
@@ -44,7 +46,10 @@ export default function HomePage({ posts, projects, mentions }: HomePageProps) {
         </section>
         <section id="services" className="relative min-h-screen bg-white">
           <ServicesSection />
+          <OurValueSection />
         </section>
+
+
 
         <section id="projects" className="relative bg-white">
           <ProjectsSection projects={projects} />

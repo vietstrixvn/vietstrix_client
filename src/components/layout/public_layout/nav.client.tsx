@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePathname, Link } from '@/i18n/navigation';
 import { Container } from '@/components/wrappers/container';
 import { LangButton, CustomImage } from '@/components';
 import { Icons } from '@/assets';
+import gsap from 'gsap';
 
 interface DropdownItem {
   label: string;
@@ -60,16 +61,69 @@ export default function NavBarClient({ navItems }: HeaderClientProps) {
     };
   }, [mobileOpen]);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const isDesktopWidth = window.innerWidth >= 1024;
+
+    if (scrolled) {
+      // 🌟 SCROLLED: Morph and shrink width into a tight, naturally packed floating pill dock
+      gsap.to(containerRef.current, {
+        width: '100%',
+        maxWidth: isDesktopWidth ? '960px' : '92%',
+        backgroundColor: 'rgba(255, 255, 255, 0.26)',
+        backdropFilter: 'blur(32px)',
+        webkitBackdropFilter: 'blur(32px)',
+        borderColor: 'rgba(255, 255, 255, 0.45)',
+        boxShadow: '0 15px 35px -10px rgba(0, 75, 161, 0.12), 0 1px 4px rgba(255, 255, 255, 0.45) inset',
+        paddingTop: '8px',
+        paddingBottom: '8px',
+        scale: 0.98,
+        borderRadius: '10px', // rounds into a perfect floating capsule pill!
+        duration: 0.5,
+        ease: 'power3.out',
+      });
+    } else {
+      // 🌟 UNSCROLLED: Expand fully to max-w-8xl spacious top bar
+      gsap.to(containerRef.current, {
+        width: '100%',
+        maxWidth: isDesktopWidth ? '1320px' : '100%',
+        backgroundColor: 'rgba(255, 255, 255, 0.12)',
+        backdropFilter: 'blur(20px)',
+        webkitBackdropFilter: 'blur(20px)',
+        borderColor: 'rgba(255, 255, 255, 0.25)',
+        boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.04), 0 1px 2px rgba(255, 255, 255, 0.25) inset',
+        paddingTop: '12px',
+        paddingBottom: '12px',
+        scale: 1.0,
+        borderRadius: '16px', // elegant top radius
+        duration: 0.5,
+        ease: 'power3.out',
+      });
+    }
+  }, [scrolled]);
+
   return (
     <header
       data-navbar
-      className={`fixed z-50 px-4 lg:px w-full flex justify-center items-center min-h-[80px] ${
-        scrolled ? 'bg-transparent' : 'bg-transparent'
-      }`}
+      className="fixed z-50 px-4 w-full flex justify-center items-center min-h-[80px]"
     >
-      <Container
-        className={`w-fit mx-auto px-6 py-2 rounded-md shadow-md transition-all duration-200
-          ${scrolled ? 'bg-white/40 backdrop-blur-2xl shadow-lg' : 'bg-white'}`}
+      <div
+        ref={containerRef}
+        className="w-full mx-auto px-6 rounded-xl border will-change-transform"
+        style={{
+          width: '100%',
+          maxWidth: '1320px',
+          backgroundColor: 'rgba(255, 255, 255, 0.12)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          borderColor: 'rgba(255, 255, 255, 0.25)',
+          boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.04), 0 1px 2px rgba(255, 255, 255, 0.25) inset',
+          paddingTop: '12px',
+          paddingBottom: '12px',
+        }}
       >
         <nav className="flex items-center justify-between gap-4 md:gap-8">
           {/* Logo */}
@@ -87,7 +141,7 @@ export default function NavBarClient({ navItems }: HeaderClientProps) {
                 height={44}
               />
             </Link>
-            <div className="flex text-black font-semibold">
+            <div className={`flex font-semibold transition-colors duration-300 ${scrolled ? 'text-main' : 'text-white'}`}>
               <span className="text-xl leading-none font-semibold uppercase">
                 VIETSTRIX
               </span>
@@ -107,7 +161,9 @@ export default function NavBarClient({ navItems }: HeaderClientProps) {
                     className={`relative group/link py-2 text-14 hover:scale-105 transition-all flex items-center gap-1 px-3.5 text-base rounded-sm ${
                       active
                         ? 'text-secondary-100 font-bold bg-main rounded-md'
-                        : 'text-main hover:font-bold hover:text-primary-800'
+                        : scrolled
+                          ? 'text-main hover:font-bold hover:text-primary-800'
+                          : 'text-main hover:font-bold hover:text-primary-200'
                     }`}
                   >
                     <span className="relative">
@@ -116,7 +172,7 @@ export default function NavBarClient({ navItems }: HeaderClientProps) {
                         className={`absolute left-0 -bottom-1 h-0.5 transition-all duration-300 ${
                           active
                             ? 'w-full bg-main'
-                            : 'w-0 group-hover/link:w-full bg-secondary-700'
+                            : `w-0 group-hover/link:w-full ${scrolled ? 'bg-main' : 'bg-white'}`
                         }`}
                       />
                     </span>
@@ -166,7 +222,9 @@ export default function NavBarClient({ navItems }: HeaderClientProps) {
             </div>
             <button
               id="mobile-menu-btn"
-              className="lg:hidden w-[38px] h-[38px] rounded-sm flex items-center justify-center text-text cursor-pointer"
+              className={`lg:hidden w-[38px] h-[38px] rounded-sm flex items-center justify-center cursor-pointer transition-colors duration-300 ${
+                scrolled ? 'text-main' : 'text-white'
+              }`}
               aria-label="Mở menu"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
@@ -174,7 +232,7 @@ export default function NavBarClient({ navItems }: HeaderClientProps) {
             </button>
           </div>
         </nav>
-      </Container>
+      </div>
 
       {/* Mobile Menu Overlay */}
       {mobileOpen && (
