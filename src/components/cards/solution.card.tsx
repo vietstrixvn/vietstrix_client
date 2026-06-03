@@ -12,9 +12,9 @@ export default function SolutionCard() {
   const textContainerRef = useRef<HTMLDivElement>(null);
 
   const viText =
-    'Đừng để website của bạn phụ thuộc hoàn toàn vào một nền tảng. Tụi Mình giúp tái xây dựng và triển khai website với quyền sở hữu rõ ràng, cho phép doanh nghiệp chủ động vận hành, dễ dàng mở rộng và giảm rủi ro khi thay đổi chính sách hoặc ngừng sử dụng dịch vụ của bên thứ ba.';
+    'Nhiều nền tảng website hoạt động theo mô hình thuê bao, khiến doanh nghiệp phải phụ thuộc vào chính sách và hệ sinh thái của họ. Tụi mình mang đến giải pháp triển khai độc lập hơn, giúp website của bạn linh hoạt, dễ mở rộng và sẵn sàng phát triển lâu dài theo nhu cầu của bạn.';
   const enText =
-    "Your website should be an asset you own, not a platform you depend on. We rebuild and deploy websites with full ownership, giving your business greater control, flexibility, and long-term stability.";
+    'Your website should be an asset you own, not a platform you depend on. We rebuild and deploy websites with full ownership, giving your business greater control, flexibility, and long-term stability.';
 
   const sentence = locale === 'vi' ? viText : enText;
   const words = sentence.split(' ');
@@ -22,7 +22,8 @@ export default function SolutionCard() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const wordElements = textContainerRef.current?.querySelectorAll('.reveal-word');
+    const wordElements =
+      textContainerRef.current?.querySelectorAll('.reveal-word');
     if (!wordElements || wordElements.length === 0) return;
 
     const trigger = gsap.to(wordElements, {
