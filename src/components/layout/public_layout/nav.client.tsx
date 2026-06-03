@@ -141,7 +141,7 @@ export default function NavBarClient({ navItems }: HeaderClientProps) {
                 height={44}
               />
             </Link>
-            <div className={`flex font-semibold transition-colors duration-300 ${scrolled ? 'text-main' : 'text-white'}`}>
+            <div className={`flex font-semibold transition-colors duration-300 ${scrolled ? 'text-main' : 'text-main'}`}>
               <span className="text-xl leading-none font-semibold uppercase">
                 VIETSTRIX
               </span>
@@ -223,7 +223,7 @@ export default function NavBarClient({ navItems }: HeaderClientProps) {
             <button
               id="mobile-menu-btn"
               className={`lg:hidden w-[38px] h-[38px] rounded-sm flex items-center justify-center cursor-pointer transition-colors duration-300 ${
-                scrolled ? 'text-main' : 'text-white'
+                scrolled ? 'text-main' : 'text-main'
               }`}
               aria-label="Mở menu"
               onClick={() => setMobileOpen(!mobileOpen)}
