@@ -2236,3 +2236,137 @@ export function ForbiddenCard({ isHovered }: { isHovered?: boolean }) {
     </motion.div>
   );
 }
+
+export function AiToCodeCard({ isHovered }: { isHovered?: boolean }) {
+  const controls = useAnimation();
+  const { ref, isInView } = useInView();
+
+  const desktopVariants = {
+    stacked: { width: '60%', height: '60%' },
+    expanded: { width: '90%', height: '75%' },
+    highlighted: {
+      width: '90%',
+      height: '75%',
+      boxShadow: '0 0 0 1px rgba(255,255,255,0.8)',
+    },
+    final: {
+      width: '90%',
+      height: '75%',
+      boxShadow: '0 0 0 1px rgba(255,255,255,0)',
+    },
+  };
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    async function sequence() {
+      await controls.start('stacked');
+      await controls.start('expanded', { duration: 1.5, ease: 'easeOut' });
+      await controls.start('highlighted', { duration: 0.3 });
+      await controls.start('final', { duration: 0.5 });
+    }
+    sequence();
+  }, [isInView]);
+
+  return (
+    <motion.div
+      ref={ref}
+      className="h-[250px] p-8 mx-auto max-w-lg flex flex-col items-center justify-center relative overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isInView ? 1 : 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div
+        className="absolute border-2 border-main rounded-md bg-transparent flex flex-col"
+        initial="stacked"
+        animate={controls}
+        variants={desktopVariants}
+      >
+        {/* Topbar */}
+        <div className="h-7 border-b-2 border-main flex items-center px-2 gap-1 shrink-0">
+          <div className="w-1.5 h-1.5 bg-main rounded-md" />
+          <div className="w-1.5 h-1.5 bg-main rounded-md" />
+          <div className="w-1.5 h-1.5 bg-main rounded-md" />
+          <span className="text-main/80 text-[9px] ml-1">AI_to_Code_Converter.tsx</span>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 bg-main flex items-center justify-between p-3 gap-3 overflow-hidden">
+          {/* Left panel: AI Prompt & Mockup */}
+          <div className="flex-1 h-full bg-white/5 border border-white/10 rounded-lg p-2 flex flex-col justify-between">
+            <div className="flex items-center gap-1.5 border-b border-white/5 pb-1">
+              <span className="text-[7px] text-white/40 uppercase font-bold">AI Design Input</span>
+            </div>
+            
+            {/* Visual prompt mockup */}
+            <div className="flex-1 flex flex-col justify-center gap-1 my-1">
+              <motion.div 
+                className="text-[6.5px] text-white/70 italic bg-white/5 p-1 rounded border border-white/10 truncate"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: isHovered ? 0.3 : 1.2 }}
+              >
+                &ldquo;Modern landing page...&rdquo;
+              </motion.div>
+              <div className="flex gap-1">
+                <div className="w-3/5 h-6 bg-white/15 rounded flex items-center justify-center">
+                  <span className="text-[6px] text-white/50">Mockup</span>
+                </div>
+                <div className="w-2/5 h-6 bg-white/10 rounded flex items-center justify-center">
+                  <span className="text-[6px] text-white/40">v0.dev</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="h-2 bg-green-500/25 border border-green-500/40 rounded flex items-center justify-center">
+              <span className="text-[5.5px] text-green-400 font-bold tracking-wider">DESIGN READY</span>
+            </div>
+          </div>
+
+          {/* Center Connection Arrow */}
+          <div className="flex flex-col items-center justify-center shrink-0">
+            <motion.div
+              animate={{ x: [0, 4, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+            >
+              <svg className="w-4 h-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+              </svg>
+            </motion.div>
+          </div>
+
+          {/* Right panel: Live Website & Interactive code */}
+          <div className="flex-1 h-full bg-white/5 border border-white/10 rounded-lg p-2 flex flex-col justify-between">
+            <div className="flex items-center justify-between border-b border-white/5 pb-1">
+              <span className="text-[7px] text-white/40 uppercase font-bold">Real Website</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+            </div>
+
+            <div className="flex-1 flex flex-col gap-1 my-1 justify-center">
+              {/* Lines of code typing */}
+              <div className="flex flex-col gap-0.5 font-mono text-[5.5px] text-emerald-400/80 leading-none">
+                <span className="text-white/60">const Web = () =&gt; &#123;</span>
+                <span className="pl-1.5">return &lt;div&gt;</span>
+                <span className="pl-3 text-white/70">&lt;Hero /&gt;</span>
+                <span className="pl-1.5">&lt;/div&gt;</span>
+                <span className="text-white/60">&#125;</span>
+              </div>
+            </div>
+
+            <div className="h-2 bg-emerald-500 border border-emerald-400 rounded flex items-center justify-center">
+              <span className="text-[5.5px] text-white font-bold tracking-wider">BUILD SUCCESS</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Statusbar */}
+        <div className="h-[16px] bg-gray-50 border-t border-gray-100 flex items-center px-2 gap-1 shrink-0">
+          <span className="w-[5px] h-[5px] rounded-md bg-emerald-400" />
+          <span className="text-[7px] text-gray-300">
+            vietstrix.com · AI-to-Web Conversion Active
+          </span>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}

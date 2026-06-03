@@ -195,10 +195,11 @@
       "description": "Tụi mình tạo ra trải nghiệm thân thiện, cá nhân hoá — rồi build và tối ưu để mọi thứ vận hành mượt và phát triển bền lâu.",
       "step": {
         "q1": "Tụi mình thiết kế, phát triển và triển khai website hoàn chỉnh từ đầu — mang lại giải pháp nhanh, có khả năng mở rộng và sẵn sàng đưa vào vận hành.",
-        "q2": "Tụi mình tạo ra giao diện trực quan, lấy người dùng làm trung tâm, giúp tăng tương tác và chuyển đổi.",
-        "q3": "Xây dựng hệ thống nhanh, có khả năng mở rộng với hiệu năng tối ưu và chuẩn SEO.",
-        "q4": "Ra mắt sản phẩm nhanh chóng với một phiên bản MVP vững chắc và dễ mở rộng.",
-        "q5": "Nâng cấp website cũ thành trải nghiệm hiện đại, hiệu năng cao và dễ sử dụng hơn."
+        "q2": "Tụi mình chuyển đổi các thiết kế tạo bởi AI (Midjourney, v0, Figma AI, v.v.) của bạn thành website thực tế tương thích tốt, mượt mà và chuẩn chỉnh.",
+        "q3": "Tụi mình tạo ra giao diện trực quan, lấy người dùng làm trung tâm, giúp tăng tương tác và chuyển đổi.",
+        "q4": "Xây dựng hệ thống nhanh, có khả năng mở rộng với hiệu năng tối ưu và chuẩn SEO.",
+        "q5": "Ra mắt sản phẩm nhanh chóng với một phiên bản MVP vững chắc và dễ mở rộng.",
+        "q6": "Nâng cấp website cũ thành trải nghiệm hiện đại, hiệu năng cao và dễ sử dụng hơn."
       }
     }
   },

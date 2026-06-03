@@ -200,10 +200,11 @@
       "description": "We create friendly, personalized experiences—then build and optimize everything to run smoothly and grow sustainably.",
       "step": {
         "q1": "We design, develop, and deploy complete websites from scratch — delivering fast, scalable, and production-ready solutions.",
-        "q2": "We craft intuitive, user-centered interfaces that drive engagement and conversions.",
-        "q3": "Build fast, scalable systems with optimized performance and SEO.",
-        "q4": "Launch your product quickly with a solid, scalable MVP.",
-        "q5": "Upgrade outdated websites into modern, high-performing experiences."
+        "q2": "We transform your AI-generated designs (from Midjourney, v0, Figma AI, etc.) into high-quality, pixel-perfect, and fully interactive websites.",
+        "q3": "We craft intuitive, user-centered interfaces that drive engagement and conversions.",
+        "q4": "Build fast, scalable systems with optimized performance and SEO.",
+        "q5": "Launch your product quickly with a solid, scalable MVP.",
+        "q6": "Upgrade outdated websites into modern, high-performing experiences."
       }
     }
   },

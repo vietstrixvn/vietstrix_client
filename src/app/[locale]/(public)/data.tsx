@@ -11,6 +11,8 @@ import OurStrength from '@/components/sections/our-strength.section';
 import { MentionResponse } from '@/types/portfolio/post/responses';
 import MentionsSection from '@/components/sections/mention.section';
 import OurValueSection from '@/components/sections/our-value.section';
+import ServicesAnimationSection from '@/components/sections/service-c.section';
+import SolutionCard from '@/components/cards/solution.card';
 
 interface HomePageProps {
   projects?: PostResponse[];
@@ -42,10 +44,10 @@ export default function HomePage({ posts, projects, mentions }: HomePageProps) {
           className="relative  bg-white"
           style={{ borderRadius: '20px 20px 0 0' }}
         >
-          <OurStrength />
+          <SolutionCard />
         </section>
-        <section id="services" className="relative min-h-screen bg-white">
-          <ServicesSection />
+        <section id="services" className="relative bg-white">
+          <ServicesAnimationSection />
           <OurValueSection />
         </section>
 
