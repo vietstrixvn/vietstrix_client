@@ -103,7 +103,12 @@ export function Contact() {
         delete submitData.post_id;
       }
 
-      await addContactMutation.mutateAsync(submitData);
+      const result = await addContactMutation.mutateAsync(submitData);
+
+      if (result) {
+        window.gtag?.('event', 'generate_lead');
+      }
+
       form.reset();
       recaptchaRef.current?.reset();
     } catch (error: any) {
