@@ -134,18 +134,18 @@ export default function NavBarClient({ navItems }: HeaderClientProps) {
               id="logo-link"
             >
               <CustomImage
-                src="/icons/logo-cricle.svg"
+                src="/icons/logo.svg"
                 alt="Vietstrix Team"
                 className="h-11 w-auto object-contain group-hover:scale-105 transition-transform"
                 width={44}
                 height={44}
               />
             </Link>
-            <div className={`flex font-semibold transition-colors duration-300 ${scrolled ? 'text-main' : 'text-main'}`}>
+            <Link href="/" className={`flex font-semibold transition-colors duration-300 ${scrolled ? 'text-main' : 'text-main'}`}>
               <span className="text-xl leading-none font-semibold uppercase">
                 VIETSTRIX
               </span>
-            </div>
+            </Link>
           </div>
           {/* Desktop Nav */}
           <nav

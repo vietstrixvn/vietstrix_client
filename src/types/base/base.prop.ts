@@ -3,6 +3,7 @@ import { ImageProps } from 'next/image';
 
 export interface LoaderProps {
   onLoadingComplete?: () => void;
+  duration?: number;
 }
 
 export interface ContainerProps {

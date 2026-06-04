@@ -14,16 +14,18 @@ export function DelayedLoading({
   const [done, setDone] = useState(false);
   const { setHeroReady } = useLoading();
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDone(true);
-      setHeroReady(true);
-      onComplete?.();
-    }, duration);
-    return () => clearTimeout(timeout);
-  }, [duration, onComplete, setHeroReady]);
+  const handleLoadingComplete = () => {
+    setDone(true);
+    setHeroReady(true);
+    onComplete?.();
+  };
 
   if (done) return null;
 
-  return <Loader onLoadingComplete={onComplete ?? (() => {})} />;
+  return (
+    <Loader
+      duration={duration}
+      onLoadingComplete={handleLoadingComplete}
+    />
+  );
 }
