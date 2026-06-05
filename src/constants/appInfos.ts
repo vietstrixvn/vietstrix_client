@@ -73,8 +73,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: appInfo.domain,
     languages: {
-      'en-US': `${appInfo.domain}`,
-      'vi-VN': `${appInfo.domain}/vi`,
+      en: `${appInfo.domain}`,
+      vi: `${appInfo.domain}/vi`,
+      'x-default': `${appInfo.domain}`,
     },
   },
 

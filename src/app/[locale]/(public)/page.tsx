@@ -58,6 +58,14 @@ export const metadata: Metadata = {
     images: ['https://www.vietstrix.com/imgs/OG-Image.png'],
     creator: '@vietstrix',
   },
+  alternates: {
+    canonical: 'https://www.vietstrix.com',
+    languages: {
+      en: 'https://www.vietstrix.com',
+      vi: 'https://www.vietstrix.com/vi',
+      'x-default': 'https://www.vietstrix.com',
+    },
+  },
 };
 
 // ISR: Revalidate mỗi 1 giờ

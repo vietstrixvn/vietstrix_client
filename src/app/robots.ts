@@ -61,13 +61,12 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: ['/admin/', '/api/', '/login'],
       },
-      {
-        userAgent: 'anthropic-ai',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/login'],
-      },
 
       // === Chặn AI Training Crawlers (Chỉ cào để huấn luyện, không đem lại Traffic) ===
+      {
+        userAgent: 'anthropic-ai',
+        disallow: ['/'],
+      },
       {
         userAgent: 'CCBot',
         disallow: ['/'],
