@@ -50,25 +50,30 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
 
-      // === Chặn AI Training Crawlers ===
+      // === Cho phép AI Search Crawlers (Để hiển thị kết quả trên ChatGPT/Claude Search) ===
       {
         userAgent: 'GPTBot',
-        disallow: ['/'],
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/login'],
       },
+      {
+        userAgent: 'ClaudeBot',
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/login'],
+      },
+      {
+        userAgent: 'anthropic-ai',
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/login'],
+      },
+
+      // === Chặn AI Training Crawlers (Chỉ cào để huấn luyện, không đem lại Traffic) ===
       {
         userAgent: 'CCBot',
         disallow: ['/'],
       },
       {
         userAgent: 'Google-Extended',
-        disallow: ['/'],
-      },
-      {
-        userAgent: 'anthropic-ai',
-        disallow: ['/'],
-      },
-      {
-        userAgent: 'ClaudeBot',
         disallow: ['/'],
       },
       {
