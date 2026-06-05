@@ -1,8 +1,9 @@
 {
   "Page": {
     "Hero": {
-      "title": "Thiết kế Website Chuyên Nghiệp & Web Development Vietnam — Từ:",
-      "description": "Liên hệ để nhận demo sớm nhất — tụi mình build nhanh khi đã rõ hướng, và linh hoạt hơn với các yêu cầu thiết kế riêng."
+      "titlePrefix": "Một website không chỉ là một sản phẩm số —",
+      "titleSuffix": "đó là bộ mặt thương hiệu của bạn trên Internet.",
+      "description": "Chúng mình thiết kế và xây dựng các website custom hiệu năng cao, giúp thương hiệu thể hiện bản sắc một cách rõ ràng và khác biệt."
     },
     "Message": {
       "heading": "Khách hàng nói gì về Vietstrix"
@@ -59,20 +60,63 @@
     },
     "Slogan": "Dám nghĩ dám làm khổ trước sướng sau.",
     "BrandIntro": "Vietstrix là một đơn vị phát triển phần mềm định hướng sản phẩm cao cấp, chuyên xây dựng các ứng dụng web hiệu năng cao và Sản phẩm Khả dụng Tối giản (MVP) cho các startup và doanh nghiệp địa phương. Chúng tôi hỗ trợ các công ty chuyển đổi ý tưởng thành sản phẩm kỹ thuật số đáng tin cậy, quản lý toàn bộ quy trình từ thiết kế UI/UX đến kỹ thuật full-stack và triển khai đám mây. Hệ thống công nghệ của chúng tôi được xây dựng trên các framework hiện đại và có khả năng mở rộng bao gồm React, Next.js, Node.js và TypeScript, được hỗ trợ bởi các giải pháp cơ sở dữ liệu mạnh mẽ. Bằng cách bàn giao các ứng dụng sẵn sàng đưa ra thị trường trong vòng dưới 4 tuần, Vietstrix giúp các nhà sáng lập xác thực ý tưởng một cách hiệu quả đồng thời giảm thiểu nợ kỹ thuật. Chúng tôi đảm bảo bàn giao mã nguồn sạch và tối ưu hóa hệ thống lâu dài.",
-    "FAQ": {
-      "title": "Câu hỏi thường gặp",
-      "subtitle": "Giải đáp các thắc mắc phổ biến về quy trình hợp tác và bàn giao sản phẩm của chúng tôi.",
-      "items": {
-        "q1": "Vietstrix có thể xây dựng MVP trong bao lâu?",
-        "a1": "Chúng tôi có thể thiết kế, xây dựng và đưa sản phẩm khả dụng tối giản (MVP) ra thị trường chỉ trong vòng từ 2 đến 4 tuần.",
-        "q2": "Vietstrix sử dụng hệ thống công nghệ nào?",
-        "a2": "Hệ thống công nghệ của chúng tôi được xây dựng trên các framework hiện đại và có khả năng mở rộng bao gồm React, Next.js, Node.js và TypeScript, kết hợp cùng các giải pháp đám mây và cơ sở dữ liệu mạnh mẽ.",
-        "q3": "Vietstrix có cung cấp dịch vụ thiết kế UI/UX không?",
-        "a3": "Có, chúng tôi cung cấp dịch vụ thiết kế UI/UX trọn gói, từ nghiên cứu người dùng, thiết kế giao diện độ phân giải cao đến dựng prototype hoàn chỉnh.",
-        "q4": "Làm sao tôi có thể theo dõi tiến độ dự án?",
-        "a4": "Chúng tôi cung cấp link xem trước trực tiếp (live preview) cập nhật hàng ngày, giúp bạn theo dõi chi tiết từng giai đoạn phát triển và đưa ra phản hồi nhanh chóng."
-      }
+    "AboutStats": {
+      "projects": "Dự án hoàn thành",
+      "experience": "Năm kinh nghiệm",
+      "clients": "Khách hàng hài lòng"
     },
+    "Stats": {
+      "item1": {
+        "title": "Hành trình phát triển",
+        "label": "Giờ lập trình",
+        "desc": "Hơn 5 năm kinh nghiệm thực chiến trong lĩnh vực phát triển web full-stack, thiết kế hệ thống và điện toán đám mây."
+      },
+      "item2": {
+        "title": "Đối tác đồng hành",
+        "label": "Dự án hoàn thành",
+        "desc": "Tự hào thiết kế và vận hành thành công 15+ ứng dụng web custom và MVP, giúp tối ưu hóa công nghệ cho doanh nghiệp."
+      },
+      "item3": {
+        "title": "Cam kết tiến độ",
+        "label": "Đúng hạn tuyệt đối",
+        "desc": "100% dự án được hoàn thành và bàn giao đúng thời hạn cam kết, đảm bảo kế hoạch kinh doanh của bạn."
+      },
+      "item4": {
+        "title": "Tối ưu tốc độ",
+        "label": "Hiệu năng tối đa",
+        "desc": "Đạt điểm số Lighthouse 98%+ vượt trội, đảm bảo trải nghiệm người dùng mượt mà và xếp hạng tìm kiếm tối ưu."
+      },
+      "question": "Bạn muốn tìm hiểu thêm về năng lực và các giải pháp của chúng tôi?",
+      "cta": "Liên hệ hợp tác"
+    },
+    "FAQ": {
+"title": "Câu hỏi thường gặp",
+"subtitle": "Giải đáp những câu hỏi phổ biến trước khi bắt đầu dự án.",
+
+"items": {
+"q1": "Một dự án website thường mất bao lâu để hoàn thành?",
+"a1": "Tùy thuộc vào phạm vi và độ phức tạp của dự án. Hầu hết website doanh nghiệp có thể hoàn thành trong vòng 2–6 tuần, trong khi các hệ thống tùy chỉnh sẽ được đánh giá và lên kế hoạch riêng.",
+
+
+"q2": "Tôi chỉ có ý tưởng, chưa có tài liệu yêu cầu chi tiết thì sao?",
+"a2": "Không sao. Chúng tôi sẽ cùng bạn làm rõ mục tiêu, đối tượng người dùng và các tính năng cần thiết trước khi bắt đầu thiết kế và phát triển.",
+
+"q3": "Tôi có được sở hữu toàn bộ mã nguồn sau khi bàn giao không?",
+"a3": "Có. Sau khi dự án hoàn thành và nghiệm thu, toàn bộ mã nguồn, tài sản thiết kế và các tài nguyên liên quan sẽ được bàn giao theo thỏa thuận.",
+
+"q4": "Làm thế nào để theo dõi tiến độ dự án?",
+"a4": "Bạn sẽ được cập nhật tiến độ thường xuyên thông qua các buổi trao đổi định kỳ, bản xem trước sản phẩm và các mốc nghiệm thu rõ ràng trong quá trình phát triển.",
+
+"q5": "Vietstrix có hỗ trợ sau khi dự án ra mắt không?",
+"a5": "Có. Chúng tôi cung cấp các gói hỗ trợ, bảo trì và nâng cấp nhằm đảm bảo sản phẩm vận hành ổn định sau khi triển khai.",
+
+"q6": "Vietstrix phù hợp với những loại doanh nghiệp nào?",
+"a6": "Chúng tôi làm việc cùng startup, doanh nghiệp nhỏ và các đội ngũ đang cần xây dựng website hoặc sản phẩm số được thiết kế riêng theo mục tiêu kinh doanh của mình."
+
+
+}
+}
+,
     "Technical": {
       "title": "Chuyên môn kỹ thuật",
       "content": "mình đã phát triển một bộ kỹ năng đa dạng trong lĩnh vực của mình, tập trung vào các công nghệ web hiện đại và thực tiễn tốt nhất.",
@@ -177,6 +221,13 @@
         "q6": "Luôn cải thiện",
         "a6": "Liên tục tối ưu, nâng cấp và hoàn thiện mọi sản phẩm tụi mình làm."
       }
+    },
+    "Founder": {
+      "name": "Hoàng Phạm",
+      "role": "Founder",
+      "bio1": "Hoàng Phạm là người đứng sau định hướng kỹ thuật và sản phẩm tại Vietstrix. Anh tin rằng công nghệ không chỉ là công cụ để xây dựng website hay ứng dụng, mà là nền tảng giúp doanh nghiệp tăng trưởng bền vững trong môi trường số.",
+      "bio2": "Tại Vietstrix, anh tập trung xây dựng những giải pháp được thiết kế riêng cho từng doanh nghiệp, ưu tiên tính thực tiễn, khả năng mở rộng và tốc độ triển khai để biến ý tưởng thành sản phẩm có giá trị thực.",
+      "quote": "\"Tụi mình không chỉ xây dựng website; tụi mình kiến tạo những sản phẩm số mang dấu ấn riêng, giúp thương hiệu thể hiện bản sắc một cách rõ ràng và khác biệt.\""
     }
   },
 

@@ -15,7 +15,7 @@ export default function FAQSection() {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  const faqKeys = [1, 2, 3, 4];
+  const faqKeys = [1, 2, 3, 4, 5, 6];
 
   // Dynamic FAQ Page Schema for SEO / Search Engine crawlers
   const faqSchema = {

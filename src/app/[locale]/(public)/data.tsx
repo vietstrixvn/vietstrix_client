@@ -11,7 +11,7 @@ import MentionsSection from '@/components/sections/mention.section';
 import OurValueSection from '@/components/sections/our-value.section';
 import ServicesAnimationSection from '@/components/sections/service-c.section';
 import SolutionCard from '@/components/cards/solution.card';
-
+import PerformentSection from '@/components/sections/starts.section';
 import FAQSection from '@/components/sections/faq.section';
 
 interface HomePageProps {
@@ -49,6 +49,7 @@ export default function HomePage({ posts, projects, mentions }: HomePageProps) {
         <section id="services" className="relative bg-white">
           <ServicesAnimationSection />
           <OurValueSection />
+          <PerformentSection />
         </section>
 
 

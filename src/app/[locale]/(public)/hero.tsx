@@ -8,15 +8,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useErosionMask } from '@/hooks/useErosionMask';
 
-interface Card {
-  keyword: string;
-}
-
 export default function HeroSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [displayText, setDisplayText] = useState('');
-  const [isTyping, setIsTyping] = useState(true);
   const t = useTranslations('Page');
   const containerRef = useRef<HTMLDivElement>(null);
   const heroContentRef = useRef<HTMLDivElement>(null);
@@ -24,7 +16,6 @@ export default function HeroSection() {
   const erosionTargetRef = useRef<HTMLDivElement>(null);
 
   // Erosion mask hook — procedural organic dissolution with sharp edges
-  // Mount canvas at container level (not inside erosionTargetRef) to ensure it covers everything
   const { updateMask } = useErosionMask(containerRef, {
     width: 512,
     height: 1024,
@@ -47,22 +38,21 @@ export default function HeroSection() {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const title = heroContentRef.current.querySelector('.hero-title');
-    const typewriter = heroContentRef.current.querySelector('.hero-typewriter');
-    const description =
-      heroContentRef.current.querySelector('.hero-description');
+    const titlePrefix = heroContentRef.current.querySelector('.hero-title-prefix');
+    const titleSuffix = heroContentRef.current.querySelector('.hero-title-suffix');
+    const description = heroContentRef.current.querySelector('.hero-description');
     const buttons = heroContentRef.current.querySelector('.hero-buttons');
 
     // 1. Entrance animation
     const tl = gsap.timeline();
     tl.fromTo(
-      [title, typewriter, description, buttons],
+      [titlePrefix, titleSuffix, description, buttons],
       { opacity: 0, y: 35 },
       {
         opacity: 1,
         y: 0,
-        duration: 1.5,
-        stagger: 0.28,
+        duration: 1.2,
+        stagger: 0.2,
         ease: 'power3.out',
         clearProps: 'transform',
       }
@@ -80,14 +70,12 @@ export default function HeroSection() {
         scrub: 0.3,
       },
       onUpdate: () => {
-        // Scale progress to 0.45 so the wave rises at a coordinated pace
-        // instead of shooting up 2x faster than the scroll!
         updateMaskRef.current(progressObj.value * 0.45);
       },
       ease: 'none',
     });
 
-    // 3. Hero content: fade out and drift upward (independent of mask)
+    // 3. Hero content: fade out and drift upward
     const motionTween = gsap.to(heroContentRef.current, {
       scrollTrigger: {
         trigger: containerRef.current,
@@ -127,7 +115,7 @@ export default function HeroSection() {
       if (aboutTween) aboutTween.kill();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -138,18 +126,6 @@ export default function HeroSection() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const cards: Card[] = [
-    {
-      keyword: 'IDEA',
-    },
-    {
-      keyword: 'BUILD',
-    },
-    {
-      keyword: 'COMPLETE',
-    },
-  ];
-
   const handleScrollToNext = () => {
     if (typeof document === 'undefined') return;
     const nextSection = document.getElementById('about');
@@ -157,34 +133,6 @@ export default function HeroSection() {
       nextSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setCurrentIndex((prev) => (prev + 1) % cards.length);
-        setIsTransitioning(false);
-      }, 300);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    const keyword = cards[currentIndex].keyword;
-    let currentChar = 0;
-    setDisplayText('');
-    setIsTyping(true);
-    const typeInterval = setInterval(() => {
-      if (currentChar < keyword.length) {
-        setDisplayText(keyword.substring(0, currentChar + 1));
-        currentChar++;
-      } else {
-        setIsTyping(false);
-        clearInterval(typeInterval);
-      }
-    }, 100);
-    return () => clearInterval(typeInterval);
-  }, [currentIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <section
@@ -210,24 +158,6 @@ export default function HeroSection() {
             />
             <feComposite in="SourceGraphic" in2="gooey" operator="atop" />
           </filter>
-          <filter id="logo-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-            <feMerge>
-              <feMergeNode in="coloredBlur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-          <linearGradient
-            id="logo-gradient"
-            x1="0%"
-            y1="0%"
-            x2="100%"
-            y2="100%"
-          >
-            <stop offset="0%" stopColor="#007fff" />
-            <stop offset="50%" stopColor="#818cf8" />
-            <stop offset="100%" stopColor="#063265" />
-          </linearGradient>
           <linearGradient
             id="hero-gradient"
             x1="0%"
@@ -240,13 +170,6 @@ export default function HeroSection() {
             <stop offset="70%" stopColor="#6366f1" />
             <stop offset="100%" stopColor="#ffffff" />
           </linearGradient>
-          <filter id="text-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-            <feMerge>
-              <feMergeNode in="coloredBlur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
         </defs>
       </svg>
 
@@ -280,28 +203,21 @@ export default function HeroSection() {
           {/* Main content wrapper */}
           <div
             ref={heroContentRef}
-            className="space-y-6 sm:space-y-8 max-w-3xl sm:max-w-4xl relative z-10 mx-auto flex flex-col items-center justify-center"
+            className="space-y-6 sm:space-y-8 max-w-4xl relative z-10 mx-auto flex flex-col items-center justify-center"
           >
             <div className="space-y-3 sm:space-y-4 flex flex-col items-center w-full">
               {/* Heading */}
-              <h1 className="hero-title opacity-0 uppercase font-black text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[1.0] tracking-tighter flex flex-col items-center text-center w-full">
-                {t('Hero.title')}
+              <h1 className="uppercase font-black text-white leading-tight tracking-tighter flex flex-col items-center text-center w-full">
+                <span className="hero-title-prefix opacity-0 text-[11px] sm:text-xs md:text-sm lg:text-base font-bold tracking-[0.25em] text-white/95 uppercase mb-2">
+                  {t('Hero.titlePrefix')}
+                </span>
+                <span className="hero-title-suffix opacity-0 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white drop-shadow-md max-w-3xl leading-[1.15]">
+                  {t('Hero.titleSuffix')}
+                </span>
               </h1>
 
-              {/* Typewriter keyword */}
-              <div className="hero-typewriter opacity-0 h-10 sm:h-14 lg:h-20 flex items-center justify-center w-full">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-wide text-center">
-                  <span className="inline-block">
-                    {displayText}
-                    <span
-                      className={`inline-block w-1 h-7 sm:h-10 bg-white ml-1 ${isTyping ? 'animate-pulse' : 'opacity-0'}`}
-                    />
-                  </span>
-                </div>
-              </div>
-
               {/* Description */}
-              <p className="hero-description opacity-0 text-sm sm:text-base font-bold text-primary-100 leading-relaxed max-w-2xl text-center">
+              <p className="hero-description opacity-0 text-sm sm:text-base font-bold text-primary-100 leading-relaxed max-w-2xl text-center mt-2">
                 {t('Hero.description')}
               </p>
             </div>

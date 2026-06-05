@@ -113,12 +113,6 @@ export default function AboutUsSection() {
                 </p>
               </div>
 
-              {/* Brand Introduction Paragraph for GEO / AI Crawling */}
-              <div ref={brandIntroRef} className="mt-8 max-w-xl opacity-0">
-                <p className="text-sm md:text-base text-white leading-relaxed font-normal">
-                  {t('BrandIntro')}
-                </p>
-              </div>
             </div>
           </div>
 
