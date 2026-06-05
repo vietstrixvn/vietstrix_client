@@ -1,18 +1,18 @@
 'use client';
 
 import HeroSection from './hero';
-import ServicesSection from '@/components/sections/service.section';
 import AboutUsSection from '@/components/sections/about.section';
 import ProjectsSection from '@/components/sections/project.section';
 import CTASection from '@/components/sections/cta.section';
 import BlogSection from '@/components/sections/post.section';
 import { PostResponse } from '@/types/portfolio';
-import OurStrength from '@/components/sections/our-strength.section';
 import { MentionResponse } from '@/types/portfolio/post/responses';
 import MentionsSection from '@/components/sections/mention.section';
 import OurValueSection from '@/components/sections/our-value.section';
 import ServicesAnimationSection from '@/components/sections/service-c.section';
 import SolutionCard from '@/components/cards/solution.card';
+
+import FAQSection from '@/components/sections/faq.section';
 
 interface HomePageProps {
   projects?: PostResponse[];
@@ -61,6 +61,10 @@ export default function HomePage({ posts, projects, mentions }: HomePageProps) {
         </section>
         <section id="blog" className="relative bg-white">
           <BlogSection posts={posts} />
+        </section>
+
+        <section id="faq" className="relative bg-white">
+          <FAQSection />
         </section>
 
         <section id="cta" className="relative">

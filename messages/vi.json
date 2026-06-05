@@ -1,7 +1,7 @@
 {
   "Page": {
     "Hero": {
-      "title": "Tụi mình biến mọi thứ thành sản phẩm — từ:",
+      "title": "Thiết kế Website Chuyên Nghiệp & Web Development Vietnam — Từ:",
       "description": "Liên hệ để nhận demo sớm nhất — tụi mình build nhanh khi đã rõ hướng, và linh hoạt hơn với các yêu cầu thiết kế riêng."
     },
     "Message": {
@@ -58,7 +58,21 @@
       "title": "DỰ ÁN NỔI BẬT"
     },
     "Slogan": "Dám nghĩ dám làm khổ trước sướng sau.",
-
+    "BrandIntro": "Vietstrix là một đơn vị phát triển phần mềm định hướng sản phẩm cao cấp, chuyên xây dựng các ứng dụng web hiệu năng cao và Sản phẩm Khả dụng Tối giản (MVP) cho các startup và doanh nghiệp địa phương. Chúng tôi hỗ trợ các công ty chuyển đổi ý tưởng thành sản phẩm kỹ thuật số đáng tin cậy, quản lý toàn bộ quy trình từ thiết kế UI/UX đến kỹ thuật full-stack và triển khai đám mây. Hệ thống công nghệ của chúng tôi được xây dựng trên các framework hiện đại và có khả năng mở rộng bao gồm React, Next.js, Node.js và TypeScript, được hỗ trợ bởi các giải pháp cơ sở dữ liệu mạnh mẽ. Bằng cách bàn giao các ứng dụng sẵn sàng đưa ra thị trường trong vòng dưới 4 tuần, Vietstrix giúp các nhà sáng lập xác thực ý tưởng một cách hiệu quả đồng thời giảm thiểu nợ kỹ thuật. Chúng tôi đảm bảo bàn giao mã nguồn sạch và tối ưu hóa hệ thống lâu dài.",
+    "FAQ": {
+      "title": "Câu hỏi thường gặp",
+      "subtitle": "Giải đáp các thắc mắc phổ biến về quy trình hợp tác và bàn giao sản phẩm của chúng tôi.",
+      "items": {
+        "q1": "Vietstrix có thể xây dựng MVP trong bao lâu?",
+        "a1": "Chúng tôi có thể thiết kế, xây dựng và đưa sản phẩm khả dụng tối giản (MVP) ra thị trường chỉ trong vòng từ 2 đến 4 tuần.",
+        "q2": "Vietstrix sử dụng hệ thống công nghệ nào?",
+        "a2": "Hệ thống công nghệ của chúng tôi được xây dựng trên các framework hiện đại và có khả năng mở rộng bao gồm React, Next.js, Node.js và TypeScript, kết hợp cùng các giải pháp đám mây và cơ sở dữ liệu mạnh mẽ.",
+        "q3": "Vietstrix có cung cấp dịch vụ thiết kế UI/UX không?",
+        "a3": "Có, chúng tôi cung cấp dịch vụ thiết kế UI/UX trọn gói, từ nghiên cứu người dùng, thiết kế giao diện độ phân giải cao đến dựng prototype hoàn chỉnh.",
+        "q4": "Làm sao tôi có thể theo dõi tiến độ dự án?",
+        "a4": "Chúng tôi cung cấp link xem trước trực tiếp (live preview) cập nhật hàng ngày, giúp bạn theo dõi chi tiết từng giai đoạn phát triển và đưa ra phản hồi nhanh chóng."
+      }
+    },
     "Technical": {
       "title": "Chuyên môn kỹ thuật",
       "content": "mình đã phát triển một bộ kỹ năng đa dạng trong lĩnh vực của mình, tập trung vào các công nghệ web hiện đại và thực tiễn tốt nhất.",

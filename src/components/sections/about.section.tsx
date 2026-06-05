@@ -14,6 +14,7 @@ export default function AboutUsSection() {
   const quoteSymbolRef = useRef<HTMLDivElement>(null);
   const sloganRef = useRef<HTMLParagraphElement>(null);
   const authorRef = useRef<HTMLDivElement>(null);
+  const brandIntroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -55,6 +56,14 @@ export default function AboutUsSection() {
       { opacity: 0, y: 20 },
       { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
       '-=0.4'
+    );
+
+    // 4. Brand introduction paragraph slides up
+    tl.fromTo(
+      brandIntroRef.current,
+      { opacity: 0, y: 15 },
+      { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
+      '-=0.6'
     );
 
     return () => {
@@ -101,6 +110,13 @@ export default function AboutUsSection() {
               <div ref={authorRef} className="mt-4">
                 <p className="text-base font-medium font-mono md:text-lg text-primary-800">
                   - Hoang Pham
+                </p>
+              </div>
+
+              {/* Brand Introduction Paragraph for GEO / AI Crawling */}
+              <div ref={brandIntroRef} className="mt-8 max-w-xl opacity-0">
+                <p className="text-sm md:text-base text-slate-500 leading-relaxed font-normal">
+                  {t('BrandIntro')}
                 </p>
               </div>
             </div>

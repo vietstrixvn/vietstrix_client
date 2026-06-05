@@ -46,7 +46,7 @@ export const getOptimizedOgImageUrl = (
   baseUrl: string = 'https://www.vietstrix.com',
   defaultImage: string = '/imgs/vsv.webp'
 ): string => {
-  if (!url) return `${baseUrl}/imgs/vsv.webp`;
+    if (!url) return `${baseUrl}${defaultImage.startsWith('/') ? defaultImage : `/${defaultImage}`}`;
 
   const isRemote = url.startsWith('http://') || url.startsWith('https://');
   const isAllowedRemote = url.includes('hcm03.vstorage.vngcloud.vn') || url.includes('api.dicebear.com');
@@ -105,14 +105,23 @@ export async function generatePostMetadata(
     const articleUrl = getPostUrl(post, locale, baseUrl);
     const ogImageUrl = getOptimizedOgImageUrl(post.thumbnail || post.images?.[0]?.url, baseUrl, defaultImage);
 
+    const rawDescription = post.excerpt || post.description || '';
+    const cleanDescription = rawDescription
+      .replace(/<[^>]*>/g, '') // Strip HTML tags
+      .replace(/\s+/g, ' ')    // Collapse multiple whitespaces
+      .trim()
+      .slice(0, 160);
+
+    const keywords = post.tags?.map((tag: any) => tag.title || tag.slug).filter(Boolean) || [];
+
     return {
       title: post.title,
-      description: post.excerpt || post.description,
-      keywords: post.tags?.map((tag: any) => tag.name) || [],
+      description: cleanDescription,
+      keywords: keywords,
       authors: [{ name: creatorName }],
       openGraph: {
         title: post.title,
-        description: post.excerpt || post.description,
+        description: cleanDescription,
         url: articleUrl,
         siteName,
         images: [
@@ -128,12 +137,12 @@ export async function generatePostMetadata(
         publishedTime: post.created_at,
         modifiedTime: post.updated_at,
         authors: [creatorName],
-        tags: post.tags?.map((tag: any) => tag.name) || [],
+        tags: keywords,
       },
       twitter: {
         card: 'summary_large_image',
         title: post.title,
-        description: post.excerpt || post.description,
+        description: cleanDescription,
         images: [ogImageUrl],
       },
       alternates: {
