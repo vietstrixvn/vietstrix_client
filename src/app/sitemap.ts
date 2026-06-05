@@ -89,12 +89,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       enProjectsResponse,
       viProjectsResponse,
     ] = await Promise.all([
-      getCategories({ type: 'blogs', lang: 'en', pageSize: 100 }).catch(() => []),
-      getCategories({ type: 'blogs', lang: 'vi', pageSize: 100 }).catch(() => []),
-      getPosts({ type: 'blogs', lang: 'en', pageSize: 100 }).catch(() => ({ posts: [] })),
-      getPosts({ type: 'blogs', lang: 'vi', pageSize: 100 }).catch(() => ({ posts: [] })),
-      getPosts({ type: 'project', lang: 'en', pageSize: 100 }).catch(() => ({ posts: [] })),
-      getPosts({ type: 'project', lang: 'vi', pageSize: 100 }).catch(() => ({ posts: [] })),
+      getCategories({ type: 'blogs', lang: 'en', pageSize: 100 }).catch(
+        () => []
+      ),
+      getCategories({ type: 'blogs', lang: 'vi', pageSize: 100 }).catch(
+        () => []
+      ),
+      getPosts({ type: 'blogs', lang: 'en', pageSize: 100 }).catch(() => ({
+        posts: [],
+      })),
+      getPosts({ type: 'blogs', lang: 'vi', pageSize: 100 }).catch(() => ({
+        posts: [],
+      })),
+      getPosts({ type: 'project', lang: 'en', pageSize: 100 }).catch(() => ({
+        posts: [],
+      })),
+      getPosts({ type: 'project', lang: 'vi', pageSize: 100 }).catch(() => ({
+        posts: [],
+      })),
     ]);
 
     const enBlogs = enBlogsResponse.posts || [];
@@ -102,66 +114,235 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const enProjects = enProjectsResponse.posts || [];
     const viProjects = viProjectsResponse.posts || [];
 
-    // Add English blog categories
+    // Create slug maps for matching EN/VI categories
+    const enCategoryMap = new Map(
+      enBlogCategories.map((cat: any) => [cat.slug, cat])
+    );
+    const viCategoryMap = new Map(
+      viBlogCategories.map((cat: any) => [cat.slug, cat])
+    );
+
+    // Add blog categories with hreflang alternates
+    const processedCategories = new Set<string>();
+
     enBlogCategories.forEach((cat: any) => {
+      if (processedCategories.has(cat.slug)) return;
+
+      const enUrl = `${siteBaseUrl}/blogs/${cat.slug}`;
+      const viUrl = `${siteBaseUrl}/vi/bai-viet/${cat.slug}`;
+      const lastMod = new Date(cat.updated_at || cat.created_at || new Date());
+
+      // English category
       sitemapEntries.push({
-        url: `${siteBaseUrl}/blogs/${cat.slug}`,
-        lastModified: new Date(cat.updated_at || cat.created_at || new Date()),
+        url: enUrl,
+        lastModified: lastMod,
         changeFrequency: 'weekly',
         priority: 0.6,
+        alternates: {
+          languages: {
+            en: enUrl,
+            vi: viUrl,
+          },
+        },
       });
+
+      // Vietnamese category (if exists)
+      if (viCategoryMap.has(cat.slug)) {
+        sitemapEntries.push({
+          url: viUrl,
+          lastModified: lastMod,
+          changeFrequency: 'weekly',
+          priority: 0.6,
+          alternates: {
+            languages: {
+              en: enUrl,
+              vi: viUrl,
+            },
+          },
+        });
+      }
+
+      processedCategories.add(cat.slug);
     });
 
-    // Add Vietnamese blog categories
+    // Add VI-only categories
     viBlogCategories.forEach((cat: any) => {
+      if (processedCategories.has(cat.slug)) return;
+
+      const viUrl = `${siteBaseUrl}/vi/bai-viet/${cat.slug}`;
       sitemapEntries.push({
-        url: `${siteBaseUrl}/vi/bai-viet/${cat.slug}`,
+        url: viUrl,
         lastModified: new Date(cat.updated_at || cat.created_at || new Date()),
         changeFrequency: 'weekly',
         priority: 0.6,
       });
+
+      processedCategories.add(cat.slug);
     });
 
-    // Add English Blogs
+    // Create slug maps for matching EN/VI blogs
+    const viBlogMap = new Map(viBlogs.map((post: any) => [post.slug, post]));
+
+    // Add blogs with hreflang alternates
+    const processedBlogs = new Set<string>();
+
     enBlogs.forEach((post: any) => {
-      const categorySlug = post.category?.slug || 'tin-tuc';
-      sitemapEntries.push({
-        url: `${siteBaseUrl}/blogs/${categorySlug}/${post.slug}`,
-        lastModified: new Date(post.updated_at || post.created_at || new Date()),
-        changeFrequency: 'weekly',
-        priority: 0.7,
-      });
+      if (processedBlogs.has(post.slug)) return;
+
+      const enCategorySlug = post.category?.slug || 'tin-tuc';
+      const enUrl = `${siteBaseUrl}/blogs/${enCategorySlug}/${post.slug}`;
+      const lastMod = new Date(
+        post.updated_at || post.created_at || new Date()
+      );
+
+      // Check if Vietnamese version exists
+      const viPost = viBlogMap.get(post.slug);
+
+      if (viPost) {
+        // Has VI version - add hreflang alternates
+        const viCategorySlug = viPost.category?.slug || 'tin-tuc';
+        const viUrl = `${siteBaseUrl}/vi/bai-viet/${viCategorySlug}/${post.slug}`;
+
+        // English blog with alternates
+        sitemapEntries.push({
+          url: enUrl,
+          lastModified: lastMod,
+          changeFrequency: 'weekly',
+          priority: 0.7,
+          alternates: {
+            languages: {
+              en: enUrl,
+              vi: viUrl,
+            },
+          },
+        });
+
+        // Vietnamese blog with alternates
+        sitemapEntries.push({
+          url: viUrl,
+          lastModified: new Date(
+            viPost.updated_at || viPost.created_at || new Date()
+          ),
+          changeFrequency: 'weekly',
+          priority: 0.7,
+          alternates: {
+            languages: {
+              en: enUrl,
+              vi: viUrl,
+            },
+          },
+        });
+      } else {
+        // EN-only blog - no alternates
+        sitemapEntries.push({
+          url: enUrl,
+          lastModified: lastMod,
+          changeFrequency: 'weekly',
+          priority: 0.7,
+        });
+      }
+
+      processedBlogs.add(post.slug);
     });
 
-    // Add Vietnamese Blogs
+    // Add VI-only blogs
     viBlogs.forEach((post: any) => {
+      if (processedBlogs.has(post.slug)) return;
+
       const categorySlug = post.category?.slug || 'tin-tuc';
+      const viUrl = `${siteBaseUrl}/vi/bai-viet/${categorySlug}/${post.slug}`;
       sitemapEntries.push({
-        url: `${siteBaseUrl}/vi/bai-viet/${categorySlug}/${post.slug}`,
-        lastModified: new Date(post.updated_at || post.created_at || new Date()),
+        url: viUrl,
+        lastModified: new Date(
+          post.updated_at || post.created_at || new Date()
+        ),
         changeFrequency: 'weekly',
         priority: 0.7,
       });
+
+      processedBlogs.add(post.slug);
     });
 
-    // Add English Projects
+    // Create slug maps for matching EN/VI projects
+    const viProjectMap = new Map(
+      viProjects.map((post: any) => [post.slug, post])
+    );
+
+    // Add projects with hreflang alternates
+    const processedProjects = new Set<string>();
+
     enProjects.forEach((post: any) => {
-      sitemapEntries.push({
-        url: `${siteBaseUrl}/projects/${post.slug}`,
-        lastModified: new Date(post.updated_at || post.created_at || new Date()),
-        changeFrequency: 'weekly',
-        priority: 0.8,
-      });
+      if (processedProjects.has(post.slug)) return;
+
+      const enUrl = `${siteBaseUrl}/projects/${post.slug}`;
+      const lastMod = new Date(
+        post.updated_at || post.created_at || new Date()
+      );
+
+      // Check if Vietnamese version exists
+      const viPost = viProjectMap.get(post.slug);
+
+      if (viPost) {
+        // Has VI version - add hreflang alternates
+        const viUrl = `${siteBaseUrl}/vi/du-an/${post.slug}`;
+
+        // English project with alternates
+        sitemapEntries.push({
+          url: enUrl,
+          lastModified: lastMod,
+          changeFrequency: 'weekly',
+          priority: 0.8,
+          alternates: {
+            languages: {
+              en: enUrl,
+              vi: viUrl,
+            },
+          },
+        });
+
+        // Vietnamese project with alternates
+        sitemapEntries.push({
+          url: viUrl,
+          lastModified: new Date(
+            viPost.updated_at || viPost.created_at || new Date()
+          ),
+          changeFrequency: 'weekly',
+          priority: 0.8,
+          alternates: {
+            languages: {
+              en: enUrl,
+              vi: viUrl,
+            },
+          },
+        });
+      } else {
+        // EN-only project - no alternates
+        sitemapEntries.push({
+          url: enUrl,
+          lastModified: lastMod,
+          changeFrequency: 'weekly',
+          priority: 0.8,
+        });
+      }
+
+      processedProjects.add(post.slug);
     });
 
-    // Add Vietnamese Projects
+    // Add VI-only projects
     viProjects.forEach((post: any) => {
+      if (processedProjects.has(post.slug)) return;
+
+      const viUrl = `${siteBaseUrl}/vi/du-an/${post.slug}`;
       sitemapEntries.push({
-        url: `${siteBaseUrl}/vi/du-an/${post.slug}`,
-        lastModified: new Date(post.updated_at || post.created_at || new Date()),
+        url: viUrl,
+        lastModified: new Date(
+          post.updated_at || post.created_at || new Date()
+        ),
         changeFrequency: 'weekly',
         priority: 0.8,
       });
+
+      processedProjects.add(post.slug);
     });
   } catch (error) {
     console.error('Error fetching dynamic sitemap entries:', error);
