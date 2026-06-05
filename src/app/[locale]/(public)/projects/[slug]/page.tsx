@@ -68,7 +68,7 @@ export default async function PostPage({
 
     const { generateArticleJsonLd } = await import('@/utils/metadata.utils');
     const { generateBreadcrumbJsonLd } =
-      await import('@/components/navigation/breadcrumb');
+      await import('@/utils/breadcrumb.utils');
 
     const articleJsonLd = generateArticleJsonLd(post);
 
