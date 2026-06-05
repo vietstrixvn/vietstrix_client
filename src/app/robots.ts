@@ -67,6 +67,14 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: 'anthropic-ai',
         disallow: ['/'],
       },
+      {
+        userAgent: 'ClaudeBot',
+        disallow: ['/'],
+      },
+      {
+        userAgent: 'Bytespider',
+        disallow: ['/'],
+      },
     ],
     sitemap: `${siteBaseUrl}/sitemap.xml`,
   };
