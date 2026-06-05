@@ -22,7 +22,7 @@ export async function generateMetadata({
 // Revalidate every 1 hour
 export const revalidate = 3600;
 
-import {  setRequestLocale } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 
 export default async function PostPage({
   params,
@@ -71,12 +71,44 @@ export default async function PostPage({
     );
 
     const { generateArticleJsonLd } = await import('@/utils/metadata.utils');
-    const jsonLd = generateArticleJsonLd(post);
+    const { generateBreadcrumbJsonLd } =
+      await import('@/components/navigation/breadcrumb');
+
+    const articleJsonLd = generateArticleJsonLd(post);
+
+    // Generate breadcrumb structured data
+    const categorySlug = post.category?.slug || 'tin-tuc';
+    const isVi = locale === 'vi';
+    const breadcrumbItems = [
+      {
+        label: isVi ? 'Blog' : 'Blogs',
+        href: isVi ? '/vi/bai-viet' : '/blogs',
+      },
+      {
+        label: post.category?.title || (isVi ? 'Tin tức' : 'News'),
+        href: isVi ? `/vi/bai-viet/${categorySlug}` : `/blogs/${categorySlug}`,
+      },
+      {
+        label: post.title,
+        href: isVi
+          ? `/vi/bai-viet/${categorySlug}/${post.slug}`
+          : `/blogs/${categorySlug}/${post.slug}`,
+      },
+    ];
+    const breadcrumbJsonLd = generateBreadcrumbJsonLd(
+      breadcrumbItems,
+      'https://www.vietstrix.com'
+    );
+
     return (
       <>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
         <ArticleDetail post={post} recentPosts={filteredRecentPosts} />
       </>

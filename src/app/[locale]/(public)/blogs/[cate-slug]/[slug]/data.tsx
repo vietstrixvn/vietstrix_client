@@ -11,6 +11,8 @@ import { CustomImage } from '@/components';
 import TableOfContents from '@/components/cards/toc.card';
 import { RecentPostSection } from '@/components/sections/recent-post.section';
 import AuthorCard from '@/components/cards/author.card';
+import { Breadcrumb } from '@/components/navigation/breadcrumb';
+import { useLocale } from 'next-intl';
 
 interface ArticleDetailProps {
   post: PostResponse;
@@ -21,9 +23,13 @@ export default function ArticleDetail({
   post,
   recentPosts = [],
 }: ArticleDetailProps) {
+  const locale = useLocale();
+  const isVi = locale === 'vi';
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   if (!post) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-32">
@@ -42,8 +48,27 @@ export default function ArticleDetail({
     );
   }
 
+  // Generate breadcrumb items
+  const categorySlug = post.category?.slug || 'tin-tuc';
+  const breadcrumbItems = [
+    {
+      label: isVi ? 'Blog' : 'Blogs',
+      href: isVi ? '/vi/bai-viet' : '/blogs',
+    },
+    {
+      label: post.category?.title || (isVi ? 'Tin tức' : 'News'),
+      href: isVi ? `/vi/bai-viet/${categorySlug}` : `/blogs/${categorySlug}`,
+    },
+    {
+      label: post.title,
+    },
+  ];
+
   return (
     <Container className="pt-20 mx-auto pb-32 bg-white overflow-x-hidden lg:overflow-x-visible">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb items={breadcrumbItems} />
+
       {/* Article Hero Image */}
       <section className="h-auto aspect-[16/9] md:h-[60vh] md:aspect-auto overflow-hidden">
         <CustomImage
@@ -122,7 +147,7 @@ export default function ArticleDetail({
                 className="prose rich-text-content prose-sm max-w-none"
               />
             </div>
-            <AuthorCard author={post?.creator}/>
+            <AuthorCard author={post?.creator} />
             <div className="flex flex-wrap items-center gap-2 overflow-hidden">
               <span className="text-sm font-bold text-secondary-700">
                 Tags:

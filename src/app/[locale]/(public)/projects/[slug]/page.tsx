@@ -67,12 +67,37 @@ export default async function PostPage({
     }
 
     const { generateArticleJsonLd } = await import('@/utils/metadata.utils');
-    const jsonLd = generateArticleJsonLd(post);
+    const { generateBreadcrumbJsonLd } =
+      await import('@/components/navigation/breadcrumb');
+
+    const articleJsonLd = generateArticleJsonLd(post);
+
+    // Generate breadcrumb structured data
+    const isVi = locale === 'vi';
+    const breadcrumbItems = [
+      {
+        label: isVi ? 'Dự án' : 'Projects',
+        href: isVi ? '/vi/du-an' : '/projects',
+      },
+      {
+        label: post.title,
+        href: isVi ? `/vi/du-an/${post.slug}` : `/projects/${post.slug}`,
+      },
+    ];
+    const breadcrumbJsonLd = generateBreadcrumbJsonLd(
+      breadcrumbItems,
+      'https://www.vietstrix.com'
+    );
+
     return (
       <>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
         <ArticleDetail post={post} />
       </>
