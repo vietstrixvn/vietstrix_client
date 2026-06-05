@@ -23,29 +23,6 @@ export const metadata = generatePageMetadata({
 });
 
 export default function Page() {
-  // Organization structured data for SEO
-  const organizationJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Vietstrix',
-    url: 'https://www.vietstrix.com',
-    sameAs: [
-      'https://www.vietstrix.com/vi', // phiên bản tiếng Việt
-    ],
-    logo: 'https://www.vietstrix.com/icons/logo-cricle.svg',
-    description: `Vietstrix is a creative digital studio building user-friendly, high-performance websites and digital products.`,
-    address: {
-      '@type': 'PostalAddress',
-      addressCountry: 'VN',
-      addressLocality: 'Vietnam',
-    },
-    contactPoint: {
-      '@type': 'ContactPoint',
-      email: 'hello@vietstrix.com',
-      contactType: 'Customer Support',
-    },
-  };
-
   const contactPageJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
@@ -62,10 +39,6 @@ export default function Page() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageJsonLd) }}

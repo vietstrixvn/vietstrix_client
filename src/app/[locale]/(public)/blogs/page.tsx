@@ -81,30 +81,6 @@ export default async function Page({
       (cat: any) => cat.lang === locale || cat.locale === locale
     );
 
-    const organizationJsonLd = {
-      '@context': 'https://schema.org',
-      '@type': 'Organization',
-      name: 'Vietstrix',
-      url: 'https://www.vietstrix.com',
-      logo: 'https://www.vietstrix.com/icons/logo-cricle.svg',
-      description:
-        'Vietstrix is a product-focused development team specializing in web applications, UI/UX design, and scalable system architecture.',
-      address: {
-        '@type': 'PostalAddress',
-        addressCountry: 'VN',
-        addressLocality: 'Ho Chi Minh City',
-      },
-      contactPoint: {
-        '@type': 'ContactPoint',
-        contactType: 'customer support',
-        availableLanguage: ['English', 'Vietnamese'],
-      },
-      sameAs: [
-        'https://www.facebook.com/VietStrix.dev',
-        'https://linkedin.com/company/vietstrix',
-      ],
-    };
-
     const blogJsonLd = {
       '@context': 'https://schema.org',
       '@type': 'Blog',
@@ -128,12 +104,6 @@ export default async function Page({
 
     return (
       <>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd),
-          }}
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }}

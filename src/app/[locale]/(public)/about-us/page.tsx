@@ -31,26 +31,6 @@ export default async function Page() {
     pageSize: 12,
   });
 
-  const organizationJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Vietstrix',
-    url: 'https://www.vietstrix.com',
-    logo: 'https://www.vietstrix.com/icons/logo-cricle.svg',
-    description:
-      'Vietstrix is a creative digital studio focused on crafting user-friendly, high-performance websites and digital products that are built to last.',
-    address: {
-      '@type': 'PostalAddress',
-      addressCountry: 'VN',
-      addressLocality: 'Ho Chi Minh City', // 👈 fix
-    },
-    contactPoint: {
-      '@type': 'ContactPoint',
-      contactType: 'Customer Support',
-      availableLanguage: ['English', 'Vietnamese'],
-    },
-  };
-
   const aboutPageJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
@@ -67,10 +47,6 @@ export default async function Page() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageJsonLd) }}

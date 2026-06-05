@@ -68,26 +68,6 @@ export default async function Page({
 
     const categories = await getCategories({ type: 'project', lang: locale });
 
-    const organizationJsonLd = {
-      '@context': 'https://schema.org',
-      '@type': 'Organization',
-      name: 'Vietstrix',
-      url: 'https://www.vietstrix.com',
-      logo: 'https://www.vietstrix.com/icons/logo-cricle.svg',
-      description:
-        'Vietstrix is a product-focused development team specializing in web applications, UI/UX design, and scalable system architecture.',
-      address: {
-        '@type': 'PostalAddress',
-        addressCountry: 'VN',
-        addressLocality: 'Ho Chi Minh City',
-      },
-      contactPoint: {
-        '@type': 'ContactPoint',
-        contactType: 'Customer Support',
-        availableLanguage: ['English', 'Vietnamese'],
-      },
-    };
-
     const projectsJsonLd = {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
@@ -113,12 +93,6 @@ export default async function Page({
 
     return (
       <>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd),
-          }}
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsJsonLd) }}

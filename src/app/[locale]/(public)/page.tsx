@@ -4,7 +4,7 @@ import HomePage from './data';
 import { getMentions } from '@/libs/seo/getMentions';
 
 export const metadata: Metadata = {
-  title: 'Vietstrix Team - Build every thing',
+  title: 'Vietstrix | Web & MVP Development Agency - Build everything custom',
   description:
     'Vietstrix is a product-driven team building scalable web apps, helping startups turn ideas into reliable digital products from design to deployment.',
   keywords: [
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     'developer profile',
   ],
   openGraph: {
-    title: 'Vietstrix - Build every thing',
+    title: 'Vietstrix | Web & MVP Development Agency - Build everything custom',
     description:
       'Vietstrix is a product-driven team building scalable web apps, helping startups turn ideas into reliable digital products from design to deployment.',
     url: 'https://www.vietstrix.com',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Vietstrix - Build every thing',
+    title: 'Vietstrix | Web & MVP Development Agency - Build everything custom',
     description:
       'Vietstrix is a product-driven team building scalable web apps, helping startups turn ideas into reliable digital products from design to deployment.',
     images: ['https://www.vietstrix.com/imgs/OG-Image.png'],
@@ -84,59 +84,8 @@ export default async function Page({
     pageSize: 12,
   });
 
-  // Organization structured data for SEO
-  const organizationJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Vietstrix',
-    alternateName: 'Vietstrix Team',
-    url: 'https://www.vietstrix.com',
-    logo: 'https://www.vietstrix.com/icons/logo-cricle.svg',
-    description:
-      'Vietstrix is a product-driven freelance team building high-performance and scalable web applications. We partner with startups and businesses to turn ideas into reliable digital products — from design and development to deployment and growth.',
-    address: {
-      '@type': 'PostalAddress',
-      addressCountry: 'VN',
-      addressLocality: 'Ho Chi Minh City, Vietnam',
-    },
-    contactPoint: {
-      '@type': 'ContactPoint',
-      contactType: 'customer support',
-      availableLanguage: ['English', 'Vietnamese'],
-    },
-    sameAs: [
-      'https://www.facebook.com/VietStrix.dev',
-      'https://github.com/vietstrixvn',
-      'https://www.linkedin.com/company/vietstrix',
-      'https://www.instagram.com/vietstrix',
-    ],
-  };
-
-  // WebSite structured data for homepage
-  const websiteJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'Vietstrix',
-    url: 'https://www.vietstrix.com',
-    description:
-      'Vietstrix is a product-driven team building scalable web apps, helping startups turn ideas into reliable digital products from design to deployment.',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: 'https://www.vietstrix.com/search?q={search_term_string}',
-      'query-input': 'required name=search_term_string',
-    },
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-      />
       <HomePage posts={posts} projects={projects} mentions={mentions} />
     </>
   );
