@@ -28,25 +28,25 @@ export default function ServicesSection() {
     {
       id: 2,
       title: 'Product Design & UI/UX',
-      description: `${t('Services.step.q2')}`,
+      description: `${t('Services.step.q3')}`,
       card: <UxUiCard isHovered={hoveredId === 2} />,
     },
     {
       id: 3,
       title: 'Web Systems & Optimization',
-      description: `${t('Services.step.q3')}`,
+      description: `${t('Services.step.q4')}`,
       card: <SystemCard isHovered={hoveredId === 3} />,
     },
     {
       id: 4,
       title: 'MVP Development for Startups',
-      description: `${t('Services.step.q4')}`,
+      description: `${t('Services.step.q5')}`,
       card: <MvpCard isHovered={hoveredId === 4} />,
     },
     {
       id: 5,
       title: 'Website Redesign & Revamp',
-      description: `${t('Services.step.q5')}`,
+      description: `${t('Services.step.q6')}`,
       card: <RedesignCard isHovered={hoveredId === 5} />,
     },
   ];
