@@ -115,9 +115,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const viProjects = viProjectsResponse.posts || [];
 
     // Create slug maps for matching EN/VI categories
-    const enCategoryMap = new Map(
-      enBlogCategories.map((cat: any) => [cat.slug, cat])
-    );
     const viCategoryMap = new Map(
       viBlogCategories.map((cat: any) => [cat.slug, cat])
     );
@@ -196,7 +193,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       );
 
       // Check if Vietnamese version exists
-      const viPost = viBlogMap.get(post.slug);
+      const viPost = viBlogMap.get(post.slug) as any;
 
       if (viPost) {
         // Has VI version - add hreflang alternates
@@ -280,7 +277,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       );
 
       // Check if Vietnamese version exists
-      const viPost = viProjectMap.get(post.slug);
+      const viPost = viProjectMap.get(post.slug) as any;
 
       if (viPost) {
         // Has VI version - add hreflang alternates
