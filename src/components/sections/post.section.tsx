@@ -7,7 +7,7 @@ import { PostResponse } from '@/types/portfolio';
 import { SectionTag } from '../customs/section-tag.custom';
 import { CustomImage } from '../media/image.component';
 import { DesktopEmpty } from '../animations/tech.animation';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 
 export default function BlogSection({
   posts = [],
@@ -40,7 +40,10 @@ export default function BlogSection({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {posts.map((post) => (
               <Link
-                href={`/blogs/${post.category.slug}/${post.slug}`}
+                href={{
+                  pathname: '/blogs/[cate-slug]/[slug]',
+                  params: { 'cate-slug': post.category.slug, slug: post.slug },
+                }}
                 key={post.id}
                 className="group flex flex-col border border-gray-200 rounded-md overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >

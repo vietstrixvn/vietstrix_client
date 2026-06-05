@@ -2,14 +2,17 @@ import React, { memo } from 'react';
 import { CustomImage } from '@/components';
 import { PostResponse } from '@/types/portfolio';
 import { formatSmartDate } from '@/utils';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 
 export const PostCard = memo(({ item }: { item: PostResponse }) => {
   const imageUrl = item.images?.[0]?.url || '/imgs/vsv.webp';
 
   return (
     <Link
-      href={`/blogs/${item.category.slug}/${item.slug}`}
+      href={{
+        pathname: '/blogs/[cate-slug]/[slug]',
+        params: { 'cate-slug': item.category.slug, slug: item.slug },
+      }}
       className="flex group flex-col overflow-hidden rounded-md border border-gray-200 bg-white cursor-pointer transition-all duration-250 hover:-translate-y-1 hover:border-gray-300 hover:shadow-xl"
     >
       {/* Thumbnail */}

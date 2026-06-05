@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { endpoints } from '@/apis';
 import { handleAPI } from '@/apis/handler';
 import { generatePostMetadata } from '@/utils/metadata.utils';
@@ -46,6 +46,16 @@ export default async function PostPage({
 
     if (!post) {
       notFound();
+    }
+
+    // Redirect permanently if the post's language does not match the URL's locale context
+    if (post.lang && post.lang !== locale) {
+      const categorySlug = post.category?.slug || 'tin-tuc';
+      if (post.lang === 'vi') {
+        permanentRedirect(`/vi/bai-viet/${categorySlug}/${post.slug}`);
+      } else {
+        permanentRedirect(`/blogs/${categorySlug}/${post.slug}`);
+      }
     }
 
     // Fetch recent posts from same category

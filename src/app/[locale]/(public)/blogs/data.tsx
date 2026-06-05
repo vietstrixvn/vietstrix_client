@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { BlogListProps } from '@/types/portfolio';
 import { Container } from '@/components/wrappers/container';
 import { PostCard } from '@/components/cards/post.card';
@@ -40,23 +40,30 @@ const BlogList: React.FC<BlogListProps> = ({
 
   const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const params = new URLSearchParams();
-      if (searchQuery.trim()) params.set('search', searchQuery.trim());
-      params.set('page', '1');
-      router.push(`?${params.toString()}`);
+      const query: Record<string, string> = { page: '1' };
+      if (searchQuery.trim()) query.search = searchQuery.trim();
+      router.push({
+        pathname: '/blogs',
+        query,
+      });
     }
   };
 
   const handleClearSearch = () => {
     setSearchQuery('');
-    router.push('?page=1');
+    router.push({
+      pathname: '/blogs',
+      query: { page: '1' },
+    });
   };
 
   const handlePageChange = (page: number) => {
-    const params = new URLSearchParams();
-    params.set('page', page.toString());
-    if (searchQuery.trim()) params.set('search', searchQuery.trim());
-    router.push(`?${params.toString()}`);
+    const query: Record<string, string> = { page: page.toString() };
+    if (searchQuery.trim()) query.search = searchQuery.trim();
+    router.push({
+      pathname: '/blogs',
+      query,
+    });
   };
 
   const handleCategoryChange = (value: string) => {
@@ -66,7 +73,10 @@ const BlogList: React.FC<BlogListProps> = ({
     } else {
       const category = categories.find((cat) => cat.id.toString() === value);
       if (category) {
-        router.push(`/blogs/${category.slug}`);
+        router.push({
+          pathname: '/blogs/[cate-slug]',
+          params: { 'cate-slug': category.slug },
+        });
       }
     }
   };

@@ -17,7 +17,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
+import { useParams } from 'next/navigation';
 import { BlogListProps } from '@/types/portfolio';
 import { Container } from '@/components/wrappers/container';
 import { PostCard } from '@/components/cards/post.card';
@@ -31,6 +32,8 @@ const BlogList: React.FC<BlogListProps> = ({
   isLoading = false,
 }) => {
   const router = useRouter();
+  const params = useParams();
+  const cateSlug = params?.['cate-slug'] as string;
   const [currentCategory, setCurrentCategory] = useState('all');
   const [currentSort, setCurrentSort] = useState('default');
   const [searchQuery, setSearchQuery] = useState('');
@@ -46,7 +49,11 @@ const BlogList: React.FC<BlogListProps> = ({
   };
 
   const handlePageChange = (page: number) => {
-    router.push(`?page=${page}`);
+    router.push({
+      pathname: '/blogs/[cate-slug]',
+      params: { 'cate-slug': cateSlug },
+      query: { page: page.toString() },
+    });
   };
 
   const handleCategoryChange = (value: string) => {
@@ -56,7 +63,10 @@ const BlogList: React.FC<BlogListProps> = ({
     } else {
       const category = categories.find((cat) => cat.id.toString() === value);
       if (category) {
-        router.push(`/blogs/${category.slug}`);
+        router.push({
+          pathname: '/blogs/[cate-slug]',
+          params: { 'cate-slug': category.slug },
+        });
       }
     }
   };
