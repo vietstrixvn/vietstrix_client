@@ -93,6 +93,7 @@ function StatCounter({
     const end = value;
     const duration = 2000; // 2s
     let startTime: number | null = null;
+    let rafId: number;
 
     const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
@@ -103,11 +104,12 @@ function StatCounter({
         ref.current = current;
       }
       if (progress < 1) {
-        requestAnimationFrame(step);
+        rafId = requestAnimationFrame(step);
       }
     };
 
-    requestAnimationFrame(step);
+    rafId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(rafId);
   }, [isVisible, value]);
 
   return (

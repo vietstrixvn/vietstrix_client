@@ -42,7 +42,6 @@ export default function SolutionCard() {
     return () => {
       trigger.scrollTrigger?.kill();
       trigger.kill();
-      ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, [locale]);
 

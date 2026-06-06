@@ -28,7 +28,8 @@ export function InteractiveClean() {
     });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.shadowMap.enabled = true;
+    // shadowMap disabled — logo doesn't need shadows, saves an entire render pass per frame
+    renderer.shadowMap.enabled = false;
 
     // Perspective Camera setup
     const camera = new THREE.PerspectiveCamera(
@@ -181,21 +182,44 @@ export function InteractiveClean() {
     container.addEventListener('mouseenter', handleMouseEnter);
     container.addEventListener('mouseleave', handleMouseLeave);
 
-    // ─── Responsive Window Resizing ──────────────────────────────────────────
+    // ─── Responsive Window Resizing (debounced to avoid framebuffer realloc spam) ─
+    let resizeTimeout: ReturnType<typeof setTimeout>;
     const handleResize = () => {
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      }, 150);
     };
     window.addEventListener('resize', handleResize);
 
-    // ─── Animation Frame Loop (Clock based) ──────────────────────────────────
+    // ─── Visibility-aware Animation Frame Loop ─────────────────────────────
     const clock = new THREE.Clock();
     let animId: number;
+    let isVisible = true;
+
+    // Pause rAF when component scrolls off-screen to save GPU cycles
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible && !animId) {
+          clock.getDelta(); // reset clock delta to avoid time jumps
+          tick();
+        }
+      },
+      { threshold: 0 }
+    );
+    visibilityObserver.observe(container);
 
     const tick = () => {
+      if (!isVisible) {
+        animId = 0;
+        return;
+      }
+
       const elapsedTime = clock.getElapsedTime();
 
       if (logoGroup) {
@@ -221,11 +245,40 @@ export function InteractiveClean() {
     // ─── Clean Up Resources ──────────────────────────────────────────────────
     return () => {
       cancelAnimationFrame(animId);
+      visibilityObserver.disconnect();
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseenter', handleMouseEnter);
       container.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimeout);
+
+      // Kill all GSAP tweens targeting Three.js objects (hover + entrance tweens)
+      gsap.killTweensOf(logoGroup.scale);
+      gsap.killTweensOf(logoGroup.rotation);
+
+      // Dispose all Three.js geometries, materials, and textures
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh) {
+          object.geometry?.dispose();
+          const materials = Array.isArray(object.material)
+            ? object.material
+            : [object.material];
+          materials.forEach((mat) => {
+            if (mat) {
+              // Dispose all texture maps
+              Object.values(mat).forEach((value) => {
+                if (value instanceof THREE.Texture) {
+                  value.dispose();
+                }
+              });
+              mat.dispose();
+            }
+          });
+        }
+      });
+
       renderer.dispose();
+      renderer.forceContextLoss();
     };
   }, []);
 

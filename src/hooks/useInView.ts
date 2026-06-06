@@ -5,26 +5,25 @@ export function useInView(threshold = 0.3) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !isInView) {
+        if (entry.isIntersecting) {
           setIsInView(true);
+          observer.disconnect(); // once visible, stop observing
         }
       },
       { threshold }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    observer.observe(el);
 
     return () => {
-      if (ref.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        observer.unobserve(ref.current);
-      }
+      observer.disconnect();
     };
-  }, [isInView, threshold]);
+  }, [threshold]);
 
   return { ref, isInView };
 }

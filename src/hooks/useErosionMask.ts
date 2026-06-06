@@ -153,8 +153,8 @@ export function useErosionOverlay(
   options: ErosionOptions = {}
 ) {
   const {
-    width = 512,
-    height = 1024,
+    width = 256,
+    height = 512,
     seed = 42,
     bgColor = [255, 255, 255],
     edgeBandHeight = 0.10,
@@ -207,6 +207,11 @@ export function useErosionOverlay(
       if (container.contains(canvas)) {
         container.removeChild(canvas);
       }
+      // Release large data structures for GC
+      canvasRef.current = null;
+      ctxRef.current = null;
+      dispMapRef.current = null;
+      imgDataRef.current = null;
     };
   }, [containerRef, width, height, seed]);
 
@@ -234,8 +239,8 @@ export function useErosionOverlay(
 
       const ep = Math.min(Math.max(rawProgress, 0), 1);
 
-      // Quantize to ~400 steps to avoid redundant redraws
-      const q = Math.round(ep * 400) / 400;
+      // Quantize to ~120 steps to avoid redundant redraws
+      const q = Math.round(ep * 120) / 120;
       if (q === lastQRef.current) return;
       lastQRef.current = q;
 

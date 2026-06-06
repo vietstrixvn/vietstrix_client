@@ -1,7 +1,7 @@
 'use client';
 
 import { Icons } from '@/assets';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 export interface CopyLinkButtonProps {
@@ -10,6 +10,13 @@ export interface CopyLinkButtonProps {
 
 export const CopyLinkButton = ({ url }: CopyLinkButtonProps) => {
   const [copied, setCopied] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const handleCopy = async () => {
     try {
@@ -26,7 +33,8 @@ export const CopyLinkButton = ({ url }: CopyLinkButtonProps) => {
 
       await navigator.clipboard.writeText(fullUrl);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => setCopied(false), 2000);
     } catch {
       toast.error('Cannot copy link!');
     }

@@ -66,7 +66,13 @@ export default function StorySection() {
     }
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      ScrollTrigger.getById('story-bottom')?.kill();
+      rows.forEach((row) => {
+        const rowTriggers = ScrollTrigger.getAll().filter(
+          (t) => t.vars.trigger === row
+        );
+        rowTriggers.forEach((t) => t.kill());
+      });
     };
   }, []);
 

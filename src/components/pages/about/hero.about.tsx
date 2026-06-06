@@ -14,12 +14,19 @@ export const AboutHeroSetion = () => {
   const sectionRef = useRef(null);
 
   useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;
     const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 1024);
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setIsDesktop(window.innerWidth >= 1024);
+      }, 150);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   useEffect(() => {

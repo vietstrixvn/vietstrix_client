@@ -67,8 +67,8 @@ export default function AboutUsSection() {
     );
 
     return () => {
+      tl.scrollTrigger?.kill();
       tl.kill();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 

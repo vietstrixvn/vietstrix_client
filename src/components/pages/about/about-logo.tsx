@@ -129,21 +129,44 @@ export function About3DLogo() {
       }
     );
 
-    // ─── Resize Handler ───────────────────────────────────────────────
+    // ─── Resize Handler (debounced to avoid framebuffer realloc spam) ──
+    let resizeTimeout: ReturnType<typeof setTimeout>;
     const handleResize = () => {
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      }, 150);
     };
     window.addEventListener('resize', handleResize);
 
-    // ─── Animation Loop ───────────────────────────────────────────────
+    // ─── Visibility-aware Animation Loop ───────────────────────────────
     const clock = new THREE.Clock();
     let animId: number;
+    let isVisible = true;
+
+    // Pause rAF when component scrolls off-screen to save GPU cycles
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible && !animId) {
+          clock.getDelta(); // reset clock delta to avoid time jumps
+          tick();
+        }
+      },
+      { threshold: 0 }
+    );
+    visibilityObserver.observe(container);
 
     const tick = () => {
+      if (!isVisible) {
+        animId = 0;
+        return;
+      }
+
       const elapsedTime = clock.getElapsedTime();
 
       if (logoGroup && logoModel) {
@@ -162,8 +185,36 @@ export function About3DLogo() {
     // ─── Cleanup ──────────────────────────────────────────────────────
     return () => {
       cancelAnimationFrame(animId);
+      visibilityObserver.disconnect();
       window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimeout);
+
+      // Kill GSAP entrance tweens targeting Three.js objects
+      gsap.killTweensOf(logoGroup.scale);
+      gsap.killTweensOf(logoGroup.rotation);
+
+      // Dispose all Three.js geometries, materials, and textures
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh) {
+          object.geometry?.dispose();
+          const materials = Array.isArray(object.material)
+            ? object.material
+            : [object.material];
+          materials.forEach((mat) => {
+            if (mat) {
+              Object.values(mat).forEach((value) => {
+                if (value instanceof THREE.Texture) {
+                  value.dispose();
+                }
+              });
+              mat.dispose();
+            }
+          });
+        }
+      });
+
       renderer.dispose();
+      renderer.forceContextLoss();
     };
   }, []);
 

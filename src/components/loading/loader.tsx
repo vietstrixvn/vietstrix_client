@@ -14,12 +14,19 @@ export function Loader({ onLoadingComplete, duration = 2500 }: LoaderProps) {
   const waveGroupRef = useRef<SVGGElement>(null);
 
   useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;
     const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 1024);
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setIsDesktop(window.innerWidth >= 1024);
+      }, 150);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   useEffect(() => {

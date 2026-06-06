@@ -118,8 +118,8 @@ export default function OurValueSection() {
     );
 
     return () => {
+      tl.scrollTrigger?.kill();
       tl.kill();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, [locale]);
 

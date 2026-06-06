@@ -93,7 +93,6 @@ export default function ServicesAnimationSection() {
 
     return () => {
       mm.revert();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 

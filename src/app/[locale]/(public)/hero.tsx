@@ -17,8 +17,8 @@ export default function HeroSection() {
 
   // Erosion mask hook — procedural organic dissolution with sharp edges
   const { updateMask } = useErosionMask(containerRef, {
-    width: 512,
-    height: 1024,
+    width: 256,
+    height: 512,
     seed: 42,
     edgeBandHeight: 0.005,      // make the transition zone super narrow for a razor-sharp crisp edge
     displacementAmplitude: 0.09, // how bumpy/blobby the edge is
@@ -110,20 +110,31 @@ export default function HeroSection() {
     }
 
     return () => {
+      erosionTween.scrollTrigger?.kill();
       erosionTween.kill();
+      motionTween.scrollTrigger?.kill();
       motionTween.kill();
-      if (aboutTween) aboutTween.kill();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      if (aboutTween) {
+        aboutTween.scrollTrigger?.kill();
+        aboutTween.kill();
+      }
     };
   }, []);
 
   useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;
     const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 1024);
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setIsDesktop(window.innerWidth >= 1024);
+      }, 150);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const handleScrollToNext = () => {
