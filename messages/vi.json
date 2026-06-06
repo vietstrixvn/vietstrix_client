@@ -190,18 +190,19 @@
       }
     },
     "Workflow": {
-      "title": "Phát triển website theo 4 bước",
+      "title": "Quy trình thiết kế",
+      "description": "Quy trình làm việc bài bản nhưng tinh gọn, tập trung hoàn toàn vào việc tạo ra những thiết kế chuyên biệt và mang lại kết quả thực tế cho doanh nghiệp",
       "button": "Bắt đầu ngay",
 
       "step": {
-        "q1": "Lên ý tưởng",
-        "a1": "Thu thập yêu cầu, tìm hiểu thị trường và xác định mục tiêu sản phẩm.",
-        "q2": "Thiết kế & Phát triển",
-        "a2": "Thiết kế UI/UX, build frontend & backend, và tích hợp các tính năng cần thiết.",
-        "q3": "Kiểm thử",
-        "a3": "Test toàn bộ chức năng, tối ưu hiệu năng và fix lỗi trước khi launch.",
-        "q4": "Bàn giao",
-        "a4": "Deploy lên server và hỗ trợ sau khi sản phẩm đi vào hoạt động."
+        "q1": "KHÁM PHÁ & ĐỊNH HÌNH",
+        "a1": "Chúng tôi bắt đầu bằng việc thấu hiểu vấn đề, người dùng và mục tiêu kinh doanh cốt lõi của doanh nghiệp.",
+        "q2": "THIẾT KẾ & TINH CHỈNH",
+        "a2": "Khi mọi thứ đã rõ ràng, chúng tôi xây dựng khung chiến lược từ cấu trúc website đến luồng người dùng.",
+        "q3": "KIỂM THỬ & TRIỂN KHAI",
+        "a3": "Sau khi hoàn thiện thiết kế tổng thể là lúc sản phẩm được lập trình, tinh chỉnh và kiểm thử kỹ lưỡng nhằm mang lại một giải pháp số hoàn chỉnh.",
+        "q4": "BÀN GIAO & ĐỒNG HÀNH",
+        "a4": "Chúng tôi chuẩn bị mọi tài nguyên để sẵn sàng thực thi, cung cấp file bàn giao và hỗ trợ vận hành."
       }
     },
     "Values": {

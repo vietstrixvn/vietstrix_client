@@ -191,18 +191,19 @@
       }
     },
     "Workflow": {
-      "title": "Website development in 4 steps",
+      "title": "Design Process",
+      "description": "A structured but streamlined workflow, fully focused on creating custom designs that deliver actual business value.",
       "button": "GET STARTED",
 
       "step": {
-        "q1": "Ideation",
-        "a1": "Gather requirements, research the market, and define project goals.",
-        "q2": "Design & Development",
-        "a2": "Create UI/UX, develop frontend & backend, and integrate required features.",
-        "q3": "Testing",
-        "a3": "Test all functionalities, optimize performance, and fix bugs before launch.",
-        "q4": "Delivery",
-        "a4": "Deploy to server and provide post-launch support."
+        "q1": "DISCOVER & DEFINE",
+        "a1": "We begin by understanding the problem, target audience, and the core business goals of your enterprise.",
+        "q2": "DESIGN & REFINE",
+        "a2": "Once everything is clear, we build the strategic framework, from website structure to user flows.",
+        "q3": "TEST & DEPLOY",
+        "a3": "After completing the overall design, we program, refine, and thoroughly test to deliver a complete digital solution.",
+        "q4": "HANDOVER & SUPPORT",
+        "a4": "We prepare all resources for execution, deliver source files, and provide ongoing operational support."
       }
     },
 
