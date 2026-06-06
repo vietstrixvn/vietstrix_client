@@ -72,7 +72,7 @@
       "item1": {
         "title": "Development Journey",
         "label": "Hours of Coding",
-        "desc": "Over 5 years of hands-on experience in full-stack web engineering, custom app development, and cloud systems."
+        "desc": "Building digital products from idea to deployment, with a focus on web applications, scalable systems, and cloud infrastructure."
       },
       "item2": {
         "title": "Trusted Partner",
@@ -93,30 +93,28 @@
       "cta": "Contact us"
     },
     "FAQ": {
-"title": "Frequently Asked Questions",
-"subtitle": "Answers to common questions before starting a project with us.",
-"items": {
-"q1": "How long does a typical project take?",
-"a1": "The timeline depends on the project's scope and complexity. Most business websites can be delivered within 2–6 weeks, while larger custom platforms require a tailored development roadmap.",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Answers to common questions before starting a project with us.",
+      "items": {
+        "q1": "How long does a typical project take?",
+        "a1": "The timeline depends on the project's scope and complexity. Most business websites can be delivered within 2–6 weeks, while larger custom platforms require a tailored development roadmap.",
 
-"q2": "What if I only have an idea and no technical requirements?",
-"a2": "That's completely fine. We help transform ideas into actionable product plans by defining goals, user flows, features, and technical requirements before development begins.",
+        "q2": "What if I only have an idea and no technical requirements?",
+        "a2": "That's completely fine. We help transform ideas into actionable product plans by defining goals, user flows, features, and technical requirements before development begins.",
 
-"q3": "Will I own the source code after the project is completed?",
-"a3": "Yes. Once the project is completed and handed over, you will receive full ownership of the agreed deliverables, including source code, design assets, and related project materials.",
+        "q3": "Will I own the source code after the project is completed?",
+        "a3": "Yes. Once the project is completed and handed over, you will receive full ownership of the agreed deliverables, including source code, design assets, and related project materials.",
 
-"q4": "How can I track the progress of my project?",
-"a4": "We provide regular progress updates, milestone reviews, and preview environments so you can monitor development and provide feedback throughout the process.",
+        "q4": "How can I track the progress of my project?",
+        "a4": "We provide regular progress updates, milestone reviews, and preview environments so you can monitor development and provide feedback throughout the process.",
 
-"q5": "Do you provide support after launch?",
-"a5": "Yes. We offer post-launch support, maintenance, and enhancement services to help ensure your product remains secure, stable, and up to date.",
+        "q5": "Do you provide support after launch?",
+        "a5": "Yes. We offer post-launch support, maintenance, and enhancement services to help ensure your product remains secure, stable, and up to date.",
 
-"q6": "Who do you typically work with?",
-"a6": "We collaborate with startups, founders, small and medium-sized businesses, and organizations looking for tailored digital solutions that align with their business goals."
-
-}
-}
-,
+        "q6": "Who do you typically work with?",
+        "a6": "We collaborate with startups, founders, small and medium-sized businesses, and organizations looking for tailored digital solutions that align with their business goals."
+      }
+    },
     "Technical": {
       "title": "Technical expertise",
       "content": "I have developed a diverse skill set in my field, focusing on modern web technologies and best practices.",
