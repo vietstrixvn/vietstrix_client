@@ -24,7 +24,7 @@ export const getCategories = async (
         const params = new URLSearchParams({
           status,
           page_size: pageSize.toString(),
-          locale: lang, // Changed from 'lang' to 'locale'
+          lang, // Changed from 'locale' back to 'lang' to match backend expectation
         });
 
         if (type) {
