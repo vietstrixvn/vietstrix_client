@@ -146,7 +146,7 @@ export default function TableOfContents({ htmlContent }: TableOfContentsProps) {
             : 'pointer-events-none max-h-0 opacity-0'
         }`}
       >
-        <ol className="m-0 list-decimal pl-[1.4rem]">
+        <ol className="m-0 list-none p-0">
           {tocItems.map((item) => (
             <TocLink key={item.id} item={item} />
           ))}
