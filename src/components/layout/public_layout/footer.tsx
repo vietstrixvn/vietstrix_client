@@ -111,6 +111,7 @@ export default function FooterSection() {
                     />
                   </svg>
                 </div>
+                <span className="sr-only">Twitter/X</span>
               </a>
 
               {/* LinkedIn Icon */}
@@ -135,6 +136,7 @@ export default function FooterSection() {
                     />
                   </svg>
                 </div>
+                <span className="sr-only">LinkedIn</span>
               </a>
 
               {/* GitHub Icon */}
@@ -159,6 +161,7 @@ export default function FooterSection() {
                     />
                   </svg>
                 </div>
+                <span className="sr-only">GitHub</span>
               </a>
             </div>
           </div>
@@ -255,6 +258,7 @@ export default function FooterSection() {
               aria-label="LinkedIn"
             >
               <i className="fab fa-linkedin"></i>
+              <span className="sr-only">LinkedIn</span>
             </a>
             <a
               href="https://github.com/vietstrixvn"
@@ -262,13 +266,15 @@ export default function FooterSection() {
               aria-label="GitHub"
             >
               <i className="fab fa-github"></i>
+              <span className="sr-only">GitHub</span>
             </a>
             <a
               href="https://www.vietstrix.com/about-us"
               className="text-white hover:text-primary-50"
               aria-label="Portfolio"
             >
-              <i className="fas fa-external-link-alt"></i>
+              <i className="fas fa-external-link-alt"/>
+              <span className="sr-only">Portfolio</span>
             </a>
             <a
               href="mailto:contact@vietstrix.com"
@@ -276,6 +282,7 @@ export default function FooterSection() {
               aria-label="Email"
             >
               <i className="fas fa-envelope"></i>
+              <span className="sr-only">Email</span>
             </a>
           </div>
         </div>

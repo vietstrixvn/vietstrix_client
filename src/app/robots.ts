@@ -8,24 +8,24 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin/', '/api/', '/login'],
+        disallow: ['/admin/', '/api/', '/login', '/cdn-cgi/'],
       },
 
       // === Search Engines ===
       {
         userAgent: 'Googlebot',
         allow: '/',
-        disallow: ['/admin/', '/api/', '/login'],
+        disallow: ['/admin/', '/api/', '/login', '/cdn-cgi/'],
       },
       {
         userAgent: 'Bingbot',
         allow: '/',
-        disallow: ['/admin/', '/api/', '/login'],
+        disallow: ['/admin/', '/api/', '/login', '/cdn-cgi/'],
       },
       {
         userAgent: 'Applebot',
         allow: '/',
-        disallow: ['/admin/', '/api/', '/login'],
+        disallow: ['/admin/', '/api/', '/login', '/cdn-cgi/'],
       },
 
       // === Social Media Bots (link preview / OG crawling) ===
@@ -54,12 +54,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: 'GPTBot',
         allow: '/',
-        disallow: ['/admin/', '/api/', '/login'],
+        disallow: ['/admin/', '/api/', '/login', '/cdn-cgi/'],
       },
       {
         userAgent: 'ClaudeBot',
         allow: '/',
-        disallow: ['/admin/', '/api/', '/login'],
+        disallow: ['/admin/', '/api/', '/login', '/cdn-cgi/'],
       },
 
       // === Chặn AI Training Crawlers (Chỉ cào để huấn luyện, không đem lại Traffic) ===

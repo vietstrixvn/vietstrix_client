@@ -4,7 +4,7 @@ import HomePage from './data';
 import { getMentions } from '@/libs/seo/getMentions';
 
 export const metadata: Metadata = {
-  title: 'Vietstrix | Web & MVP Development Agency - Build everything custom',
+  title: 'Vietstrix: Build everything custom',
   description:
     'Vietstrix is a product-driven team building scalable web apps, helping startups turn ideas into reliable digital products from design to deployment.',
   keywords: [

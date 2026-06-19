@@ -23,6 +23,7 @@ export const FooterShare = () => {
             aria-label="LinkedIn"
           >
             <i className="fab fa-linkedin"></i>
+            <span className="sr-only">LinkedIn</span>
           </a>
           <a
             href="https://github.com/vietstrixvn"
@@ -30,6 +31,7 @@ export const FooterShare = () => {
             aria-label="GitHub"
           >
             <i className="fab fa-github"></i>
+            <span className="sr-only">GitHub</span>
           </a>
           <a
             href="https://www.vietstrix.com/about-us"
@@ -37,6 +39,7 @@ export const FooterShare = () => {
             aria-label="Portfolio"
           >
             <i className="fas fa-external-link-alt"></i>
+            <span className="sr-only">Portfolio</span>
           </a>
           <a
             href="mailto:contact@vietstrix.com"
@@ -44,6 +47,7 @@ export const FooterShare = () => {
             aria-label="Email"
           >
             <i className="fas fa-envelope"></i>
+            <span className="sr-only">Email</span>
           </a>
         </div>
       </div>
