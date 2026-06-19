@@ -25,7 +25,7 @@ export function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
   return (
     <nav
       aria-label="Breadcrumb"
-      className={`flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-6 ${className}`}
+      className={`flex items-center gap-2 text-sm text-gray-600 mb-6 ${className}`}
     >
       {/* Home link */}
       <Link
@@ -51,7 +51,7 @@ export function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
               </Link>
             ) : (
               <span
-                className={`${isLast ? 'text-gray-900 dark:text-gray-100 font-medium' : ''} line-clamp-1`}
+                className={`${isLast ? 'text-gray-900 font-medium' : ''} line-clamp-1`}
                 aria-current={isLast ? 'page' : undefined}
               >
                 {item.label}
